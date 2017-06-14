@@ -1,0 +1,42 @@
+#profile-top {
+  .profile-bg {
+    position: relative;
+    background: $brand-secondary;
+    height: 220px;
+    .container {
+      height: 100%;
+    }
+  }
+  .avatar {
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    width: 180px;
+    height: 180px;
+    background: white;
+    box-shadow: 7px 7px 12px rgba(black, .2);
+  }
+  .name {
+    position: absolute;
+    bottom: 0;
+    left: 220px;
+    h3 {
+      color: white;
+      font-size: 50px;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    p {
+      color: white;
+      font-size: 28px;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+  }
+  .tabs-heading-cont {
+    background: white;
+    .tabs-heading {
+      margin-left: 200px;
+    }
+  }
+}

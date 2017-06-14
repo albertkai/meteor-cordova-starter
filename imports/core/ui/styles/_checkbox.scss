@@ -1,0 +1,57 @@
+.checkbox {
+  width: 100px;
+  height: 100px;
+  border: 2px solid $gray-lighter;
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+  &:hover {
+    background: $gray-lighter;
+  }
+  &.disabled {
+    cursor: default;
+    &:hover {
+      background: transparent;
+    }
+  }
+  &.checked {
+    i {
+      color: $green;
+    }
+    border-color: $green;
+    background: rgba($green, .07);
+    cursor: default;
+  }
+  &.missed {
+    color: $red;
+    border-color: $red;
+    background: rgba($red, .07);
+    cursor: default;
+  }
+  &.tint {
+    border-color: rgba($water-color, .5);
+    color: rgba($water-color, .5);
+    &:hover {
+      background: rgba($water-color, .2);
+    }
+  }
+  &.play {
+    color: $gray-light;
+    i {
+      position: relative;
+      left: 5px;
+    }
+  }
+  i {
+    font-size: 50px;
+  }
+  &.add {
+    background: $green;
+    color: white;
+    border-color: $green;
+    &:hover {
+      background: darken($green, 10%);
+      border-color: darken($green, 10%);
+    }
+  }
+}

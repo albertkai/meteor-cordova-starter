@@ -14,9 +14,13 @@ $pale-blue: rgb(212, 229, 248);
 $red: rgb(248, 72, 81);
 $yellow: rgb(208, 201, 23);
 $green: rgb(70, 208, 95);
+$water-color: #80cbff;
 
-$brand-primary: rgba(100, 170, 255, 0.91);
-$brand-secondary: rgba(96, 255, 151, 0.91);
+$header-height: 50px;
+$base-padding: 20px;
+
+$brand-primary: rgba(69, 125, 191, 0.91);
+$brand-secondary: rgba(255, 233, 62, 0.91);
 
 $base-font-sans-serif: 'Arial', 'Helvetica Neue', 'Helvetica', sans-serif;
 $base-font-serif: 'Times', 'Baskerville', 'Georgia', serif;
@@ -87,3 +91,6 @@ $animation-speed: 0.3s;
 
 $inverse-color: $white;
 $base-brand-color: $blue;
+
+$header-height: 42px;
+$base-padding: 20px;

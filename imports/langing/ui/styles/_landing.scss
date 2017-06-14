@@ -1,0 +1,25 @@
+#landing {
+  .top {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-image: url(/images/clouds.jpg);
+    background-position: center center;
+    &:before {
+      content: '';
+      position: absolute;
+      display: block;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba($brand-primary, .5);
+    }
+    h1 {
+      color: white;
+      font-size: 70px;
+    }
+  }
+}

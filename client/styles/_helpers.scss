@@ -5,6 +5,23 @@
   list-style: none;
 }
 
+%center-self {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  @include transform(translate(-50%, -50%));
+}
+
+%center-content {
+  @include flexbox;
+  @include flex-direction(column);
+  @include justify-content(center);
+}
+
+.center-content {
+  @extend %center-content;
+}
+
 // clearfix
 %clearfix {
   &:after {
@@ -12,6 +29,11 @@
     display: block;
     clear: both;
   }
+}
+
+%no-flex {
+  @include flex-grow(0);
+  @include flex-shrink(0);
 }
 
 .clearfix {

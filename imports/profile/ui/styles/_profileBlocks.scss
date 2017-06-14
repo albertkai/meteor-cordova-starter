@@ -1,0 +1,23 @@
+#profile-blocks {
+  .container {
+    min-height: 500px;
+    > h3 {
+      font-size: 34px;
+    }
+  }
+  .main-info {
+    .item {
+      @include flexbox;
+      h5, p {
+        font-size: 18px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      > div {
+        &:nth-child(1) {
+          width: 200px;
+        }
+      }
+    }
+  }
+}

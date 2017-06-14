@@ -4,6 +4,7 @@ import thunk from 'redux-thunk';
 import Immutable from 'immutable';
 
 import {coreReducer} from './reducer.js';
+// Placeholder import (used by robot)
 
 const middleware = [thunk];
 let devtools;
@@ -44,6 +45,7 @@ const enhancer = compose(
 const store = createStore(
   combineReducers({
     core: coreReducer,
+    // Placeholder (used by robot)
   }),
   enhancer,
 );

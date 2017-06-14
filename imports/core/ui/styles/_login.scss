@@ -1,0 +1,133 @@
+#login {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  &:before {
+    content: '';
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba($brand-primary, .5);
+    z-index: 2;
+  }
+  .ovrl {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-image: url(/images/clouds.jpg);
+    background-position: center center;
+    @include animate(pulse 30s infinite);
+    z-index: 1;
+  }
+  h5 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+    &.divide {
+      position: relative;
+      //&:before {
+      //  content: "";
+      //  display: block;
+      //  position: absolute;
+      //  height: 1px;
+      //  background: $gray-light;
+      //  width: 100%;
+      //  left: 0;
+      //  top: 0;
+      //}
+    }
+  }
+  .form-cont {
+    position: relative;
+    background: white;
+    width: 330px;
+    z-index: 10;
+    @extend %center-self;
+    .logo {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      color: rgba(white, .7);
+      top: -50px;
+      font-size: 28px;
+      left: 0;
+      font-weight: 700;
+      span {
+        position: absolute;
+        color: $yellow;
+        top: -12px;
+        font-size: 14px;
+        font-weight: 200;
+      }
+    }
+    input {
+      margin-bottom: 10px;
+    }
+    button {
+      padding-left: 70px;
+      padding-right: 70px;
+      font-size: 20px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  .social-networks {
+    button {
+      width: 32%;
+      margin-right: 2%;
+      padding: 5px 0;
+      &:last-child {
+        margin-right: 0;
+      }
+      &.facebook {
+        color: #3b5998;
+        border-color: #3b5998;
+        &:hover {
+          color: white;
+          background: #3b5998;
+        }
+      }
+      &.twitter {
+        color: #00aced;
+        border-color: #00aced;
+        &:hover {
+          color: white;
+          background: #00aced;
+        }
+      }
+      &.vk {
+        color: #4c75a3;
+        border-color: #4c75a3;
+        &:hover {
+          color: white;
+          background: #4c75a3;
+        }
+      }
+    }
+  }
+  .links {
+    padding-bottom: 10px;
+    a:nth-child(2) {
+      float: right;
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    @include transform(scale(1));
+  }
+  50% {
+    @include transform(scale(1.1));
+  }
+  100% {
+    @include transform(scale(1));
+  }
+}
