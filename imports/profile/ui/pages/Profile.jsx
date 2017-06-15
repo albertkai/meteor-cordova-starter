@@ -7,7 +7,7 @@ export class Profile extends PureComponent {
   render() {
     return (
       <div id="profile">
-        <ProfileTop />
+        <ProfileTop {...this.props} />
         <div className="content">
           <ProfileBlocks />
         </div>

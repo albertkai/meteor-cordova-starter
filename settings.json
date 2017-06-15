@@ -1,1 +1,41 @@
-{}
+{
+  "AWSAccessKeyId": "AKIAJ5LJHZ57ZGYUOPGA",
+  "AWSSecretAccessKey": "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",
+  "facebook": {
+    "appId": 1903245093279775,
+    "secret": "076f05a87927d385b3a2d04c49416199"
+  },
+  "vk": {
+    "appId": 6076427,
+    "secret": "hb2E8kEiQlgJeluJiPFD",
+    "serviceKey": "864b565c864b565c864b565c478617ee578864b864b565cdf09bdb6ebcd545c12922a79"
+  },
+  "twitter": {
+    "key": "6NxbtToN4mnjFy8MNfbkMS0Q2",
+    "secret": "mZGJRC4DIiEG54cWC9uFI8GUkQs2TNvVPm0mN08pflEA7zw61x"
+  },
+  "smtp": {
+    "username": "AKIAI6V3AEUTGMBVGG7Q",
+    "password": "ArDNyAsRee8a43w4Rsm3hV3zuhGXikJQwpdmjJlkzDXK",
+    "host": "email-smtp.us-east-1.amazonaws.com:587"
+  },
+  "public": {
+    "oneSignal": {
+      "appId": "ee40a17b-50aa-496f-b552-3b778407f958",
+      "restApiKey": "M2UwNWUyZTgtZjY1MC00ZjA2LWJhNzItNTExYThlMmJmMWNh",
+      "subdomain": "lingua",
+      "welcomeNotification": {
+        "title": "Hello from Easylingua",
+        "message": "You just received your first successful notification."
+      }
+    },
+    "facebook": {
+      "permissions": [
+        "public_profile",
+        "email",
+        "user_birthday",
+        "user_location"
+      ]
+    }
+  }
+}

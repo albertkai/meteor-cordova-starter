@@ -65,3 +65,10 @@ react-meteor-data
 # mdg:meteor-apm-agent
 # http
 # tmeasday:publish-counts
+service-configuration
+edgee:slingshot
+accounts-base
+accounts-facebook
+accounts-twitter
+mrt:accounts-vk
+aldeed:simple-schema

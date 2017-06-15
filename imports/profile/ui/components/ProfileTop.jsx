@@ -1,14 +1,29 @@
 import React, { PureComponent } from 'react';
 
+import { Avatar, coreConstants } from '/imports/core';
+
 export class ProfileTop extends PureComponent {
   render() {
+    const {
+      user: {
+        personalData: {
+          avatar,
+          background,
+          firstName,
+          lastName,
+        },
+      },
+    } = this.props;
     return (
       <div id="profile-top">
-        <div className="profile-bg">
+        <div
+          className="profile-bg"
+          style={{ backgroundImage: `url(${coreConstants.CLOUDFRONT_URL}${background})` }}
+        >
           <div className="container">
-            <div className="avatar" />
+            <Avatar avatar={avatar} />
             <div className="name">
-              <h3>Галя Мазина</h3>
+              <h3>{firstName} {lastName}</h3>
               <p>Отель Летучая рыба, <span>директор</span></p>
             </div>
           </div>

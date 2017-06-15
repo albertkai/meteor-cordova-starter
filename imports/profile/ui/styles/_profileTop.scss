@@ -3,6 +3,9 @@
     position: relative;
     background: $brand-secondary;
     height: 220px;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center center;
     .container {
       height: 100%;
     }
@@ -10,10 +13,10 @@
   .avatar {
     position: absolute;
     bottom: -30px;
+    border: 1px solid white;
     left: 0;
     width: 180px;
     height: 180px;
-    background: white;
     box-shadow: 7px 7px 12px rgba(black, .2);
   }
   .name {

@@ -12,6 +12,10 @@
   @include transform(translate(-50%, -50%));
 }
 
+.center-self {
+  @extend %center-self;
+}
+
 %center-content {
   @include flexbox;
   @include flex-direction(column);

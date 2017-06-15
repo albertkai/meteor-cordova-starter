@@ -1,8 +1,19 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router';
 
+import { Avatar } from '/imports/core';
+
 export class SideMenu extends PureComponent {
   render() {
+    const {
+      user: {
+        personalData: {
+          firstName,
+          lastName,
+          avatar,
+        },
+      },
+    } = this.props;
     return (
       <div id="side-menu" className="side-menu">
         <header>
@@ -11,12 +22,12 @@ export class SideMenu extends PureComponent {
         <div className="content">
           <Link to="/profile" activeClassName="active" className="user-link">
             <span>
-              <span className="avatar" />
+              <Avatar avatar={avatar} />
             </span>
             <span>
               <span>
-                <span>Альберт</span>
-                <span>Кайгородов</span>
+                <span>{firstName}</span>
+                <span>{lastName}</span>
               </span>
             </span>
           </Link>

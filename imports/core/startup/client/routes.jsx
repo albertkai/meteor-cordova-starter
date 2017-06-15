@@ -9,11 +9,20 @@ import { Profile } from '/imports/profile';
 import { Landing } from '/imports/langing';
 // Placeholder (used by robot)
 
+const authenticate = (nextState, replace) => {
+  console.log(nextState)
+  if (!Meteor.loggingIn() && !Meteor.userId()) {
+    replace({
+      pathname: '/login',
+    });
+  }
+};
+
 export const AppRouter = () => (
   <Router history={browserHistory}>
-    <Route path="/" component={MainLayout}>
+    <Route path="/" component={MainLayout} onEnter={authenticate}>
       <IndexRoute component={Today} />
-      <Route path="/today" component={Today} />
+      <Route path="/today" component={Today}/>
       <Route path="/history" component={History} />
 			<Route path="/goals" component={Goals} />
 			<Route path="/profile" component={Profile} />
