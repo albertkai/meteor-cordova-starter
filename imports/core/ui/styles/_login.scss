@@ -23,7 +23,7 @@
     background-size: cover;
     background-image: url(/images/clouds.jpg);
     background-position: center center;
-    @include animate(pulse 30s infinite);
+    @extend .scaling;
     z-index: 1;
   }
   h5 {
@@ -130,4 +130,34 @@
   100% {
     @include transform(scale(1));
   }
+}
+
+@keyframes scaling {
+
+  from, to {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+  }
+  50%{
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    -o-transform: scale(1.5);
+    transform: scale(1.5);
+  }
+
+}
+
+.scaling {
+
+  -webkit-animation-name: scaling;
+  animation-name: scaling;
+  -webkit-animation-duration: 70s;
+  animation-duration: 70s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
 }
