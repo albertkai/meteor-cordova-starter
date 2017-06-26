@@ -16,7 +16,7 @@ SyncedCron.add({
       const { timezone } = u.personalData;
       const currentUsersTime = moment.tz(timezone);
       const currentHour = parseInt(currentUsersTime.format('HH'), 10);
-      if (currentHour) {
+      if (currentHour === 5) {
         const currentDay = Days.findOne({ userId: u._id }, { sort: { createdAt: -1 } });
         if (currentDay) {
           const createdAtFormat = moment(currentDay.createdAt).tz(timezone).format('DD/MM/YYYY');
