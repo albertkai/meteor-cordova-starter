@@ -72,3 +72,7 @@ accounts-facebook
 accounts-twitter
 mrt:accounts-vk
 aldeed:simple-schema
+accounts-password
+kidovate:pnotify
+percolate:synced-cron
+aldeed:collection2

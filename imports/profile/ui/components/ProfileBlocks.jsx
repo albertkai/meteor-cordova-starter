@@ -1,27 +1,89 @@
 import React, { PureComponent } from 'react';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Checkbox } from '/imports/core';
+import { profileActions, TimezoneSelect } from '/imports/profile';
 
-export class ProfileBlocks extends PureComponent {
+const isEnabled = block => block ? block.enabled : false;
+
+const getValue = (block, option) => {
+  return block && block.options && block.options[option] ? block.options[option] : false;
+}
+
+export class ProfileBlocksComponent extends PureComponent {
+
+  setWakeUp = (e) => {
+    const { value } = e.target;
+    this.props.setBlockOption('wakeUp', 'time', value);
+  };
+
+  setSport = (e) => {
+    const { value } = e.target;
+    this.props.setBlockOption('sport', 'type', value);
+  };
+
+  setMeditationTime = (e) => {
+    const { value } = e.target;
+    this.props.setBlockOption('meditation', 'time', value);
+  };
+
+  setMeditationVoice = (e) => {
+    const { value } = e.target;
+    this.props.setBlockOption('meditation', 'voice', value);
+  };
+
+  setMeditationBackground = (e) => {
+    const { value } = e.target;
+    this.props.setBlockOption('meditation', 'background', value);
+  };
+
   render() {
+    const {
+      toggleWakeUp,
+      toggleSport,
+      toggleMeditation,
+      toggleTasks,
+      toggleWater,
+      toggleKind,
+      toggleReport,
+      setTimezone,
+      setFee,
+      user: {
+        blocks,
+        personalData: {
+          timezone,
+        },
+        fees: {
+          amount,
+        },
+      },
+    } = this.props;
     return (
       <div id="profile-blocks">
         <div className="container paper">
           <div className="main-info">
-            <div className="item">
-              <div>
-                <h5>Город:</h5>
-              </div>
-              <div>
-                <p>Волгоград</p>
-              </div>
-            </div>
+            {/*<div className="item">*/}
+              {/*<div>*/}
+                {/*<h5>Блоки:</h5>*/}
+              {/*</div>*/}
+              {/*<div>*/}
+                {/*<p>*/}
+                  {/*<span>Дневное задание</span>*/}
+                  {/*<span>Медитация</span>*/}
+                  {/*<span>2 литра воды</span>*/}
+                  {/*<span>Отчет за день</span>*/}
+                {/*</p>*/}
+              {/*</div>*/}
+            {/*</div>*/}
             <div className="item">
               <div>
                 <h5>Временная зона:</h5>
               </div>
               <div>
-                <p>Moscow/Russia <span>00:20:32</span></p>
+                <TimezoneSelect
+                  timezone={timezone}
+                  setTimezone={setTimezone}
+                />
               </div>
             </div>
             <div className="item">
@@ -29,7 +91,13 @@ export class ProfileBlocks extends PureComponent {
                 <h5>Сумма штрафа:</h5>
               </div>
               <div>
-                <input type="number" value="500" />
+                <input
+                  id="fee"
+                  type="number"
+                  defaultValue={amount}
+                  onChange={setFee}
+                />
+                <span><i className="fa fa-rouble" /></span>
               </div>
             </div>
           </div>
@@ -37,7 +105,7 @@ export class ProfileBlocks extends PureComponent {
           <div className="blocks">
             <div className="block-item required">
               <div>
-                <Checkbox status="checked" />
+                <Checkbox checked />
               </div>
               <div>
                 <h3><sup>*</sup> Ежедневные задания</h3>
@@ -45,14 +113,17 @@ export class ProfileBlocks extends PureComponent {
                   <p>
                     Раз в день вам будет приходить короткое задание. Вам нужно будет прочитать его, обдумать и записать выводы.
                     <br/>
-                    Среднее время выполнения - 5 минут. Каждое задание - это маленький шаг навстречу лучшему я. Шаг за шагом, вы будете понимать что-то новое, и становиться лучше.
+                    Каждое задание - это маленький шаг навстречу лучшему я. Шаг за шагом, вы будете понимать что-то новое, и становиться лучше.
                   </p>
                 </div>
               </div>
             </div>
             <div className="block-item">
               <div>
-                <Checkbox />
+                <Checkbox
+                  checked={isEnabled(blocks.wakeUp)}
+                  onChange={toggleWakeUp}
+                />
               </div>
               <div>
                 <h3>Ранний подъем</h3>
@@ -60,7 +131,10 @@ export class ProfileBlocks extends PureComponent {
                   <p>Способствует нормализации активности, гораздо большей энергетике и мыслям. Ранний подъем - неотъемлемый атрибут успешных людей!</p>
                   <div className="settings">
                     <label htmlFor="">Время:</label>
-                    <select name="" id="">
+                    <select
+                      onChange={this.setWakeUp}
+                      value={getValue(blocks.wakeUp, 'time')}
+                    >
                       <option value="05:00">05:00</option>
                       <option value="05:10">05:10</option>
                       <option value="05:20">05:20</option>
@@ -84,7 +158,10 @@ export class ProfileBlocks extends PureComponent {
             </div>
             <div className="block-item">
               <div>
-                <Checkbox />
+                <Checkbox
+                  checked={isEnabled(blocks.sport)}
+                  onChange={toggleSport}
+                />
               </div>
               <div>
                 <h3>Зарядка</h3>
@@ -92,12 +169,15 @@ export class ProfileBlocks extends PureComponent {
                   <p>Ежедневный комплекс упражнений минимум 10 минут на растяжку и укрепление мышц. Поддерживает вас в форме, и дает энергии. Ведь вы не получите энергии для реализации целей если ваше тело слабо</p>
                   <div className="settings">
                     <label htmlFor="">Комплекс:</label>
-                    <select name="" id="">
-                      <option value="05:00">Легкая разминка</option>
-                      <option value="05:10">Растяжка</option>
-                      <option value="05:20">Комплекс спартанца</option>
-                      <option value="05:30">Базовая йога</option>
-                      <option value="05:40">Цигун</option>
+                    <select
+                      onChange={this.setSport}
+                      value={getValue(blocks.sport, 'type')}
+                    >
+                      <option value="1">Легкая разминка</option>
+                      <option value="2">Растяжка</option>
+                      <option value="3">Комплекс спартанца</option>
+                      <option value="4">Базовая йога</option>
+                      <option value="5">Цигун</option>
                     </select>
                   </div>
                 </div>
@@ -105,14 +185,20 @@ export class ProfileBlocks extends PureComponent {
             </div>
             <div className="block-item">
               <div>
-                <Checkbox />
+                <Checkbox
+                  checked={isEnabled(blocks.meditation)}
+                  onChange={toggleMeditation}
+                />
               </div>
               <div>
                 <h3>Медитация</h3>
                 <div>
                   <p>Гармонизирует дух, и снимает зажимы. Медитация - это необходимая практика, это как тренировка нашего мозга. Даже во сне мы не получаем такого расслабления. Даже 10 минут медитации в день сделают вас более собранным и спокойным</p>
                   <label htmlFor="">Время:</label>
-                  <select name="" id="">
+                  <select
+                    onChange={this.setMeditationTime}
+                    value={getValue(blocks.meditation, 'time')}
+                  >
                     <option value="10">10 минут</option>
                     <option value="15">15 минут</option>
                     <option value="20">20 минут</option>
@@ -121,12 +207,18 @@ export class ProfileBlocks extends PureComponent {
                     <option value="60">60 Минут</option>
                   </select>
                   <label htmlFor="">Голос:</label>
-                  <select name="" id="">
-                    <option value="albert">Альберт</option>
-                    <option value="gala">Галя</option>
+                  <select
+                    onChange={this.setMeditationVoice}
+                    value={getValue(blocks.meditation, 'voice')}
+                  >
+                    <option value="male">Альберт</option>
+                    <option value="female">Галя</option>
                   </select>
                   <label htmlFor="">Фон:</label>
-                  <select name="" id="">
+                  <select
+                    onChange={this.setMeditationBackground}
+                    value={getValue(blocks.meditation, 'background')}
+                  >
                     <option value="none">Без фона</option>
                     <option value="ocean">Океан</option>
                     <option value="forest">Лес</option>
@@ -136,7 +228,10 @@ export class ProfileBlocks extends PureComponent {
             </div>
             <div className="block-item">
               <div>
-                <Checkbox />
+                <Checkbox
+                  checked={isEnabled(blocks.taskList)}
+                  onChange={toggleTasks}
+                />
               </div>
               <div>
                 <h3>3 задачи на день</h3>
@@ -153,7 +248,10 @@ export class ProfileBlocks extends PureComponent {
             </div>
             <div className="block-item">
               <div>
-                <Checkbox />
+                <Checkbox
+                  checked={isEnabled(blocks.water)}
+                  onChange={toggleWater}
+                />
               </div>
               <div>
                 <h3>2 литра воды</h3>
@@ -163,14 +261,17 @@ export class ProfileBlocks extends PureComponent {
                     <br/>
                     Каждые несколько часов вам будет приходить уведомление, о необходимости выпить стакан воды. После этого вы должны будете нажать на чекбокс, и к вашему балансу воды добавится 200мл.
                     <br/>
-                    Также, когда вы выпиваете стакан воды (или чая), тоже зайдите в приложение и кликните по счетчику. Если количество воды в 23:59 будет меньше 2х литров - вам начислится штраф
+                    Также, когда вы выпиваете стакан воды, тоже зайдите в приложение и кликните по счетчику. Если количество воды в 23:59 будет меньше 2х литров - вам начислится штраф
                   </p>
                 </div>
               </div>
             </div>
             <div className="block-item">
               <div>
-                <Checkbox />
+                <Checkbox
+                  checked={isEnabled(blocks.kind)}
+                  onChange={toggleKind}
+                />
               </div>
               <div>
                 <h3>Доброе дело</h3>
@@ -181,6 +282,24 @@ export class ProfileBlocks extends PureComponent {
                     Из этих маленьких добрых дел как из пазла будет складываться ваша лучшая личность
                     <br/>
                     Также необходимо будет писать отчет, что же вы сделали.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="block-item">
+              <div>
+                <Checkbox
+                  checked={isEnabled(blocks.report)}
+                  onChange={toggleReport}
+                />
+              </div>
+              <div>
+                <h3>Вечерний отчет</h3>
+                <div>
+                  <p>
+                    Каждый вечер вам нужно будет писать короткий отчет о том, как ваши действия за прошедший день приближают вас к вашим целям
+                    <br/>
+                    Это добавит вам осознанности, также вы будете видеть хронику вашего продвижения к целям
                   </p>
                 </div>
               </div>
@@ -201,5 +320,18 @@ export class ProfileBlocks extends PureComponent {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  profile: state.profile.toJS(),
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(profileActions, dispatch);
+
+export const ProfileBlocks = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ProfileBlocksComponent);
+
 
 export default ProfileBlocks;

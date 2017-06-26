@@ -4,6 +4,13 @@ import { Link } from 'react-router';
 import { Avatar } from '/imports/core';
 
 export class SideMenu extends PureComponent {
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.location.pathname !== nextProps.location.pathname) {
+      this.props.closeMenu();
+    }
+  }
+
   render() {
     const {
       user: {
@@ -11,6 +18,9 @@ export class SideMenu extends PureComponent {
           firstName,
           lastName,
           avatar,
+        },
+        fees: {
+          toPay,
         },
       },
     } = this.props;
@@ -50,15 +60,17 @@ export class SideMenu extends PureComponent {
               </li>
             </ul>
           </nav>
-          <div className="fee">
-            <h4><i className="fa fa-warning"/> Оплатите штраф:</h4>
-            <h2>1500Р <button>?</button></h2>
-            <button>Оплатить</button>
-            <p>Необходимо оплатить до 23:59 сегодня, иначе вы не сможете пользоваться сервисом</p>
-          </div>
+          {
+            !!toPay && <div className="fee">
+              <h4><i className="fa fa-warning"/> Оплатите штраф:</h4>
+              <h2>1500Р <button>?</button></h2>
+              <button>Оплатить</button>
+              <p>Необходимо оплатить до 23:59 сегодня, иначе вы не сможете пользоваться сервисом</p>
+            </div>
+          }
           <footer>
             <div className="support">
-              <h5>Пожжержка:</h5>
+              <h5>Поддержка:</h5>
               <a href="mailto:support@levelup.chat">support@better.me</a>
             </div>
           </footer>

@@ -1,0 +1,10 @@
+.content-editable {
+  cursor: text;
+  &:empty:before {
+    content: attr(placeholder);
+    display: block; /* For Firefox */
+    color: #ccc;
+    font-style: italic;
+    font-weight: 200;
+  }
+}

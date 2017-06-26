@@ -24,7 +24,7 @@ export class ProfileTop extends PureComponent {
             <Avatar avatar={avatar} />
             <div className="name">
               <h3>{firstName} {lastName}</h3>
-              <p>Отель Летучая рыба, <span>директор</span></p>
+              {/*<p>Отель Летучая рыба, <span>директор</span></p>*/}
             </div>
           </div>
         </div>

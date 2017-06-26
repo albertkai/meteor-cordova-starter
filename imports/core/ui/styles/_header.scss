@@ -1,7 +1,11 @@
 #header {
+  position: relative;
   @include flexbox;
   background: white;
   padding: 0 $base-padding;
+  @media screen and (max-width: $screen-sm) {
+    text-align: center;
+  }
   > div, > aside {
     @extend %center-content;
   }
@@ -15,6 +19,28 @@
     @extend %no-flex;
     button {
       border: 0;
+    }
+  }
+  .toggle-menu {
+    position: absolute;
+    font-size: 24px;
+    left: 3px;
+    top: 0;
+    border: 0;
+    @media screen and (min-width: $screen-sm) {
+      display: none;
+    }
+    &:hover {
+      background: transparent;
+      color: $brand-primary;
+    }
+  }
+  .logo {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: $brand-primary;
+    @media screen and (min-width: $screen-sm) {
+      display: none;
     }
   }
 }

@@ -20,6 +20,9 @@ body {
     margin-top: 15px;
     margin-bottom: 15px;
     padding: $base-padding;
+    @media screen and (max-width: $screen-sm) {
+      margin: 10px !important;
+    }
   }
 }
 
@@ -44,6 +47,17 @@ body {
     top: 0;
     left: 0;
     @include flexbox;
+    @media screen and (max-width: $screen-sm) {
+      @include transition(.4s);
+      @include transform(translate(-250px, 0));
+      &._menu-opened {
+        @include transform(translate(0, 0));
+        .close-overlay {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
   }
   .side-menu {
     width: 250px;
@@ -55,7 +69,6 @@ body {
       height: 100%;
       top: 0;
       left: 0;
-      width: 70vw;
     }
     .user-link {
       @include flexbox;
@@ -135,6 +148,7 @@ body {
     @include flexbox;
     @include flex-grow(1);
     @include flex-direction(column);
+    @include flex-shrink(0);
     > header {
       height: $header-height;
       @extend %no-flex;
@@ -144,6 +158,35 @@ body {
     .content {
       @include flex-grow(1);
       overflow-y: scroll;
+    }
+    @media screen and (max-width: $screen-sm) {
+      width: 100vw;
+    }
+    .close-overlay {
+      position: absolute;
+      visibility: hidden;
+      opacity: 0;
+      border: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+      border-radius: 0;
+      background: rgba(255, 255, 255, .9);
+      @include transition(.4s);
+      > div {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        @include transform(translate(0, -50%));
+        width: 50px;
+        span {
+          display: block;
+          text-align: center;
+          color: $gray-darker;
+          font-size: 20px;
+          margin-bottom: 28px;
+        }
+      }
     }
   }
 }

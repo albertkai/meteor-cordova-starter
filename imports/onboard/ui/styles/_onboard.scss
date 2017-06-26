@@ -1,0 +1,99 @@
+#onboard {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  top: 0;
+  overflow: hidden;
+  left: 0;
+  @media screen and (min-width: $screen-sm) {
+    &:before {
+      content: '';
+      position: absolute;
+      display: block;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba($brand-primary, .5);
+      z-index: 2;
+    }
+  }
+  .steps {
+    text-align: center;
+    > span {
+      display: inline-block;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 40px;
+      border: 2px solid rgba(0, 0, 0, .2);
+      font-size: 20px;
+      font-weight: bold;
+      color: rgba(0, 0, 0, .2);
+      margin: 0 7px;
+      &._active {
+        color: $brand-primary;
+        border-color: $brand-primary;
+      }
+    }
+  }
+  .ovrl {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-image: url(/images/clouds.jpg);
+    background-position: center center;
+    @extend .scaling;
+    z-index: 1;
+  }
+  .onboard-cont {
+    position: relative;
+    z-index: 2;
+    @extend %center-self;
+    background: white;
+    width: 600px;
+    height: 500px;
+    @media screen and (max-width: $screen-sm) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, .90);
+      @include transform(translate(0, 0));
+    }
+  }
+  .content {
+    padding: 30px;
+    @media screen and (max-width: $screen-sm) {
+      padding: 20px;
+    }
+    h1, h2, h3, h4 {
+      color: $brand-primary;
+      text-transform: uppercase;
+    }
+    p {
+      font-size: 16px;
+      @media screen and (max-width: $screen-sm) {
+        font-size: 14px;
+      }
+    }
+    .footer {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      bottom: 50px;
+      button {
+        width: 200px;
+        font-size: 22px;
+      }
+    }
+  }
+}

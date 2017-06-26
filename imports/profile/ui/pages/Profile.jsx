@@ -9,7 +9,7 @@ export class Profile extends PureComponent {
       <div id="profile">
         <ProfileTop {...this.props} />
         <div className="content">
-          <ProfileBlocks />
+          <ProfileBlocks {...this.props} />
         </div>
       </div>
     );

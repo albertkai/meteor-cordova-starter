@@ -1,0 +1,52 @@
+.history-item {
+  &:not(:last-child) {
+    margin-bottom: 70px;
+  }
+  header {
+    @include flexbox;
+    border-bottom: 1px solid $gray-lighter;
+    padding-bottom: 10px;
+    p {
+      width: 50%;
+      margin: 0;
+      font-size: 24px;
+      span {
+        color: $brand-primary;
+      }
+      &:nth-child(2) {
+        text-align: right;
+      }
+    }
+  }
+  .summary {
+    @include flexbox;
+    @include align-items(center);
+    margin: 10px 0;
+    p {
+      margin: 0;
+      font-size: 18px;
+      margin-right: 20px;
+    }
+    >div {
+      padding-right: 10px;
+      > div {
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+        border: 1px solid $green;
+        color: $green;
+        line-height: 31px;
+        text-align: center;
+        font-size: 18px;
+      }
+    }
+    &.fails {
+      > div {
+        > div {
+          border-color: $red;
+          color: $red;
+        }
+      }
+    }
+  }
+}

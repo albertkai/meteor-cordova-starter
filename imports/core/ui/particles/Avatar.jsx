@@ -12,7 +12,7 @@ export class Avatar extends PureComponent {
         }
         return `${coreConstants.CLOUDFRONT_URL}${avatar}`;
       }
-      return `${coreConstants.CLOUDFRONT_URL}sample/default_avatar.jpg`;
+      return `${coreConstants.CLOUDFRONT_URL}samples/default_avatar.jpg`;
     })();
     return (
       <div className="avatar" style={{ backgroundImage: `url(${url})` }}>

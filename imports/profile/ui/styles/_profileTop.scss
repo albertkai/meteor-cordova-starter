@@ -1,7 +1,6 @@
 #profile-top {
   .profile-bg {
     position: relative;
-    background: $brand-secondary;
     height: 220px;
     -webkit-background-size: cover;
     background-size: cover;
@@ -18,28 +17,52 @@
     width: 180px;
     height: 180px;
     box-shadow: 7px 7px 12px rgba(black, .2);
+    @media screen and (max-width: $screen-sm) {
+      width: 140px;
+      height: 140px;
+      bottom: auto;
+      left: 50%;
+      top: 50%;
+      @include transform(translate(-50%, -60%));
+    }
   }
   .name {
     position: absolute;
     bottom: 0;
     left: 220px;
+    @media screen and (max-width: $screen-sm) {
+      left: 0;
+      width: 100%;
+      text-align: center;
+      bottom: 15px;
+    }
     h3 {
       color: white;
       font-size: 50px;
       margin-top: 0;
       margin-bottom: 0;
+      @media screen and (max-width: $screen-sm) {
+        font-size: 24px;
+      }
     }
     p {
       color: white;
       font-size: 28px;
       margin-top: 0;
       margin-bottom: 10px;
+      @media screen and (max-width: $screen-sm) {
+        font-size: 18px;
+      }
     }
   }
   .tabs-heading-cont {
     background: white;
     .tabs-heading {
       margin-left: 200px;
+      @media screen and (max-width: $screen-sm) {
+        margin-left: 0;
+        text-align: center;
+      }
     }
   }
 }

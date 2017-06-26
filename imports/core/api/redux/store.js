@@ -4,6 +4,7 @@ import thunk from 'redux-thunk';
 import Immutable from 'immutable';
 
 import {coreReducer} from './reducer.js';
+import { profileReducer } from '/imports/profile';
 // Placeholder import (used by robot)
 
 const middleware = [thunk];
@@ -20,7 +21,6 @@ const loggerImmutable = logger({
         newState[i] = state[i];
       }
     }
-
     return newState;
   },
 });
@@ -45,7 +45,8 @@ const enhancer = compose(
 const store = createStore(
   combineReducers({
     core: coreReducer,
-    // Placeholder (used by robot)
+    profile: profileReducer,
+// Placeholder (used by robot)
   }),
   enhancer,
 );

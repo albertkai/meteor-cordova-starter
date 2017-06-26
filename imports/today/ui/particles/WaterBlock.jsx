@@ -1,21 +1,54 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import { Checkbox } from '/imports/core';
+import { todayActions } from '/imports/today';
 
-export class WaterBlock extends PureComponent {
+export class WaterBlockComponent extends PureComponent {
+
+  checkWaterBlock = () => {
+    const {
+      checkWaterBlock,
+      day: {
+        _id,
+      },
+    } = this.props;
+    checkWaterBlock(_id);
+  };
+
   render() {
+    const {
+      block,
+    } = this.props;
+    const volume = block.data ? block.data.volume : 0;
     return (
       <div className="block-item water">
         <div>
-          <Checkbox status="tint" />
+          <Checkbox
+              status="tint"
+              checked={block.passed}
+              onChange={this.checkWaterBlock}
+              enableOnly
+          />
         </div>
         <div>
-          <h3>Выпито <span>0.6</span> из <span>2</span> литров воды</h3>
+          <h3>Выпито <span>{(volume / 1000).toFixed(1)}</span> из <span>2</span> литров воды</h3>
           <p className="desc">Нажмите на кнопку с каплей, каждый раз когда выпиваете стакан воды</p>
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => state;
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(todayActions, dispatch);
+
+export const WaterBlock = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(WaterBlockComponent);
 
 export default WaterBlock;

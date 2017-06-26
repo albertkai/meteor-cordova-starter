@@ -2,7 +2,8 @@
   "name": "meteor-react-starter",
   "private": true,
   "scripts": {
-    "start": "npm install && meteor run --settings settings.json"
+    "start": "npm install && meteor run --settings settings.json",
+    "deploy": "meteor deploy betterme.meteorapp.com --settings settings.json"
   },
   "dependencies": {
     "aws-sdk": "^2.70.0",
@@ -11,6 +12,8 @@
     "faker": "^4.1.0",
     "immutable": "^3.8.1",
     "meteor-node-stubs": "~0.2.4",
+    "moment": "^2.18.1",
+    "moment-timezone": "^0.5.13",
     "react": "^15.4.2",
     "react-addons-perf": "^15.4.1",
     "react-addons-pure-render-mixin": "^15.3.2",

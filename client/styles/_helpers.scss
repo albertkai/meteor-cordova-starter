@@ -70,7 +70,11 @@
   }
 }
 
-
+.hidden-sm {
+  @media screen and (max-width: $screen-sm) {
+    display: none !important;
+  }
+}
 
 /// * Helper class to truncate and add ellipsis to a string too long for it to fit
 /// * on a single line.

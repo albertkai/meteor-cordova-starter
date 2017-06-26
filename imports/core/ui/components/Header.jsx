@@ -13,13 +13,25 @@ const locationsMap = {
 
 export class HeaderComponent extends PureComponent {
   render() {
-    const { logOut } = this.props;
+    const {
+      logOut,
+      toggleMenu,
+    } = this.props;
     return (
       <header id="header">
-        <div>
+        <button
+          className="toggle-menu"
+          onClick={toggleMenu}
+        >
+          <i className="fa fa-bars" />
+        </button>
+        <div className="logo">
+          betterme
+        </div>
+        <div className="hidden-xs hidden-sm">
           <h2>{locationsMap[this.props.location.pathname]}</h2>
         </div>
-        <aside>
+        <aside className="hidden-sm hidden-xs">
           <button onClick={logOut}>Выйти</button>
         </aside>
       </header>

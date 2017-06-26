@@ -11,19 +11,19 @@ export const incrementClickCount = () => ({
 // Actions with side effect
 export const loginWithFacebook = () => () => {
   Meteor.loginWithFacebook({}, () => {
-    browserHistory.push('/today');
+    browserHistory.push('/');
   });
 };
 
 export const loginWithVk = () => () => {
   Meteor.loginWithVk({}, () => {
-    browserHistory.push('/today');
+    browserHistory.push('/');
   });
 };
 
 export const loginWithTwitter = () => () => {
   Meteor.loginWithTwitter({}, () => {
-    browserHistory.push('/today');
+    browserHistory.push('/');
   });
 };
 
@@ -33,3 +33,10 @@ export const logOut = () => () => {
   });
 };
 
+export const toggleMenu = () => ({
+  type: c.TOGGLE_MENU,
+});
+
+export const closeMenu = () => ({
+  type: c.CLOSE_MENU,
+});

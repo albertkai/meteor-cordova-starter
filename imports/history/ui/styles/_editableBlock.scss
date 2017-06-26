@@ -1,0 +1,22 @@
+.editable-block {
+  .text, textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid $gray-lighter;
+    border-radius: 7px;
+    margin: 0;
+  }
+  textarea {
+    height: 120px;
+  }
+  .text {
+    background: $gray-lighter;
+  }
+  .buttons {
+    text-align: right;
+    margin-top: 10px;
+    button {
+      margin-left: 10px;
+    }
+  }
+}

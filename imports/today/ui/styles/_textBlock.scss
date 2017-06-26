@@ -1,1 +1,15 @@
-#text-block {}
+.block-item.text {
+  .answer {
+    padding: 10px;
+    font-size: 16px;
+    color: $base-text-color;
+    background: $gray-lighter;
+    border-radius: 7px;
+  }
+  .task-text {
+    p {
+      margin-top: 10px;
+      color: $base-text-color;
+    }
+  }
+}

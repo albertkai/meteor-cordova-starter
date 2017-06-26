@@ -1,26 +1,24 @@
 .checkbox {
+  position: relative;
   width: 100px;
   height: 100px;
-  border: 2px solid $gray-lighter;
+  border: 2px solid rgba($gray-light, .5);
   border-radius: 50%;
   cursor: pointer;
   color: white;
-  &:hover {
-    background: $gray-lighter;
-  }
-  &.disabled {
-    cursor: default;
-    &:hover {
-      background: transparent;
-    }
-  }
-  &.checked {
+  overflow: hidden;
+  z-index: 1;
+  @media screen and (max-width: $screen-sm) {
+    width: 50px;
+    height: 50px;
+    line-height: 49px;
+    text-align: center;
     i {
-      color: $green;
+      font-size: 25px !important;
     }
-    border-color: $green;
-    background: rgba($green, .07);
-    cursor: default;
+  }
+  &:hover {
+    background: rgba($gray-light, .5);
   }
   &.missed {
     color: $red;
@@ -34,6 +32,9 @@
     &:hover {
       background: rgba($water-color, .2);
     }
+  }
+  &.half {
+    border-color: $green;
   }
   &.play {
     color: $gray-light;
@@ -53,5 +54,31 @@
       background: darken($green, 10%);
       border-color: darken($green, 10%);
     }
+  }
+  &.disabled {
+    cursor: default;
+    &:hover {
+      background: transparent;
+    }
+  }
+  &.checked {
+    i {
+      color: $green;
+    }
+    border-color: $green;
+    background: rgba($green, .07);
+    cursor: default;
+    &:hover {
+      background: rgba($green, .07);
+    }
+  }
+  .half {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    background: rgba($green, .07);
   }
 }
