@@ -1,0 +1,47 @@
+#send-message {
+  flex: 0 1 40px;
+  width: 100%;
+  padding: 10px;
+  position: relative;
+
+  & .message-input {
+    background: none;
+    border: none;
+    outline: none!important;
+    resize: none;
+    color: $base-text-color;
+    font-size: 20px;
+    height: 40px;
+    margin: 0;
+    padding-right: 20px;
+    width: 70%;
+    @media screen and (max-width: $screen-sm) {
+      font-size: 16px;
+    }
+  }
+
+  textarea:focus:-webkit-placeholder{
+    color: transparent;
+  }
+
+  & .message-submit {
+    position: absolute;
+    z-index: 1;
+    top: 9px;
+    right: 10px;
+    color: #fff;
+    border: none;
+    background: $green;
+    font-size: 18px;
+    text-transform: uppercase;
+    line-height: 1;
+    padding: 10px 30px;
+    border-radius: 10px;
+    outline: none!important;
+    transition: background .2s ease;
+
+    &:hover {
+      background: darken($green, 10%);
+    }
+  }
+}

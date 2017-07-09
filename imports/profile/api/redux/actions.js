@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Slingshot } from 'meteor/edgee:slingshot';
 
 import { Notify } from '/imports/notifications';
 import * as c from './constants.js';
@@ -102,7 +103,7 @@ export const setTimezone = (e) => () => {
 };
 
 let feeTimeout;
-export const setFee = (e) => () => {
+export const setFee = e => () => {
   e.persist();
   Meteor.clearTimeout(feeTimeout);
   feeTimeout = Meteor.setTimeout(() => {
@@ -113,4 +114,58 @@ export const setFee = (e) => () => {
 
 export const setBlockOption = (name, option, value) => () => {
   Meteor.call('users.setBlockOption', name, option, value);
+};
+
+export const uploadAvatar = e => () => {
+  const file = e.target.files[0];
+  const uploader = new Slingshot.Upload('imageUploads');
+  uploader.send(file, (error, url) => {
+    if (error) {
+      console.error('Error uploading', error);
+      Notify.alert({
+        title: 'Что-то пошло не так!',
+        text: 'Пожалуйста, обратитесь в службу поддержки',
+        type: 'error',
+      });
+      return false;
+    }
+    const fileName = _.last(url.split('/'));
+    Meteor.call('users.uploadAvatar', fileName, (err) => {
+      if (err) {
+        Notify.alert({
+          title: 'Что-то пошло не так!',
+          text: 'Пожалуйста, обратитесь в службу поддержки',
+          type: 'error',
+        });
+      }
+    });
+    return true;
+  });
+};
+
+export const uploadBackground = e => () => {
+  const file = e.target.files[0];
+  const uploader = new Slingshot.Upload('imageUploads');
+  uploader.send(file, (error, url) => {
+    if (error) {
+      console.error('Error uploading', error);
+      Notify.alert({
+        title: 'Что-то пошло не так!',
+        text: 'Пожалуйста, обратитесь в службу поддержки',
+        type: 'error',
+      });
+      return false;
+    }
+    const fileName = _.last(url.split('/'));
+    Meteor.call('users.uploadBackground', fileName, (err) => {
+      if (err) {
+        Notify.alert({
+          title: 'Что-то пошло не так!',
+          text: 'Пожалуйста, обратитесь в службу поддержки',
+          type: 'error',
+        });
+      }
+    });
+    return true;
+  });
 };

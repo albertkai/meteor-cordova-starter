@@ -75,4 +75,20 @@ Meteor.methods({
       });
     }
   },
+
+  'users.uploadAvatar': function (file) {
+    Meteor.users.update(this.userId, {
+      $set: {
+        'personalData.avatar': file,
+      },
+    });
+  },
+
+  'users.uploadBackground': function (file) {
+    Meteor.users.update(this.userId, {
+      $set: {
+        'personalData.background': file,
+      },
+    });
+  },
 });

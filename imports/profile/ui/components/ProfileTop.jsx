@@ -1,8 +1,11 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import { Avatar, coreConstants } from '/imports/core';
+import { profileActions } from  '/imports/profile';
 
-export class ProfileTop extends PureComponent {
+export class ProfileTopComponent extends PureComponent {
   render() {
     const {
       user: {
@@ -13,19 +16,28 @@ export class ProfileTop extends PureComponent {
           lastName,
         },
       },
+      uploadAvatar,
+      uploadBackground,
     } = this.props;
     return (
       <div id="profile-top">
         <div
           className="profile-bg"
-          style={{ backgroundImage: `url(${coreConstants.CLOUDFRONT_URL}${background})` }}
+          style={{ backgroundImage: `url(${coreConstants.CLOUDFRONT_URL}images/${background})` }}
         >
           <div className="container">
-            <Avatar avatar={avatar} />
+            <Avatar
+              avatar={avatar}
+              onChange={uploadAvatar}
+            />
             <div className="name">
               <h3>{firstName} {lastName}</h3>
               {/*<p>Отель Летучая рыба, <span>директор</span></p>*/}
             </div>
+          </div>
+          <div className="change-background">
+            <input type="file" onChange={uploadBackground} />
+            <i className="fa fa-image" />
           </div>
         </div>
         <div className="tabs-heading-cont">
@@ -41,5 +53,17 @@ export class ProfileTop extends PureComponent {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  profile: state.profile.toJS(),
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(profileActions, dispatch);
+
+export const ProfileTop = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ProfileTopComponent);
 
 export default ProfileTop;

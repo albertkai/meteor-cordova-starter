@@ -171,8 +171,6 @@ Meteor.methods({
       const { timezone } = user.personalData;
       const dayTimezone = moment(currentDay.createdAt).tz(timezone).format('DD/MM/YYYY');
       const currentUsersDayFormat = moment.tz(timezone).format('DD/MM/YYYY');
-      console.log(dayTimezone);
-      console.log(currentUsersDayFormat);
       if (dayTimezone === currentUsersDayFormat) {
         Days.update({
           _id: dayId,

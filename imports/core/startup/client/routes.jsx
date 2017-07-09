@@ -8,6 +8,8 @@ import { Today } from '/imports/today';
 import { Profile } from '/imports/profile';
 import { Landing } from '/imports/langing';
 import { Onboard } from '/imports/onboard';
+import { MyDay } from '/imports/myday';
+import { Chats } from '/imports/chats';
 // Placeholder (used by robot)
 
 const authenticate = (nextState, replace) => {
@@ -27,6 +29,8 @@ export const AppRouter = () => (
       <Route path="/history" component={History} />
 			<Route path="/goals" component={Goals} />
 			<Route path="/profile" component={Profile} />
+			<Route path="/my-day" component={MyDay} />
+			<Route path="/chats" component={Chats} />
 			{/* Placeholder (used by robot) */}
     </Route>
     <Route component={EmptyLayout}>

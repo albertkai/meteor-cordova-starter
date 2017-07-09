@@ -22,3 +22,6 @@ export { SignUp } from './ui/pages/SignUp.jsx';
 export { ContentEditable } from './ui/particles/ContentEditable.jsx';
 
 export { Tasks } from './api/models/tasks/tasks.js';
+export { MobileMenu } from './ui/components/MobileMenu.jsx';
+
+export { Groups } from './api/models/groups/groups.js';

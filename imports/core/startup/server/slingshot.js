@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Slingshot } from 'meteor/edgee:slingshot';
+import { Random } from 'meteor/random';
 import _ from 'underscore';
 
 Slingshot.createDirective('imageUploads', Slingshot.S3Storage, {
@@ -21,9 +22,8 @@ Slingshot.createDirective('imageUploads', Slingshot.S3Storage, {
     return true;
   },
   key(file) {
-    const filenameSplit = file.name.split('.');
-    const ext = _.last(filenameSplit);
-    const fileName = _.initial(filenameSplit).join('').replace(/[|&;$%@"<>()+,\s]/g, '');
+    const ext = _.last(file.name.split('.'));
+    const fileName = Random.id();
     return `images/${fileName}.${ext}`;
   },
 });

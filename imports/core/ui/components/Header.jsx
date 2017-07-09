@@ -7,6 +7,8 @@ import { coreActions } from '/imports/core';
 const locationsMap = {
   '/today': 'Сегодня',
   '/history': 'История',
+  '/chats': 'Чаты',
+  '/my-day': 'Мой распорядок',
   '/goals': 'Цели',
   '/profile': 'Профиль',
 }
@@ -24,6 +26,12 @@ export class HeaderComponent extends PureComponent {
           onClick={toggleMenu}
         >
           <i className="fa fa-bars" />
+        </button>
+        <button
+          className="toggle-notifications"
+          onClick={toggleMenu}
+        >
+          <i className="fa fa-volume-down" />
         </button>
         <div className="logo">
           betterme

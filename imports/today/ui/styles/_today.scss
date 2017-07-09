@@ -1,7 +1,25 @@
 #today {
   header {
+    padding: $base-padding;
+    padding-bottom: 0;
+    border-bottom: 1px solid $gray-lighter;
     h2 {
+      @include flexbox;
+      font-weight: normal;
+      > span {
+        &:nth-child(2) {
+          @include flex-grow(1);
+          text-align: right;
+        }
+      }
       margin-top: 0;
+      @media screen and (max-width: $screen-sm) {
+        font-size: 14px;
+      }
     }
+  }
+  .content {
+    padding: $base-padding;
+    padding-top: 0;
   }
 }

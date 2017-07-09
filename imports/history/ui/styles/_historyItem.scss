@@ -10,6 +10,9 @@
       width: 50%;
       margin: 0;
       font-size: 24px;
+      @media screen and (max-width: $screen-sm) {
+        font-size: 16px;
+      }
       span {
         color: $brand-primary;
       }
@@ -26,6 +29,12 @@
       margin: 0;
       font-size: 18px;
       margin-right: 20px;
+      @media screen and (max-width: $screen-sm) {
+        font-size: 14px;
+      }
+      span {
+        margin-right: 10px;
+      }
     }
     >div {
       padding-right: 10px;

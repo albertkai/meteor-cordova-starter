@@ -5,6 +5,7 @@ import Immutable from 'immutable';
 
 import {coreReducer} from './reducer.js';
 import { profileReducer } from '/imports/profile';
+import { chatsReducer } from '/imports/chats';
 // Placeholder import (used by robot)
 
 const middleware = [thunk];
@@ -46,6 +47,7 @@ const store = createStore(
   combineReducers({
     core: coreReducer,
     profile: profileReducer,
+chats: chatsReducer,
 // Placeholder (used by robot)
   }),
   enhancer,

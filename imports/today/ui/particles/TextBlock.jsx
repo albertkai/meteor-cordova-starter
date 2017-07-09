@@ -39,21 +39,30 @@ export class TextBlockComponent extends PureComponent {
       return (
         <div className="block-item text">
           <div>
-            <Checkbox
-              onChange={this.checkTextBlock}
-              checked={block.passed}
-              enableOnly
-            />
+            <div>
+              <Checkbox
+                onChange={this.checkTextBlock}
+                checked={block.passed}
+                enableOnly
+              />
+            </div>
+            <div>
+              <h3>День {block.options.day}. Задание</h3>
+              <p>Прочтите, обдумайте написанное, а главное - выполните действие <br/> и запишите ваши мысли</p>
+            </div>
           </div>
           <div>
-            <h3>День {block.options.day}. Задание</h3>
-            <div className="desc task-text" dangerouslySetInnerHTML={{ __html: block.options.html }} />
-            {
-              block.data && block.data.text ?
-                <div>
-                  <p className="answer">{block.data.text}</p>
-                </div> :
-                <div>
+            <div>
+              <div className="checkbox" />
+            </div>
+            <div>
+              <div className="desc task-text" dangerouslySetInnerHTML={{ __html: block.options.html }} />
+              {
+                block.data && block.data.text ?
+                  <div>
+                    <p className="answer">{block.data.text}</p>
+                  </div> :
+                  <div>
                 <textarea
                   ref={ref => this.textInput = ref}
                   cols="30"
@@ -61,14 +70,15 @@ export class TextBlockComponent extends PureComponent {
                   onChange={this.onChange}
                   placeholder="Напишите ответ, а затем отметьте задание как выполненное"
                 />
-                  <p className="symbols-left">
-                    {this.state.left > 0 ?
-                      <span>Еще минимум {this.state.left} символов</span> :
-                      <span>Длина сообщения достаточна</span>
-                    }
-                  </p>
-                </div>
-            }
+                    <p className="symbols-left">
+                      {this.state.left > 0 ?
+                        <span>Еще минимум {this.state.left} символов</span> :
+                        <span>Длина сообщения достаточна</span>
+                      }
+                    </p>
+                  </div>
+              }
+            </div>
           </div>
         </div>
       );

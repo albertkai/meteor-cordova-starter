@@ -3,6 +3,10 @@ import { Accounts } from 'meteor/accounts-base';
 import { HTTP } from 'meteor/http';
 import _ from 'underscore';
 
+import { Groups } from '../../api/models/groups/groups';
+
+const GROUP_MAX = 20;
+
 Accounts.onCreateUser(function(options, user) {
   const background = `samples/${_.random(1, 3)}.jpg`;
   if (user.services.facebook) {
@@ -104,6 +108,22 @@ Accounts.onCreateUser(function(options, user) {
     amount: 500,
     toPay: 0,
     items: [],
+  };
+  let groupId = '';
+  const lastGroup = Groups.findOne({}, { sort: { createdAt: -1 } });
+  if (lastGroup && lastGroup.people < GROUP_MAX) {
+    if (lastGroup.people < GROUP_MAX) {
+      groupId = lastGroup._id;
+      Groups.update(groupId, { $inc: { people: 1 } });
+    }
+  } else {
+    groupId = Groups.insert({
+      createdAt: Date.now(),
+      people: 1,
+    });
+  }
+  user.serviceData = {
+    groupId,
   };
   return user;
 });

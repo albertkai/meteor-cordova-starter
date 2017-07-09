@@ -13,7 +13,7 @@ class HomeComponent extends PureComponent {
       incrementClickCount,
     } = this.props;
     return (
-      <div id="home">
+      <div id="home" className="page">
         <div className="container">
           <h2>Hello world</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis cupiditate deleniti fuga, iusto neque nesciunt placeat, provident quidem rerum soluta sunt voluptatum! Alias consequuntur deserunt dicta dolorem dolorum, ducimus explicabo harum, impedit inventore labore laboriosam natus nemo neque nihil nulla obcaecati officiis perspiciatis quibusdam reiciendis repudiandae sapiente sed ullam veritatis.</p>

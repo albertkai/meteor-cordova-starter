@@ -20,10 +20,24 @@ body {
     margin-top: 15px;
     margin-bottom: 15px;
     padding: $base-padding;
+    &.no-padding {
+      padding: 0;
+    }
     @media screen and (max-width: $screen-sm) {
       margin: 10px !important;
     }
   }
+}
+
+.scroll-wrap {
+  @include flexbox;
+  @include flex-direction(column);
+}
+
+.scrollable {
+  @include flex-grow(1);
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 %mobile-menu {
@@ -32,6 +46,12 @@ body {
   top: 0;
   left: 0;
   width: 70vw;
+}
+
+.page {
+  height: 100%;
+  @include flex-grow(1);
+  @include flexbox;
 }
 
 .root {
@@ -157,6 +177,8 @@ body {
     }
     .content {
       @include flex-grow(1);
+      @include flexbox;
+      @include flex-direction(column);
       overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
     }

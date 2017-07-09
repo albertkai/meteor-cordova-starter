@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { createContainer } from 'meteor/react-meteor-data';
 import { browserHistory } from 'react-router';
 
-import { SideMenu, Header, FeeModal, Loading } from '/imports/core';
+import { SideMenu, Header, FeeModal, MobileMenu, Loading } from '/imports/core';
 import * as actions from '../../api/redux/actions';
 
 export class MainLayoutComponent extends PureComponent {
@@ -69,6 +69,7 @@ export class MainLayoutComponent extends PureComponent {
                 <div className="content">
                   {React.cloneElement(children, this.props)}
                 </div>
+                <MobileMenu />
                 <button
                   className="close-overlay"
                   onClick={toggleMenu}

@@ -9,8 +9,8 @@ export class HistoryComponent extends PureComponent {
   render() {
     const { days, daysReady } = this.props;
     return (
-      <div id="history">
-        <div className="container paper">
+      <div id="history" className="page">
+        <div className="container paper scrollable">
           {
             daysReady ?
               days.map(d => <HistoryItem key={d._id} day={d} />) :

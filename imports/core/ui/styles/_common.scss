@@ -15,18 +15,72 @@
 }
 
 .avatar {
+  position: relative;
   -webkit-background-size: cover;
   background-size: cover;
   background-position: center center;
   border-radius: 50%;
   width: 50px;
   height: 50px;
+  &:hover {
+    .ovrl {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  .ovrl {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    background: rgba($brand-primary, .8);
+    text-align: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    @include transition(.4s);
+    label {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      cursor: pointer;
+      line-height: 22px;
+      font-size: 22px;
+      &:hover {
+        color: $brand-primary;
+      }
+      input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        z-index: 2;
+      }
+    }
+    i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include transform(translate(-50%, -50%));
+      color: white;
+      font-size: 32px;
+    }
+  }
 }
 
 .tabs-heading {
   margin: 0;
   padding: 0;
   list-style: none;
+  @media screen and (max-width: $screen-sm) {
+    text-align: center;
+  }
   li {
     position: relative;
     display: inline-block;
@@ -62,6 +116,9 @@
 .block-item {
   border-top: 1px solid $gray-lighter;
   padding: 20px 0;
+  &:first-child {
+    border-top: none;
+  }
   @include flexbox;
   &.water {
     h3 {
@@ -99,10 +156,40 @@
     }
   }
   &.text {
+    @include flex-direction(column);
     .task-text {
       font-size: 20px;
       margin-bottom: 10px;
       color: $base-text-color;
+      margin-top: -25px;
+      @media screen and (max-width: $screen-sm) {
+        margin-top: 0;
+      }
+    }
+    > div {
+      @include flexbox;
+      > div {
+        &:nth-child(1) {
+          padding-right: 20px;
+        }
+        &:nth-child(2) {
+          @include flex-grow(1);
+        }
+      }
+      &:nth-child(2) {
+        .checkbox {
+          opacity: 0;
+          visibility: hidden;
+        }
+        @media screen and (max-width: $screen-sm) {
+          > div:nth-child(1) {
+            padding-right: 0;
+          }
+          .checkbox {
+            display: none;
+          }
+        }
+      }
     }
   }
   textarea {
@@ -112,37 +199,69 @@
       font-size: 14px;
     }
   }
-  .tasks {
-    .task {
+  &.tasks-block {
+    @include flex-direction(column);
+    > div {
       @include flexbox;
-      margin-top: 10px;
       > div {
         &:nth-child(1) {
-          @extend %no-flex;
-          margin-right: 7px;
+          padding-right: 20px;
         }
         &:nth-child(2) {
           @include flex-grow(1);
-          @extend %center-content;
         }
       }
-      .checkbox {
-        width: 33px;
-        height: 33px;
-        padding: 0;
-        i {
-          font-size: 18px;
+      &:nth-child(2) {
+        > div:nth-child(1) {
+          .checkbox {
+            opacity: 0;
+            visibility: hidden;
+          }
+          @media screen and (max-width: $screen-sm) {
+            padding-right: 10px;
+            .checkbox {
+              display: none;
+            }
+          }
         }
       }
-      h4 {
+    }
+    .tasks {
+      margin-top: -35px;
+      @media screen and (max-width: $screen-sm) {
         margin-top: 0;
-        margin-bottom: 0;
-        font-size: 16px;
       }
-      &.add {
+      .task {
+        @include flexbox;
+        margin-top: 10px;
         > div {
-          h4 {
-            color: $green;
+          &:nth-child(1) {
+            @extend %no-flex;
+            margin-right: 7px;
+          }
+          &:nth-child(2) {
+            @include flex-grow(1);
+            @extend %center-content;
+          }
+        }
+        .checkbox {
+          width: 33px;
+          height: 33px;
+          padding: 0;
+          i {
+            font-size: 18px;
+          }
+        }
+        h4 {
+          margin-top: 0;
+          margin-bottom: 0;
+          font-size: 16px;
+        }
+        &.add {
+          > div {
+            h4 {
+              color: $green;
+            }
           }
         }
       }

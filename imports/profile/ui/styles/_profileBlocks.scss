@@ -1,6 +1,12 @@
 #profile-blocks {
+  @include flexbox;
+  @include flex-direction(column);
+  margin: 0 auto;
   .container {
     min-height: 500px;
+    @include flexbox;
+    @include flex-direction(column);
+    @include flex-grow(1);
     > h3 {
       font-size: 34px;
       @media screen and (max-width: $screen-sm) {
@@ -9,35 +15,75 @@
     }
   }
   .main-info {
+    @include flexbox;
+    padding: $base-padding;
+    padding-top: $base-padding / 2;
+    border-bottom: 1px solid $gray-lighter;
     .item {
       @include flexbox;
+      @media screen and (max-width: $screen-sm) {
+        &:nth-child(1) {
+          width: 70%;
+        }
+        &:nth-child(2) {
+          width: 30%;
+        }
+        @include flex-direction(column);
+        @include flex-grow(0);
+        @include flex-shrink(0);
+      }
       h5, p {
         font-size: 18px;
         margin-top: 10px;
         margin-bottom: 10px;
         @media screen and (max-width: $screen-sm) {
-          font-size: 12px;
+          font-size: 10px;
         }
       }
       > div {
         &:nth-child(1) {
           width: 200px;
           @media screen and (max-width: $screen-sm) {
-            width: 100px;
+            position: relative;
             @include flex-grow(0);
             @include flex-shrink(0);
+            width: 100%;
           }
         }
         @media screen and (max-width: $screen-sm) {
           select {
-            width: 100px;
+            width: 60%;
             font-size: 12px;
           }
           input {
             font-size: 14px;
+            @media screen and (max-width: $screen-sm) {
+              border-radius: 0;
+              width: 70% !important;
+            }
           }
         }
       }
+    }
+  }
+  .blocks {
+    position: relative;
+    @include flex-grow(1);
+    height: 100%;
+    .block-item {
+      padding: $base-padding;
+    }
+    .block-item:first-child {
+      border-top: none;
+    }
+    .blocks-cont {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
   }
   #fee {
