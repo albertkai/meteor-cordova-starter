@@ -6,6 +6,10 @@ export class HistoryDesc extends PureComponent {
     this.props.onboardNextStep();
   };
 
+  back = () => {
+    this.props.onboardBack();
+  };
+
   render() {
     return (
       <div id="history-desc" className="onboard-card">
@@ -13,6 +17,12 @@ export class HistoryDesc extends PureComponent {
         <p>Ты всегда сможешь вернуться, чтобы проследить свой прогресс</p>
         <p>Обманывать и жульничать нет смысла, так как ты обманываешь самого себя!</p>
         <div className="footer">
+          <button
+            className="back"
+            onClick={this.back}
+          >
+            <i className="fa fa-arrow-left" />
+          </button>
           <button onClick={this.next}>Вперед!</button>
         </div>
       </div>

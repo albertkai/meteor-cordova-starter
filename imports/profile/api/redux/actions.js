@@ -52,6 +52,11 @@ const notifyFeeChange = (err, res) => {
   }
 };
 
+export const toggleTab = tab => ({
+  type: c.TOGGLE_TAB,
+  tab,
+});
+
 // Placeholder (used by robot)
 
 // Side effect actions

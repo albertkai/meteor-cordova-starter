@@ -93,7 +93,7 @@ export class TodayComponent extends PureComponent {
       const limit = moment(createdAt).add('days', 1).set('hour', 5).set('minute', 0);
       console.log(limit);
       this.interval = Meteor.setInterval(() => {
-        const timeLeft = moment.utc(moment().diff(limit, 'milliseconds')).format("HH:mm:ss");
+        const timeLeft = moment.utc(limit.diff(moment(), 'milliseconds')).format('HH:mm:ss');
         this.setState({ timeLeft });
       }, 1000);
     }

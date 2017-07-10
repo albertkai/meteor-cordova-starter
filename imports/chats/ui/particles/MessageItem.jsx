@@ -1,4 +1,7 @@
 import React, { PureComponent } from 'react';
+import moment from 'moment';
+
+import { Avatar } from '/imports/core';
 
 export class MessageItem extends PureComponent {
   render() {
@@ -7,6 +10,11 @@ export class MessageItem extends PureComponent {
         author,
         content,
         createdAt,
+        userData: {
+          avatar,
+          firstName,
+          lastName,
+        }
       },
       user: {
         _id,
@@ -16,13 +24,9 @@ export class MessageItem extends PureComponent {
     return (
       <div id="message-item">
         <div className={`message new ${isPersonal ? 'message-personal' : ''}`}>
-          {!isPersonal && <figure className="avatar">]
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg"
-            />
-          </figure>}
+          {!isPersonal && <Avatar avatar={avatar} />}
           {content}
-          <div className="timestamp">{createdAt}</div>
+          <div className="timestamp">{moment(createdAt).format('DD/MM/YYYY HH:mm:ss')}</div>
         </div>
       </div>
     );

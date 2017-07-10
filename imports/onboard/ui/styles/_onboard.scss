@@ -94,6 +94,16 @@
         width: 200px;
         font-size: 22px;
       }
+      .back {
+        position: absolute;
+        left: 0;
+        width: 70px;
+        border: 0;
+        &:hover {
+          background-color: transparent;
+          color: darken($brand-primary, 20%);
+        }
+      }
     }
   }
 }

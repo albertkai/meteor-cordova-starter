@@ -6,6 +6,10 @@ export class Taxes extends PureComponent {
     this.props.onboardNextStep();
   };
 
+  back = () => {
+    this.props.onboardBack();
+  };
+
   render() {
     return (
       <div id="taxes">
@@ -14,6 +18,12 @@ export class Taxes extends PureComponent {
         <p>В конце каждого календарного месяца, мы берем всю накопленную сумму штрафов (за вычетом операционных расходов), и перечисляем их на благотворительность</p>
         <p>Каждый месяц мы выкладываем подробные отчеты, о том как и куда были потрачены деньги</p>
         <div className="footer">
+          <button
+            className="back"
+            onClick={this.back}
+          >
+            <i className="fa fa-arrow-left" />
+          </button>
           <button onClick={this.next}>Вперед!</button>
         </div>
       </div>

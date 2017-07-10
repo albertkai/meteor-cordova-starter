@@ -42,4 +42,15 @@ Meteor.methods({
     }
     Meteor.users.update(this.userId, query);
   },
+
+  'onboard.onboardBack'() {
+    console.log('yoo');
+    const user = Meteor.users.findOne(this.userId);
+    const { step } = user.onboard;
+    const query = { $set: {} };
+    if (step !== 'intro') {
+      query.$set['onboard.step'] = steps[steps.indexOf(step) - 1];
+    }
+    Meteor.users.update(this.userId, query);
+  },
 });

@@ -154,19 +154,19 @@ export class ProfileBlocksComponent extends PureComponent {
                   <h3>Зарядка</h3>
                   <div>
                     <p>Ежедневный комплекс упражнений минимум 10 минут на растяжку и укрепление мышц. Поддерживает вас в форме, и дает энергии. Ведь вы не получите энергии для реализации целей если ваше тело слабо</p>
-                    <div className="settings">
-                      <label htmlFor="">Комплекс:</label>
-                      <select
-                        onChange={this.setSport}
-                        value={getValue(blocks.sport, 'type')}
-                      >
-                        <option value="1">Легкая разминка</option>
-                        <option value="2">Растяжка</option>
-                        <option value="3">Комплекс спартанца</option>
-                        <option value="4">Базовая йога</option>
-                        <option value="5">Цигун</option>
-                      </select>
-                    </div>
+                    {/*<div className="settings">*/}
+                      {/*<label htmlFor="">Комплекс:</label>*/}
+                      {/*<select*/}
+                        {/*onChange={this.setSport}*/}
+                        {/*value={getValue(blocks.sport, 'type')}*/}
+                      {/*>*/}
+                        {/*<option value="1">Легкая разминка</option>*/}
+                        {/*<option value="2">Растяжка</option>*/}
+                        {/*<option value="3">Комплекс спартанца</option>*/}
+                        {/*<option value="4">Базовая йога</option>*/}
+                        {/*<option value="5">Цигун</option>*/}
+                      {/*</select>*/}
+                    {/*</div>*/}
                   </div>
                 </div>
               </div>
@@ -181,35 +181,35 @@ export class ProfileBlocksComponent extends PureComponent {
                   <h3>Медитация</h3>
                   <div>
                     <p>Гармонизирует дух, и снимает зажимы. Медитация - это необходимая практика, это как тренировка нашего мозга. Даже во сне мы не получаем такого расслабления. Даже 10 минут медитации в день сделают вас более собранным и спокойным</p>
-                    <label htmlFor="">Время:</label>
-                    <select
-                      onChange={this.setMeditationTime}
-                      value={getValue(blocks.meditation, 'time')}
-                    >
-                      <option value="10">10 минут</option>
-                      <option value="15">15 минут</option>
-                      <option value="20">20 минут</option>
-                      <option value="30">30 минут</option>
-                      <option value="45">45 Минут</option>
-                      <option value="60">60 Минут</option>
-                    </select>
-                    <label htmlFor="">Голос:</label>
-                    <select
-                      onChange={this.setMeditationVoice}
-                      value={getValue(blocks.meditation, 'voice')}
-                    >
-                      <option value="male">Альберт</option>
-                      <option value="female">Галя</option>
-                    </select>
-                    <label htmlFor="">Фон:</label>
-                    <select
-                      onChange={this.setMeditationBackground}
-                      value={getValue(blocks.meditation, 'background')}
-                    >
-                      <option value="none">Без фона</option>
-                      <option value="ocean">Океан</option>
-                      <option value="forest">Лес</option>
-                    </select>
+                    {/*<label htmlFor="">Время:</label>*/}
+                    {/*<select*/}
+                      {/*onChange={this.setMeditationTime}*/}
+                      {/*value={getValue(blocks.meditation, 'time')}*/}
+                    {/*>*/}
+                      {/*<option value="10">10 минут</option>*/}
+                      {/*<option value="15">15 минут</option>*/}
+                      {/*<option value="20">20 минут</option>*/}
+                      {/*<option value="30">30 минут</option>*/}
+                      {/*<option value="45">45 Минут</option>*/}
+                      {/*<option value="60">60 Минут</option>*/}
+                    {/*</select>*/}
+                    {/*<label htmlFor="">Голос:</label>*/}
+                    {/*<select*/}
+                      {/*onChange={this.setMeditationVoice}*/}
+                      {/*value={getValue(blocks.meditation, 'voice')}*/}
+                    {/*>*/}
+                      {/*<option value="male">Альберт</option>*/}
+                      {/*<option value="female">Галя</option>*/}
+                    {/*</select>*/}
+                    {/*<label htmlFor="">Фон:</label>*/}
+                    {/*<select*/}
+                      {/*onChange={this.setMeditationBackground}*/}
+                      {/*value={getValue(blocks.meditation, 'background')}*/}
+                    {/*>*/}
+                      {/*<option value="none">Без фона</option>*/}
+                      {/*<option value="ocean">Океан</option>*/}
+                      {/*<option value="forest">Лес</option>*/}
+                    {/*</select>*/}
                   </div>
                 </div>
               </div>
@@ -291,7 +291,7 @@ export class ProfileBlocksComponent extends PureComponent {
                   </div>
                 </div>
               </div>
-              <div className="block-item">
+              <div className="block-item add">
                 <div>
                   <button className="checkbox add">
                     <i className="fa fa-plus" />

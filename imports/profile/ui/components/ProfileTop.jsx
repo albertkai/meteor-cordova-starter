@@ -6,6 +6,21 @@ import { Avatar, coreConstants } from '/imports/core';
 import { profileActions } from  '/imports/profile';
 
 export class ProfileTopComponent extends PureComponent {
+
+  _renderLink(type, name, active) {
+    const { toggleChatType } = this.props;
+    const activeClass = active === type ? 'active' : '';
+    const onClick = (e) => {
+      e.preventDefault();
+      toggleChatType(type);
+    };
+    return (
+      <li className={activeClass}>
+        <a onClick={onClick}>{name}</a>
+      </li>
+    );
+  }
+
   render() {
     const {
       user: {
@@ -43,7 +58,7 @@ export class ProfileTopComponent extends PureComponent {
         <div className="tabs-heading-cont">
           <div className="container">
             <ul className="tabs-heading">
-              <li className="active"><a href="">Основное</a></li>
+              <li className="active"><a href="">Информация</a></li>
               <li><a href="">Приватность</a></li>
               <li><a href="">Оповещения</a></li>
             </ul>

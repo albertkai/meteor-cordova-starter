@@ -10,12 +10,15 @@ const initialState = fromJS({
     voice: 'female',
     background: 'none',
   },
+  openedTab: 'info',
 });
 
 export function profileReducer(state = initialState, action) {
   switch (action.type) {
     case c.SET_BLOCK_OPTION:
 			return state.setIn(action.path, action.value);
+		case c.TOGGLE_TAB:
+			return state.set('openedTab', action.tab);
 		// Placeholder (used by robot)
     default:
       return state;

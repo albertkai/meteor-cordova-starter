@@ -9,7 +9,9 @@ export class Profile extends PureComponent {
       <div id="profile">
         <ProfileTop {...this.props} />
         <div className="content">
-          <p>Whaaa?</p>
+          <div className="container paper">
+            <p>Что делать здесь? Нужны ваши идеи! Возможно отслеживать прогресс, или что-то вроде колеса жизни. Можно тупо информацию о пользователе</p>
+          </div>
         </div>
       </div>
     );

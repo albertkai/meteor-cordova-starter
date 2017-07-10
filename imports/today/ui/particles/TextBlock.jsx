@@ -78,6 +78,11 @@ export class TextBlockComponent extends PureComponent {
                     </p>
                   </div>
               }
+              <button
+                className="send"
+                onClick={this.checkTextBlock}
+              >
+                Отправить!</button>
             </div>
           </div>
         </div>
@@ -114,6 +119,12 @@ export class TextBlockComponent extends PureComponent {
                     <span>Длина сообщения достаточна</span>
                   }
                 </p>
+                <button
+                  className="send"
+                  onClick={this.checkTextBlock}
+                >
+                  Отправить!
+                </button>
               </div>
           }
         </div>

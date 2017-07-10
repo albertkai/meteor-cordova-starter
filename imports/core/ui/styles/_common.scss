@@ -120,11 +120,33 @@
     border-top: none;
   }
   @include flexbox;
+  label {
+    margin-right: 10px;
+  }
+  .settings {
+    margin-top: 10px;
+  }
   &.water {
     h3 {
       span {
         color: $water-color;
       }
+    }
+  }
+  &.add {
+    margin-bottom: 20px;
+    h3 {
+      color: $green;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    >div:nth-child(1) {
+      margin-bottom: 0;
+    }
+    >div:nth-child(2) {
+      @include flexbox;
+      @include flex-direction(column);
+      @include justify-content(center);
     }
   }
   h3 {
@@ -150,6 +172,10 @@
       //@extend %center-content;
     &:nth-child(1) {
       padding-right: 20px;
+      margin-bottom: 20px;
+      @media screen and (max-width: $screen-sm) {
+        margin-bottom: 35px;
+      }
     }
     &:nth-child(2) {
       @include flex-grow(1);
@@ -259,8 +285,11 @@
         }
         &.add {
           > div {
-            h4 {
+            h3 {
               color: $green;
+            }
+            &:nth-child(2) {
+              @include justify-content();
             }
           }
         }

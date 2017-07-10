@@ -45,8 +45,8 @@ export class EditableBlockComponent extends PureComponent {
         {task && <p className="task" dangerouslySetInnerHTML={{ __html: task }} />}
         {desc && <p className="desc">{desc}</p>}
         {
-          isEditing && data ?
-            <textarea defaultValue={data.text} onChange={this.onChange} /> :
+          isEditing ?
+            <textarea defaultValue={data ? data.text : ''} onChange={this.onChange} /> :
             <p className="text">{data ? data.text || 'Нажмите "редактировать", чтобы добавить текст' : 'Нажмите "редактировать", чтобы добавить текст'}</p>
         }
         {
