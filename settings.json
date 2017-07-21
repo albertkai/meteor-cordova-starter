@@ -26,20 +26,23 @@
   },
   "public": {
     "oneSignal": {
-      "appId": "ee40a17b-50aa-496f-b552-3b778407f958",
-      "restApiKey": "M2UwNWUyZTgtZjY1MC00ZjA2LWJhNzItNTExYThlMmJmMWNh",
-      "subdomain": "lingua",
+      "appId": "8e7e502e-90e9-4d7d-ab5d-419448da3ac8",
+      "restApiKey": "NmQxZTc1ZGEtYWEyOS00ZGI1LThiNzMtZTg5NDE2M2Y2YmU1",
+      "subdomain": "betterme",
       "welcomeNotification": {
-        "title": "Hello from Easylingua",
-        "message": "You just received your first successful notification."
+        "title": "Hello from Better.me",
+        "message": "Lets get everything better!"
       }
     },
     "facebook": {
       "permissions": [
         "public_profile",
-        "email",
-        "user_birthday",
-        "user_location"
+        "email"
+      ],
+      "profileFields": [
+        "name",
+        "gender",
+        "location"
       ]
     }
   }

@@ -34,11 +34,17 @@ export class ProfileTopComponent extends PureComponent {
       uploadAvatar,
       uploadBackground,
     } = this.props;
+    let backgroundUrl;
+    if (background.match(/samples/g)) {
+      backgroundUrl = `${coreConstants.CLOUDFRONT_URL}${background}`;
+    } else {
+      backgroundUrl = `${coreConstants.CLOUDFRONT_URL}images/${background}`;
+    }
     return (
       <div id="profile-top">
         <div
           className="profile-bg"
-          style={{ backgroundImage: `url(${coreConstants.CLOUDFRONT_URL}images/${background})` }}
+          style={{ backgroundImage: `url(${backgroundUrl})` }}
         >
           <div className="container">
             <Avatar

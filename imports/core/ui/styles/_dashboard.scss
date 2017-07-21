@@ -24,7 +24,8 @@ body {
       padding: 0;
     }
     @media screen and (max-width: $screen-sm) {
-      margin: 10px !important;
+      margin: 0 !important;
+      border-radius: 0;
     }
   }
 }

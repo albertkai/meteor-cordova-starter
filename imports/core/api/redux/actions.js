@@ -8,7 +8,24 @@ export const incrementClickCount = () => ({
   type: c.INCREMENT_CLICK_COUNT,
 });
 
+export const toggleMenu = () => ({
+  type: c.TOGGLE_MENU,
+});
+
+export const closeMenu = () => ({
+  type: c.CLOSE_MENU,
+});
+
 // Actions with side effect
+export const checkNotificationId = user => () => {
+  if (user) {
+    window.plugins.OneSignal.getIds((ids) => {
+      const { userId } = ids;
+      Meteor.call('users.updateNotificationsId', userId);
+    });
+  }
+};
+
 export const loginWithFacebook = () => () => {
   Meteor.loginWithFacebook({}, () => {
     browserHistory.push('/');
@@ -32,11 +49,3 @@ export const logOut = () => () => {
     browserHistory.push('/login');
   });
 };
-
-export const toggleMenu = () => ({
-  type: c.TOGGLE_MENU,
-});
-
-export const closeMenu = () => ({
-  type: c.CLOSE_MENU,
-});

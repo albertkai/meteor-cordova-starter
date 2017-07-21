@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -10,7 +11,14 @@ import * as actions from '../../api/redux/actions';
 export class MainLayoutComponent extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
-    const { location: { pathname } } = this.props;
+    const {
+      location: {
+        pathname,
+      },
+      user,
+      userReady,
+      checkNotificationId,
+    } = this.props;
     const {
       user: newUser,
       userReady: newUserReady,
@@ -27,6 +35,9 @@ export class MainLayoutComponent extends PureComponent {
         }
       }
     }
+    if (Meteor.isCordova && newUser && newUserReady && !userReady) {
+      checkNotificationId(newUser);
+    }
   }
 
   componentDidMount(prevProps) {
@@ -34,6 +45,7 @@ export class MainLayoutComponent extends PureComponent {
     const {
       user,
       userReady,
+      checkNotificationId,
     } = this.props;
     if (user && user.onboard) {
       if (!user.onboard.isFinished) {
@@ -46,6 +58,7 @@ export class MainLayoutComponent extends PureComponent {
         }
       }
     }
+    if (Meteor.isCordova) checkNotificationId(user);
   }
 
   render() {

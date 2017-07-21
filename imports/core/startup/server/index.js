@@ -17,5 +17,6 @@ import '../../api/models/tasks/tasks_pubs.js';
 import '../../api/models/tasks/tasks_fixture.js';
 
 import '/imports/chats/startup/server/index.js';
+import '/imports/notifications/startup/server/index.js';
 import '../../api/models/groups/groups_methods.js';
 import '../../api/models/groups/groups_pubs.js';

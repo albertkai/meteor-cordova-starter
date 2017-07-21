@@ -114,22 +114,28 @@ SyncedCron.add({
 });
 
 SyncedCron.add({
-  name: 'Set daily fees',
+  name: 'Send scheduled notifications',
   schedule: function(parser) {
     return parser.text('every hour');
   },
   job: function() {
-    console.log('Yo');
-  },
-});
-
-SyncedCron.add({
-  name: 'Check wake up',
-  schedule: function(parser) {
-    return parser.text('every 10 minutes');
-  },
-  job: function() {
-    console.log('Yo');
+    const { timezone } = u.personalData;
+    const currentUsersTime = moment.tz(timezone);
+    const currentHour = parseInt(currentUsersTime.format('HH'), 10);
+    // Water
+    if ([9, 12, 15, 18, 21].includes(currentHour)) {
+      Meteor.users.find({ 'blocks.water.enabled': true }).forEach(u => {
+        console.log('sending push notification');
+      });
+    }
+    if ([8, 14, 20].includes(currentHour)) {
+      Meteor.users.find().forEach(u => {
+        console.log('Send motivating notification');
+      });
+    }
+    // Days.find({ createdAt: moment().s }).forEach(d => {
+    //   console.log(d._id);
+    // });
   },
 });
 

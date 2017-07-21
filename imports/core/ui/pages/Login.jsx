@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -12,6 +13,10 @@ export class LoginComponent extends PureComponent {
     password: '',
     error: '',
   };
+
+  componentDidMount() {
+    console.log('dfg');
+  }
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -55,11 +60,15 @@ export class LoginComponent extends PureComponent {
         <div className="form-cont paper">
           <div className="logo">BETTER:ME<span>beta</span></div>
           <h5>Войдите через:</h5>
-          <div className="social-networks">
-            <button className="facebook" onClick={loginWithFacebook}><i className="fa fa-facebook" /></button>
-            <button className="twitter" onClick={loginWithTwitter}><i className="fa fa-twitter" /></button>
-            <button className="vk" onClick={loginWithVk}><i className="fa fa-vk" /></button>
-          </div>
+          {
+            Meteor.isCordova
+              ? <button onClick={loginWithFacebook}>Facebook</button>
+              : <div className="social-networks">
+                  <button className="facebook" onClick={loginWithFacebook}><i className="fa fa-facebook" /></button>
+                  <button className="twitter" onClick={loginWithTwitter}><i className="fa fa-twitter" /></button>
+                  <button className="vk" onClick={loginWithVk}><i className="fa fa-vk" /></button>
+              </div>
+          }
           <h5 className="divide">или</h5>
           <form action="" onSubmit={this.onSubmit}>
             <input

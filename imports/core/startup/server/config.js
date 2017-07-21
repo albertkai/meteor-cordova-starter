@@ -8,15 +8,15 @@ Meteor.startup(() => {
   process.env.MAIL_URL = `smtp://${Meteor.settings.smtp.username}:${Meteor.settings.smtp.password}@${Meteor.settings.smtp.host}`;
 });
 
-ServiceConfiguration.configurations.remove({
-  service: 'facebook',
-});
-
-ServiceConfiguration.configurations.insert({
-  service: 'facebook',
-  appId: Meteor.settings.facebook.appId,
-  secret: Meteor.settings.facebook.secret,
-});
+// ServiceConfiguration.configurations.remove({
+//   service: 'facebook',
+// });
+//
+// ServiceConfiguration.configurations.insert({
+//   service: 'facebook',
+//   appId: Meteor.settings.facebook.appId,
+//   secret: Meteor.settings.facebook.secret,
+// });
 
 ServiceConfiguration.configurations.remove({
   service: 'vk',

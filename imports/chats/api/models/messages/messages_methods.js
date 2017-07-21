@@ -25,4 +25,8 @@ Meteor.methods({
       createdAt: Date.now(),
     });
   },
+
+  'messages.clean'() {
+    Messages.remove({});
+  },
 });

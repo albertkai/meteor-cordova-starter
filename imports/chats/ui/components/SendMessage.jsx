@@ -24,7 +24,7 @@ export class SendMessageComponent extends PureComponent {
     } = this.props;
     const content = this.input.value;
     let thread;
-    if (chatType === 'common' || chatType === 'insight') {
+    if (chatType === 'common' || chatType === 'insights') {
       thread = chatType;
     } else {
       thread = groupId;

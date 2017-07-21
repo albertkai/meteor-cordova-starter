@@ -68,7 +68,7 @@ const MessagesListContainer = createContainer(({
   },
 }) => {
   let thread;
-  if (chatType === 'common' || chatType === 'insight') {
+  if (chatType === 'common' || chatType === 'insights') {
     thread = chatType;
   } else {
     thread = groupId;

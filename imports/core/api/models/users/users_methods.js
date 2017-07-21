@@ -91,4 +91,17 @@ Meteor.methods({
       },
     });
   },
+
+  'users.sendNotif': function () {
+    console.log('Send notification');
+  },
+
+  'users.clear': function () {
+    Meteor.users.remove({});
+  },
+
+  'users.updateNotificationsId': function(userId) {
+    console.log('Updating notifications userId', userId);
+    Meteor.users.update(this.userId, { $set: { 'serviceData.notifications.oneSignalId': userId } });
+  },
 });
