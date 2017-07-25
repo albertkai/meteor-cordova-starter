@@ -1,6 +1,6 @@
 import { Notify } from '/imports/notifications';
 
-export const checkTextBlock = (dayId, blockName, text, min) => () => {
+export const checkTextBlock = (dayId, blockName, text, min) => (dispatch) => {
   if (text.length < min) {
     Notify.alert({
       title: 'Слишком короткий ответ',
@@ -8,19 +8,15 @@ export const checkTextBlock = (dayId, blockName, text, min) => () => {
       type: 'error',
     });
   } else {
-    Meteor.call('days.checkTextBlock', dayId, blockName, text, min, (err) => {
+    Meteor.call('days.checkTextBlock', dayId, blockName, text, min, (err, allFinished) => {
       if (err) {
         Notify.alert({
           title: 'Произошла ошибка',
           text: 'Пожалуйста напишите в службу поддержки',
           type: 'error',
         });
-      } else {
-        Notify.alert({
-          title: 'Ты молодец!',
-          text: 'Дневное задание выполнено!',
-          type: 'success',
-        });
+      } else if (allFinished) {
+        dispatch({ type: 'core/TOGGLE_DAY_SUCCESS_MODAL' });
       }
     });
   }
@@ -87,31 +83,27 @@ export const checkTask = (dayId, index) => () => {
         type: 'error',
       });
     } else {
-      if (passed) {
-        Notify.alert({
-          title: 'Супер! Все цели выполнены',
-          text: 'Такими маленькими, но верными шагами вы непременно придете к своим большим целям, причем быстрее чем вы думаете!',
-          type: 'success',
-        });
-      }
+      // if (passed) {
+      //   Notify.alert({
+      //     title: 'Супер! Все цели выполнены',
+      //     text: 'Такими маленькими, но верными шагами вы непременно придете к своим большим целям, причем быстрее чем вы думаете!',
+      //     type: 'success',
+      //   });
+      // }
     }
   });
 };
 
-export const checkSimpleBlock = (dayId, blockName) => () => {
-  Meteor.call('days.checkSimpleBlock', dayId, blockName, (err) => {
+export const checkSimpleBlock = (dayId, blockName) => (dispatch) => {
+  Meteor.call('days.checkSimpleBlock', dayId, blockName, (err, allFinished) => {
     if (err) {
       Notify.alert({
         title: 'Произошла ошибка',
         text: 'Пожалуйста напишите в службу поддержки',
         type: 'error',
       });
-    } else {
-      Notify.alert({
-        title: 'Супер!',
-        text: 'Вы стали еще немного ближе к своим целям!',
-        type: 'success',
-      });
+    } else if (allFinished) {
+      dispatch({ type: 'core/TOGGLE_DAY_SUCCESS_MODAL' });
     }
   });
 };

@@ -16,6 +16,7 @@ export class Checkbox extends PureComponent {
       disabled,
       isHalf,
       checked,
+      noAnimation,
     } = this.props;
     const icon = (() => {
       if (!status || checked) {
@@ -30,13 +31,16 @@ export class Checkbox extends PureComponent {
       return '';
     })();
     return (
-      <button
-        className={`checkbox ${status} ${disabled ? 'disabled' : ''} ${checked ? 'checked' : ''} ${isHalf ? 'half' : ''}`}
-        onClick={this.onChange}
-      >
-        <i className={`fa fa-${icon}`} />
-        {isHalf && <div className="half" />}
-      </button>
+      <div className="checkbox-cont">
+        {!noAnimation && <div className={`circle ${checked ? 'checked' : ''}`} />}
+        <button
+          className={`checkbox ${status} ${disabled ? 'disabled' : ''} ${checked ? 'checked' : ''} ${isHalf ? 'half' : ''}`}
+          onClick={this.onChange}
+        >
+          <i className={`fa fa-${icon}`} />
+          {isHalf && <div className="half" />}
+        </button>
+      </div>
     );
   }
 }

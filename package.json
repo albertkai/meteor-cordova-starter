@@ -4,7 +4,8 @@
   "scripts": {
     "start": "npm install && meteor run --settings settings.json",
     "deploy": "meteor deploy betterme.meteorapp.com --settings settings.json",
-    "device": "meteor run ios-device --settings settings.json"
+    "device": "meteor run ios-device --settings settings.json",
+    "sim": "meteor run ios --settings settings.json"
   },
   "dependencies": {
     "aws-sdk": "^2.70.0",

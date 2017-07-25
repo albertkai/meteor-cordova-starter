@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import moment from 'moment';
 
+import { RocketIcon } from '/imports/onboard';
+
 export class Intro extends PureComponent {
 
   next = () => {
@@ -15,6 +17,9 @@ export class Intro extends PureComponent {
     const { user } = this.props;
     return (
       <div id="intro" className="onboard-card">
+        <div className="icon">
+          <RocketIcon />
+        </div>
         <h3>Привет, {user && user.personalData && user.personalData.firstName}!</h3>
         <p>Мы знаем, что, кем бы ты ни был, каких бы успехов ни добился уже в своей жизни, перед какими бы проблемами ни стоял в настоящее время, тебя привело сюда страсное желание достичь еще больших результатов. Мы обещаем,что если ты станешь «играть по правилам» данного приложения, то будешь вознагражден сверх всяких ожиданий.</p>
         <p>Часто нам в жизни необходим кто-то, кто будет нас постоянно подпинывать, и напоминать, куда мы идем и зачем! И это приложение как раз готово в этом помочь!</p>

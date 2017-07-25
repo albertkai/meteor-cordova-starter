@@ -30,6 +30,7 @@ export class SendMessageComponent extends PureComponent {
       thread = groupId;
     }
     sendMessage(thread, content, 'text');
+    this.input.value = '';
   };
 
   render() {

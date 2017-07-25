@@ -29,7 +29,7 @@ const blocksMap = {
     properties: {
       type: 'video',
       name: 'Зарядка',
-      desc: 'Выполните комплекс упражнений в видео. После того, как вы просмотрите все видео без переключений - задание будет отмечено как выполненное.',
+      desc: '15 минутный комплекс',
     },
   },
   meditation: {
@@ -38,7 +38,7 @@ const blocksMap = {
     properties: {
       type: 'audio',
       name: 'Медитация',
-      desc: '10 минутная медитация. Рекомендуем выполняь как можно раньше. После того, как аудио будет полностью прослушано, задание будет отмечено как выполненное.',
+      desc: '10 минут',
     },
   },
   water: {
@@ -102,6 +102,7 @@ export class TodayComponent extends PureComponent {
   render() {
     const { today, todayReady } = this.props;
     if (todayReady && today) {
+      const itemWidth = window.innerWidth / today.blocks.length;
       return (
         <div id="today" className="page">
           <div className="container paper no-padding scroll-wrap">
@@ -110,6 +111,15 @@ export class TodayComponent extends PureComponent {
                 <span>Выполнено: <strong>{today.blocks.filter(b => b.passed).length}</strong> из <strong>{today.blocks.length}</strong></span>
                 <span>Осталось: <strong>{this.state.timeLeft}</strong></span>
               </h2>
+              <div className="status-stripe">
+                {today.blocks.filter(b => b.passed).map(b => (
+                  <span
+                      className={`${b.name} ${b.passed ? '_passed' : ''}`}
+                      style={{ width: `${itemWidth}px` }}
+                      key={`status-${b.name}`}
+                  />
+                ))}
+              </div>
             </header>
             <div className="content scrollable">
               {today.blocks
@@ -118,6 +128,7 @@ export class TodayComponent extends PureComponent {
                   const blockData = blocksMap[b.name];
                   const Dynamic = blockData.component;
                   return <Dynamic
+                    type={b.name}
                     day={today}
                     block={b}
                     key={`block-${b.name}`}

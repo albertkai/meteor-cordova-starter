@@ -15,7 +15,7 @@ export class LoginComponent extends PureComponent {
   };
 
   componentDidMount() {
-    console.log('dfg');
+    this.props.setStatusBar('default');
   }
 
   onSubmit = (e) => {
@@ -57,40 +57,60 @@ export class LoginComponent extends PureComponent {
     return (
       <div id="login" className="login-page">
         <div className="ovrl" />
-        <div className="form-cont paper">
-          <div className="logo">BETTER:ME<span>beta</span></div>
-          <h5>Войдите через:</h5>
-          {
-            Meteor.isCordova
-              ? <button onClick={loginWithFacebook}>Facebook</button>
-              : <div className="social-networks">
-                  <button className="facebook" onClick={loginWithFacebook}><i className="fa fa-facebook" /></button>
-                  <button className="twitter" onClick={loginWithTwitter}><i className="fa fa-twitter" /></button>
-                  <button className="vk" onClick={loginWithVk}><i className="fa fa-vk" /></button>
+        <div className="form-cont paper no-padding">
+          <div className="logo">
+            <img src="/images/logo.jpg" alt="logo" />
+          </div>
+          <div className="stick-down">
+            <p className="no-account">Еще нет аккаунта? <Link to="/sign-up">Регистрация</Link></p>
+            <form action="" onSubmit={this.onSubmit}>
+              <div className="form-item">
+                <div className="label">
+                  <i className="fa fa-envelope" />
+                </div>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                />
               </div>
-          }
-          <h5 className="divide">или</h5>
-          <form action="" onSubmit={this.onSubmit}>
-            <input
-              type="email"
-              placeholder="Email"
-              name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-             />
-            <input
-              type="password"
-              placeholder="Пароль"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-            {this.state.error && <p className="error">{this.state.error}</p>}
-            <button>Войти</button>
-          </form>
-          <div className="links">
-            <a href="/recover-password">Забыли пароль?</a>
-            <Link to="/sign-up">Регистрация</Link>
+              <div className="form-item">
+                <div className="label">
+                  <i className="fa fa-lock" />
+                </div>
+                <input
+                  type="password"
+                  placeholder="Пароль"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                />
+                <a href="/recover-password">Забыли?</a>
+              </div>
+              {this.state.error && <p className="error">{this.state.error}</p>}
+              <button>Войти</button>
+            </form>
+            <h5 className="divide">или</h5>
+          </div>
+          <div className="circles">
+            <div />
+            <div />
+            <div />
+          </div>
+          <div className="enter-with">
+            {
+              Meteor.isCordova
+                ? <div className="social-networks">
+                  <button className="facebook" onClick={loginWithFacebook}><i className="fa fa-facebook" /> Войти с <span>Facebook</span></button>
+                </div>
+                : <div className="social-networks">
+                <button className="facebook" onClick={loginWithFacebook}><i className="fa fa-facebook" /></button>
+                <button className="twitter" onClick={loginWithTwitter}><i className="fa fa-twitter" /></button>
+                <button className="vk" onClick={loginWithVk}><i className="fa fa-vk" /></button>
+              </div>
+            }
           </div>
         </div>
       </div>

@@ -31,6 +31,7 @@ Meteor.methods({
         userId: this.userId,
         'blocks.name': name,
       }, query);
+      return currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
     }
   },
 
@@ -167,6 +168,9 @@ Meteor.methods({
     const user = Meteor.users.findOne(this.userId);
     const currentDay = Days.findOne(dayId);
     const tasksBlock = currentDay.blocks.find(b => b.name === blockName);
+    console.log(currentDay);
+    console.log(blockName);
+    console.log(tasksBlock);
     if (tasksBlock) {
       const { timezone } = user.personalData;
       const dayTimezone = moment(currentDay.createdAt).tz(timezone).format('DD/MM/YYYY');
@@ -182,6 +186,7 @@ Meteor.methods({
           },
         });
       }
+      return currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
     }
   },
 });

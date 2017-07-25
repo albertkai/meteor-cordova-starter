@@ -1,7 +1,9 @@
 #today {
   header {
-    padding: $base-padding;
+    position: relative;
+    padding: $base-padding / 2 $base-padding;
     padding-bottom: 0;
+    background: $gray-lighter;
     border-bottom: 1px solid $gray-lighter;
     h2 {
       @include flexbox;
@@ -17,9 +19,47 @@
         font-size: 14px;
       }
     }
+    .status-stripe {
+      position: absolute;
+      @include flexbox;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: darken($gray-lighter, 10%);
+      span {
+        background: $brand-primary;
+        border-right: 1px solid $gray-lighter;
+        &.wakeUp {
+          background: $wake-up-color;
+        }
+        &.sport {
+          background: $sport-color;
+        }
+        &.meditation {
+          background: $meditation-color;
+        }
+        &.water {
+          background: $water-block-color;
+        }
+        &.taskList {
+          background: $tasks-color;
+        }
+        &.report {
+          background: $report-color;
+        }
+        &.kind {
+          background: $kind-color;
+        }
+      }
+    }
   }
   .content {
-    padding: $base-padding;
     padding-top: 0;
+  }
+  .block-item {
+    &.meditation {
+
+    }
   }
 }

@@ -8,12 +8,15 @@ import { todayActions } from '/imports/today';
 export class TextBlockComponent extends PureComponent {
   state = {
     left: this.props.min,
+    expanded: false,
   };
 
   onChange = (e) => {
     const { value } = e.target;
     this.setState({ left: this.props.min - value.length });
   };
+
+  expand = () => this.setState({ expanded: !this.state.expanded });
 
   checkTextBlock = () => {
     const { value } = this.textInput;
@@ -33,11 +36,13 @@ export class TextBlockComponent extends PureComponent {
       name,
       desc,
       block,
+      type,
       task,
     } = this.props;
+    const { expanded } = this.state;
     if (task) {
       return (
-        <div className="block-item text">
+        <div className={`block-item text ${type} ${block.passed ? '_passed' : ''}`}>
           <div>
             <div>
               <Checkbox
@@ -47,11 +52,16 @@ export class TextBlockComponent extends PureComponent {
               />
             </div>
             <div>
-              <h3>День {block.options.day}. Задание</h3>
-              <p>Прочтите, обдумайте написанное, а главное - выполните действие <br/> и запишите ваши мысли</p>
+              <h3>День {block.options.day}</h3>
+              <p>Ежедневное задание</p>
+            </div>
+            <div>
+              <button className="button-expand" onClick={this.expand}>
+                <i className={`fa fa-chevron-${expanded ? 'up' : 'down'}`} />
+              </button>
             </div>
           </div>
-          <div>
+          <div className={`expand ${expanded ? '_expanded' : ''}`}>
             <div>
               <div className="checkbox" />
             </div>
@@ -89,23 +99,36 @@ export class TextBlockComponent extends PureComponent {
       );
     }
     return (
-      <div className="block-item text">
+      <div className={`block-item text ${type} ${block.passed ? '_passed' : ''}`}>
         <div>
-          <Checkbox
-            onChange={this.checkTextBlock}
-            checked={block.passed}
-            enableOnly
-          />
+          <div>
+            <Checkbox
+              onChange={this.checkTextBlock}
+              checked={block.passed}
+              enableOnly
+            />
+          </div>
+          <div>
+            <h3>{name}</h3>
+          </div>
+          <div>
+            <button className="button-expand" onClick={this.expand}>
+              <i className={`fa fa-chevron-${expanded ? 'up' : 'down'}`} />
+            </button>
+          </div>
         </div>
-        <div>
-          <h3>{name}</h3>
-          <p className="desc">{desc}</p>
-          {
-            block.data && block.data.text ?
-              <div>
-                <p className="answer">{block.data.text}</p>
-              </div> :
-              <div>
+        <div className={`expand ${expanded ? '_expanded' : ''}`}>
+          <div>
+            <div className="checkbox" />
+          </div>
+          <div>
+            <p className="desc">{desc}</p>
+            {
+              block.data && block.data.text ?
+                <div>
+                  <p className="answer">{block.data.text}</p>
+                </div> :
+                <div>
                 <textarea
                   ref={ref => this.textInput = ref}
                   cols="30"
@@ -113,20 +136,21 @@ export class TextBlockComponent extends PureComponent {
                   onChange={this.onChange}
                   placeholder="Напишите ответ, а затем отметьте задание как выполненное"
                 />
-                <p className="symbols-left">
-                  {this.state.left > 0 ?
-                    <span>Еще минимум {this.state.left} символов</span> :
-                    <span>Длина сообщения достаточна</span>
-                  }
-                </p>
-                <button
-                  className="send"
-                  onClick={this.checkTextBlock}
-                >
-                  Отправить!
-                </button>
-              </div>
-          }
+                  <p className="symbols-left">
+                    {this.state.left > 0 ?
+                      <span>Еще минимум {this.state.left} символов</span> :
+                      <span>Длина сообщения достаточна</span>
+                    }
+                  </p>
+                  <button
+                    className="send"
+                    onClick={this.checkTextBlock}
+                  >
+                    Отправить!
+                  </button>
+                </div>
+            }
+          </div>
         </div>
       </div>
     );

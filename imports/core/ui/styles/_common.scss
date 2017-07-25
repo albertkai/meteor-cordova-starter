@@ -14,6 +14,87 @@
   left: 0;
 }
 
+.popover-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  .modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(darken($brand-primary, 30%), .7);
+    z-index: 1;
+  }
+  .modal-cont {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    z-index: 2;
+    border-radius: 5px;
+    box-shadow: $main-box-shadow;
+    @include transform(translate(-50%, -50%));
+    @media screen and (max-width: $screen-sm) {
+      width: 80vw;
+      min-height: 60vh;
+    }
+    background: white;
+    @include flexbox;
+    @include flex-direction(column);
+    min-height: 300px;
+    .modal-header, .modal-footer {
+      @include flex-grow(0);
+      @include flex-shrink(0);
+      padding: 0 20px;
+    }
+    .modal-body {
+      padding: 20px;
+      text-align: center;
+      @include flex-grow(1);
+      h3 {
+        color: $brand-primary;
+        font-size: 22px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+      }
+      p.accent {
+        font-weight: 600;
+      }
+      .icon {
+        i {
+          font-size: 70px;
+          color: $brand-primary;
+        }
+      }
+    }
+    .modal-header {
+      background: $brand-primary;
+      color: white;
+      text-align: right;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+    .modal-footer {
+      text-align: center;
+      padding: 0 20px 20px 20px;
+      button {
+        padding: 7px 25px;
+      }
+    }
+    .close {
+      border: 0;
+      color: white;
+      font-size: 12px;
+      padding: 10px 0;
+    }
+  }
+}
+
 .avatar {
   position: relative;
   -webkit-background-size: cover;
@@ -115,22 +196,100 @@
 
 .block-item {
   border-top: 1px solid $gray-lighter;
-  padding: 20px 0;
+  @include flexbox;
+  @include flex-grow(0);
+  @include flex-shrink(0);
+  overflow: hidden;
+  padding: 15px 10px;
+  h3, p, button {
+    position: relative;
+    z-index: 2;
+  }
+  .checkbox-cont {
+    z-index: 1;
+  }
   &:first-child {
     border-top: none;
   }
-  @include flexbox;
   label {
     margin-right: 10px;
   }
   .settings {
     margin-top: 10px;
   }
+  .button-expand {
+    padding-left: 0;
+    padding-right: 0;
+    border: 0;
+  }
   &.water {
     h3 {
       span {
         color: $water-color;
       }
+    }
+    .circle {
+      background-color: $water-color;
+    }
+  }
+  &.dailyTask {
+    h3 {
+      color: $daily-task-color;
+    }
+    .checkbox {
+      border-color: $daily-task-color;
+    }
+    .circle {
+      background-color: $daily-task-color;
+    }
+  }
+  &.meditation {
+    h3 {
+      color: $meditation-color;
+    }
+    .checkbox {
+      border-color: $meditation-color;
+    }
+    .circle {
+      background-color: $meditation-color;
+    }
+  }
+  &.sport {
+    h3 {
+      color: $sport-color;
+    }
+    .checkbox {
+      border-color: $sport-color;
+    }
+    .circle {
+      background-color: $sport-color;
+    }
+  }
+  &.kind {
+    h3, .button-expand {
+      color: $kind-color;
+    }
+    .checkbox {
+      border-color: $kind-color;
+    }
+    .circle {
+      background-color: $kind-color;
+    }
+  }
+  &.report {
+    h3, .button-expand {
+      color: $report-color;
+    }
+    .checkbox {
+      border-color: $report-color;
+    }
+    .circle {
+      background-color: $report-color;
+    }
+  }
+  &:not(.text) {
+    > div {
+      padding-right: 10px;
     }
   }
   &.add {
@@ -149,12 +308,24 @@
       @include justify-content(center);
     }
   }
+  &._passed {
+    h3, p {
+      color: white !important;
+    }
+    .checkbox {
+      border-color: white !important;
+      i {
+        color: white !important;
+      }
+      background: transparent;
+    }
+  }
   h3 {
     margin-top: 0;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
     font-size: 28px;
     @media screen and (max-width: $screen-sm) {
-      font-size: 18px;
+      font-size: 20px;
     }
     sup {
       color: $red;
@@ -171,14 +342,15 @@
   > div {
       //@extend %center-content;
     &:nth-child(1) {
-      padding-right: 20px;
-      margin-bottom: 20px;
-      @media screen and (max-width: $screen-sm) {
-        margin-bottom: 35px;
+      @media screen and (min-width: $screen-sm) {
+        margin-bottom: 20px;
       }
     }
     &:nth-child(2) {
       @include flex-grow(1);
+      @include justify-content(center);
+      @include flexbox;
+      @include flex-direction(column);
     }
   }
   &.text {
@@ -196,10 +368,15 @@
       @include flexbox;
       > div {
         &:nth-child(1) {
-          padding-right: 20px;
+          padding-right: 10px;
         }
         &:nth-child(2) {
           @include flex-grow(1);
+        }
+        &:nth-child(2), &:nth-child(3) {
+          @include justify-content(center);
+          @include flexbox;
+          @include flex-direction(column);
         }
       }
       &:nth-child(2) {
@@ -231,10 +408,15 @@
       @include flexbox;
       > div {
         &:nth-child(1) {
-          padding-right: 20px;
+          padding-right: 10px;
         }
         &:nth-child(2) {
           @include flex-grow(1);
+        }
+        &:nth-child(2), &:nth-child(3) {
+          @include justify-content(center);
+          @include flexbox;
+          @include flex-direction(column);
         }
       }
       &:nth-child(2) {
@@ -254,8 +436,9 @@
     }
     .tasks {
       margin-top: -35px;
+      margin-left: 15px;
       @media screen and (max-width: $screen-sm) {
-        margin-top: 0;
+        margin-top: 5px;
       }
       .task {
         @include flexbox;
@@ -305,6 +488,7 @@
   top: 0;
   left: 0;
   overflow: hidden;
+  padding-bottom: 50px;
   &:before {
     content: '';
     position: absolute;
@@ -313,7 +497,7 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background: rgba($brand-primary, .5);
+    background: rgba(white, .8);
     z-index: 2;
   }
   .ovrl {
@@ -355,82 +539,149 @@
   .form-cont {
     position: relative;
     background: white;
+    overflow: hidden;
+    @include flex-shrink(0);
     width: 330px;
+    padding-bottom: 50px;
     z-index: 10;
+    @include flexbox;
+    text-align: center;
+    @include flex-direction(column);
+    @include justify-content(flex-end);
     @media screen and (max-width: $screen-sm) {
-      width: 90%;
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      border-radius: 0;
     }
     @extend %center-self;
-    .logo {
-      position: absolute;
-      width: 100%;
-      text-align: center;
-      color: rgba(white, .7);
-      top: -50px;
-      font-size: 28px;
-      left: 0;
-      font-weight: 700;
-      span {
+    .form-item {
+      position: relative;
+      text-align: left;
+      border-bottom: 1px solid white;
+      .label {
         position: absolute;
-        color: $yellow;
-        top: -12px;
-        font-size: 14px;
-        font-weight: 200;
+        height: 32px;
+        left: 0;
+        text-align: center;
+        top: 5px;
+        line-height: 32px;
+        i {
+          color: white;
+          font-size: 20px;
+        }
+      }
+      input {
+        border-color: transparent;
+        background: transparent;
+        color: white;
+        width: 90%;
+        padding-left: 30px;
+        font-weight: 500;
+        &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+          color:    white;
+        }
+        &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+          color:    white;
+          opacity:  1;
+        }
+        &::-moz-placeholder { /* Mozilla Firefox 19+ */
+          color:    white;
+          opacity:  1;
+        }
+        &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+          color:    white;
+        }
+        &::-ms-input-placeholder { /* Microsoft Edge */
+          color:    white;
+        }
+      }
+      a {
+        position: absolute;
+        right: 0;
+        color: white;
+        font-weight: bold;
+        font-size: 12px;
+        top: 15px;
       }
     }
-    input {
-      margin-bottom: 10px;
+    .no-account {
+      font-weight: 400;
+      a {
+        font-weight: 600;
+        color: $blue;
+      }
+      margin-bottom: 7vh;
+    }
+    .logo {
+      width: 100%;
+      left: 0;
+      top: 12vh;
+      height: 200px;
+      text-align: center;
+      img {
+        width: 45%;
+      }
     }
     button {
       padding-left: 70px;
       padding-right: 70px;
+      margin-top: 20px;
       font-size: 20px;
       width: 100%;
       margin-bottom: 10px;
+      background: $lawngreen;
+      color: white;
+      border: none;
       @media screen and (max-width: $screen-sm) {
         padding-left: 0;
         padding-right: 0;
       }
     }
   }
-  .social-networks {
+  .enter-with {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    .social-networks {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      @include flexbox;
+    }
     button {
       width: 32%;
-      margin-right: 2%;
+      margin: 0;
       padding: 5px 0;
-      &:last-child {
-        margin-right: 0;
+      border-radius: 0;
+      @include flex-grow(1);
+      border: 0;
+      color: white;
+      text-transform: none;
+      font-weight: 300;
+      span {
+        font-weight: 500;
       }
       &.facebook {
-        color: #3b5998;
-        border-color: #3b5998;
+        background-color: #3b5998;
         &:hover {
-          color: white;
-          background: #3b5998;
+          background: darken(#3b5998, 10%);
         }
       }
       &.twitter {
-        color: #00aced;
-        border-color: #00aced;
+        background-color: #00aced;
         &:hover {
-          color: white;
-          background: #00aced;
+          background-color: darken(#00aced, 10%);
         }
       }
       &.vk {
-        color: #4c75a3;
-        border-color: #4c75a3;
+        background-color: #4c75a3;
         &:hover {
-          color: white;
-          background: #4c75a3;
+          background-color: darken(#4c75a3, 10%);
         }
       }
-    }
-  }
-  .links {
-    padding-bottom: 10px;
-    a:nth-child(2) {
-      float: right;
     }
   }
 }
@@ -484,5 +735,25 @@
     right: 0 !important;
     @include transform(translate(0, -25px));
   }
+}
+
+.user-icon {
+
+}
+
+.chat-icon {
+
+}
+
+.list-icon {
+
+}
+
+.history-icon {
+
+}
+
+.plus-icon {
+
 }
 

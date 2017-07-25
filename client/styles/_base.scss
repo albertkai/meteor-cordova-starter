@@ -25,10 +25,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 14px;
-}
-
-label {
-  font-family: $font-family-accent;
+  font-weight: 300;
 }
 
 button,
@@ -40,10 +37,12 @@ input[type='submit'] {
   -webkit-appearance: none;
   border: 1px solid $brand-primary;
   color: $brand-primary;
-  border-radius: 7px;
+  border-radius: 5px;
   font-size: 16px;
   padding: 7.5px 10px;
-  font-family: $font-family-accent;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: $font-family-header;
   &:hover {
     color: white;
     background: $brand-primary;

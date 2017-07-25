@@ -5,30 +5,43 @@
 $gray: #999;
 $gray-lighter: #f6f6f6;
 $gray-light: #b3b3b3;
-$gray-darker: #636673;
+$gray-darker: #595d69;
 $black: #000;
 $white: #fff;
 $light-blue: #71bbff;
-$blue: #138fff;
+$blue: #47b6f3;
 $pale-blue: rgb(212, 229, 248);
-$red: rgb(248, 72, 81);
-$yellow: rgb(208, 201, 23);
-$green: rgb(70, 208, 95);
+$red: rgb(248, 97, 69);
+$magenta: rgb(248, 110, 169);
+$violet: rgb(169, 124, 248);
+$orange: rgb(248, 128, 40);
+$yellow: #f4cc2a;
+$green: #0bf5ab;
+$lawngreen: #b4e02a;
 $water-color: #80cbff;
+
+$daily-task-color: $blue;
+$wake-up-color: $green;
+$sport-color: $lawngreen;
+$meditation-color: $yellow;
+$tasks-color: $orange;
+$water-block-color: $red;
+$kind-color: $magenta;
+$report-color: $violet;
 
 $header-height: 50px;
 $base-padding: 20px;
 
 $main-box-shadow: 0 0 5px rgba(0, 0, 0, .15);
 
-$brand-primary: rgba(69, 125, 191, 0.91);
+$brand-primary: $blue;
 $brand-secondary: rgba(255, 233, 62, 0.91);
 
-$base-font-sans-serif: 'Arial', 'Helvetica Neue', 'Helvetica', sans-serif;
+$base-font-sans-serif: 'SourceSansPro';
 $base-font-serif: 'Times', 'Baskerville', 'Georgia', serif;
 
 $font-family-text: $base-font-sans-serif;
-$font-family-header: $base-font-sans-serif;
+$font-family-header: 'SourceSansPro';
 $font-family-accent: $base-font-serif;
 
 $screen-xs:                  480px !default;

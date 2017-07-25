@@ -1,1 +1,8 @@
-#wake-up-block {}
+.wake-up-block {
+  h3 {
+    color: $wake-up-color;
+  }
+  .checkbox {
+    border-color: $wake-up-color;
+  }
+}

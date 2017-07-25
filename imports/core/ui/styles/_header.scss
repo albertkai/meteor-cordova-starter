@@ -3,7 +3,25 @@
   @include flexbox;
   background: white;
   padding: 0 $base-padding;
+  @include flex-grow(0);
+  @include flex-shrink(0);
+  background: $brand-primary;
+  color: white;
+  &.my-day {
+    background: $lawngreen;
+  }
+  &.history {
+    background: $green;
+  }
+  &.today {
+    background: $blue;
+  }
+  &.chats {
+    background: $violet;
+  }
   @media screen and (max-width: $screen-sm) {
+    padding-top: 30px;
+    height: auto !important;
     text-align: center;
   }
   > div, > aside {
@@ -13,6 +31,10 @@
     @include flex-grow(1);
     h2 {
       margin: 0;
+      @media screen and (max-width: $screen-sm) {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
     }
   }
   > aside {
@@ -24,8 +46,9 @@
   .toggle-menu, .toggle-notifications {
     position: absolute;
     font-size: 24px;
-    top: 0;
+    bottom: 0;
     border: 0;
+    color: white;
     &.toggle-menu {
       left: 3px;
     }
@@ -38,14 +61,6 @@
     &:hover {
       background: transparent;
       color: $brand-primary;
-    }
-  }
-  .logo {
-    font-size: 16px;
-    text-transform: uppercase;
-    color: $brand-primary;
-    @media screen and (min-width: $screen-sm) {
-      display: none;
     }
   }
 }

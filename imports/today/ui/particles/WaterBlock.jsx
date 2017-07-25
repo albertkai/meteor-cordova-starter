@@ -33,8 +33,8 @@ export class WaterBlockComponent extends PureComponent {
           />
         </div>
         <div>
-          <h3>Выпито <span>{(volume / 1000).toFixed(1)}</span> из <span>2</span> литров воды</h3>
-          <p className="desc">Нажмите на кнопку с каплей, каждый раз когда выпиваете стакан воды</p>
+          <h3><span>{(volume / 1000).toFixed(1)}</span> из <span>2</span> литров воды</h3>
+          <p className="desc">Минимум 2 литра</p>
         </div>
       </div>
     );

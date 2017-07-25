@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 
+import { ConstructionIcon } from '/imports/onboard';
+
 export class Description extends PureComponent {
 
   next = () => {
@@ -13,7 +15,11 @@ export class Description extends PureComponent {
   render() {
     return (
       <div id="description" className="onboard-card">
-        <p>Путь к грандиозным целям по-настощему строится как из кирпичиков, из маленьких ежедневных действий</p>
+        <div className="icon">
+          <ConstructionIcon />
+        </div>
+        <h3>Как это работает?</h3>
+        <p>Путь к грандиозным целям строится, как из кирпичиков, из маленьких ежедневных действий</p>
         <p>Мы предлагаем тебе на выбор ряд каждодневных ритуалов, таких как ранний подъем, постановка 3х задач, медитация и т.д. Из них ты сам формируешь свой распорядок дня.</p>
         <p>Также, каждый день тебе будет приходить одно обязательное задание, которое нужно будет прочесть, осмыслить, записать свою реакцию на прочитанное, и главное, выполнить соответствующее действие.</p>
         <div className="footer">

@@ -1,1 +1,17 @@
-#tasks-block {}
+.tasks-block {
+  h3 {
+    color: $tasks-color;
+  }
+  .checkbox {
+    border-color: $tasks-color;
+  }
+  .tasks {
+    @media screen and (max-width: $screen-sm) {
+      margin-top: 30px;
+      margin-left: 5px;
+    }
+    .checkbox {
+      border-color: $gray-light;
+    }
+  }
+}

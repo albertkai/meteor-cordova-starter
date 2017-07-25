@@ -4,6 +4,9 @@ import { bindActionCreators } from 'redux';
 
 import { Avatar, coreConstants } from '/imports/core';
 import { profileActions } from  '/imports/profile';
+import { coreActions } from  '/imports/core';
+
+const actions = Object.assign({}, profileActions, coreActions);
 
 export class ProfileTopComponent extends PureComponent {
 
@@ -33,6 +36,7 @@ export class ProfileTopComponent extends PureComponent {
       },
       uploadAvatar,
       uploadBackground,
+      logOut,
     } = this.props;
     let backgroundUrl;
     if (background.match(/samples/g)) {
@@ -54,6 +58,7 @@ export class ProfileTopComponent extends PureComponent {
             <div className="name">
               <h3>{firstName} {lastName}</h3>
               {/*<p>Отель Летучая рыба, <span>директор</span></p>*/}
+              <button onClick={logOut}>Выйти</button>
             </div>
           </div>
           <div className="change-background">
@@ -80,7 +85,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(profileActions, dispatch);
+  bindActionCreators(actions, dispatch);
 
 export const ProfileTop = connect(
   mapStateToProps,

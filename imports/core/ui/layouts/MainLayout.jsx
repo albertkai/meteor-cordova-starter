@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { createContainer } from 'meteor/react-meteor-data';
 import { browserHistory } from 'react-router';
 
-import { SideMenu, Header, FeeModal, MobileMenu, Loading } from '/imports/core';
+import { SideMenu, Header, FeeModal, MobileMenu, Loading, WakeUpModal, DaySuccessModal } from '/imports/core';
 import * as actions from '../../api/redux/actions';
 
 export class MainLayoutComponent extends PureComponent {
@@ -18,6 +18,7 @@ export class MainLayoutComponent extends PureComponent {
       user,
       userReady,
       checkNotificationId,
+      setStatusBar,
     } = this.props;
     const {
       user: newUser,
@@ -35,8 +36,12 @@ export class MainLayoutComponent extends PureComponent {
         }
       }
     }
-    if (Meteor.isCordova && newUser && newUserReady && !userReady) {
-      checkNotificationId(newUser);
+    if (Meteor.isCordova) {
+      console.log('Cordova detected');
+      setStatusBar('light');
+      if (newUser && newUserReady && !userReady) {
+        checkNotificationId(newUser);
+      }
     }
   }
 
@@ -68,7 +73,11 @@ export class MainLayoutComponent extends PureComponent {
       userReady,
       core: {
         menuOpened,
+        wakeUpModalShown,
+        daySuccessModalShown,
       },
+      toggleWakeUpModal,
+      toggleDaySuccessModal,
       toggleMenu,
     } = this.props;
     return (
@@ -79,10 +88,10 @@ export class MainLayoutComponent extends PureComponent {
               <SideMenu {...this.props} />
               <div className="main-content">
                 <Header {...this.props} />
-                <div className="content">
+                <div className="content" style={{ WebkitOverflowScrolling: 'touch' }}>
                   {React.cloneElement(children, this.props)}
                 </div>
-                <MobileMenu />
+                <MobileMenu {...this.props} />
                 <button
                   className="close-overlay"
                   onClick={toggleMenu}
@@ -98,6 +107,8 @@ export class MainLayoutComponent extends PureComponent {
                     <span>Ь</span>
                   </div>
                 </button>
+                {wakeUpModalShown && <WakeUpModal toggle={toggleWakeUpModal} />}
+                {daySuccessModalShown && <DaySuccessModal toggle={toggleDaySuccessModal} />}
               </div>
             </div> :
             <Loading />

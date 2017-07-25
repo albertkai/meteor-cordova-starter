@@ -1,1 +1,21 @@
-#onboard-final {}
+#onboard-final {
+  i {
+    color: $red;
+  }
+  h1, h2, h3, h4 {
+    color: $red !important;
+  }
+  .footer {
+    button:not(.back) {
+      background: $red;
+      border: 0;
+      color: white;
+      &:hover {
+        background: darken($red, 10%);
+      }
+    }
+    .back {
+      color: $red;
+    }
+  }
+}

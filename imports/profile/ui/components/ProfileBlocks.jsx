@@ -1,8 +1,18 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Checkbox } from '/imports/core';
-import { profileActions, TimezoneSelect } from '/imports/profile';
+import {
+  Switcher,
+  AlarmIcon,
+  CalendarIcon,
+  KindIcon,
+  MeditationIcon,
+  ReportIcon,
+  SportIcon,
+  TaskIcon,
+  WaterIcon,
+} from '/imports/core';
+import { profileActions } from '/imports/profile';
 
 const isEnabled = block => block ? block.enabled : false;
 
@@ -61,126 +71,138 @@ export class ProfileBlocksComponent extends PureComponent {
     return (
       <div id="profile-blocks">
         <div className="container paper no-padding">
-          <div className="main-info">
-            <div className="item">
-              <div>
-                <h5>Временная зона:</h5>
-              </div>
-              <div>
-                <TimezoneSelect
-                  timezone={timezone}
-                  setTimezone={setTimezone}
-                />
-              </div>
-            </div>
-            <div className="item">
-              <div>
-                <h5>Сумма штрафа:</h5>
-              </div>
-              <div>
-                <input
-                  id="fee"
-                  type="number"
-                  defaultValue={amount}
-                  onChange={setFee}
-                />
-                <span><i className="fa fa-rouble" /></span>
-              </div>
-            </div>
-          </div>
+          {/*<div className="main-info">*/}
+            {/*<div className="item">*/}
+              {/*<div>*/}
+                {/*<h5>Временная зона:</h5>*/}
+              {/*</div>*/}
+              {/*<div>*/}
+                {/*<TimezoneSelect*/}
+                  {/*timezone={timezone}*/}
+                  {/*setTimezone={setTimezone}*/}
+                {/*/>*/}
+              {/*</div>*/}
+            {/*</div>*/}
+            {/*<div className="item">*/}
+              {/*<div>*/}
+                {/*<h5>Сумма штрафа:</h5>*/}
+              {/*</div>*/}
+              {/*<div>*/}
+                {/*<input*/}
+                  {/*id="fee"*/}
+                  {/*type="number"*/}
+                  {/*defaultValue={amount}*/}
+                  {/*onChange={setFee}*/}
+                {/*/>*/}
+                {/*<span><i className="fa fa-rouble" /></span>*/}
+              {/*</div>*/}
+            {/*</div>*/}
+          {/*</div>*/}
           <div className="blocks">
             <div className="blocks-cont">
-              <div className="block-item required">
-                <div>
-                  <Checkbox checked />
-                </div>
+              <div className="task-item required daily-task _enabled">
                 <div>
                   <h3><sup>*</sup> Ежедневные задания</h3>
                   <div>
                     <p>
                       Раз в день вам будет приходить короткое задание. Вам нужно будет прочитать его, обдумать и записать выводы.
-                      <br/>
-                      Каждое задание - это маленький шаг навстречу лучшему я. Шаг за шагом, вы будете понимать что-то новое, и становиться лучше.
+                      Каждое задание - это маленький шаг навстречу лучшему я.
                     </p>
                   </div>
                 </div>
-              </div>
-              <div className="block-item">
                 <div>
-                  <Checkbox
+                  <div className="icon">
+                    <CalendarIcon />
+                  </div>
+                  <Switcher
+                    checked={true}
+                  />
+                </div>
+              </div>
+              <div className={`task-item wake-up ${isEnabled(blocks.wakeUp) ? '_enabled' : ''}`}>
+                <div>
+                  <h3>Ранний подъем</h3>
+                  <div>
+                    <p>
+                      Способствует нормализации активности, гораздо большей энергетике и мыслям. Ранний подъем - неотъемлемый атрибут успешных людей!
+                    </p>
+                  </div>
+                  <div className="settings">
+                    <label htmlFor="">Время:</label>
+                    <select
+                      onChange={this.setWakeUp}
+                      value={getValue(blocks.wakeUp, 'time')}
+                    >
+                      <option value="05:00">05:00</option>
+                      <option value="05:10">05:10</option>
+                      <option value="05:20">05:20</option>
+                      <option value="05:30">05:30</option>
+                      <option value="05:40">05:40</option>
+                      <option value="05:50">05:50</option>
+                      <option value="06:00">06:00</option>
+                      <option value="06:10">06:10</option>
+                      <option value="06:20">06:20</option>
+                      <option value="06:30">06:30</option>
+                      <option value="06:40">06:40</option>
+                      <option value="06:50">06:50</option>
+                      <option value="07:00">07:00</option>
+                      <option value="07:10">07:10</option>
+                      <option value="07:20">07:20</option>
+                      <option value="07:30">07:30</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <div className="icon">
+                    <AlarmIcon />
+                  </div>
+                  <Switcher
                     checked={isEnabled(blocks.wakeUp)}
                     onChange={toggleWakeUp}
                   />
                 </div>
-                <div>
-                  <h3>Ранний подъем</h3>
-                  <div>
-                    <p>Способствует нормализации активности, гораздо большей энергетике и мыслям. Ранний подъем - неотъемлемый атрибут успешных людей!</p>
-                    <div className="settings">
-                      <label htmlFor="">Время:</label>
-                      <select
-                        onChange={this.setWakeUp}
-                        value={getValue(blocks.wakeUp, 'time')}
-                      >
-                        <option value="05:00">05:00</option>
-                        <option value="05:10">05:10</option>
-                        <option value="05:20">05:20</option>
-                        <option value="05:30">05:30</option>
-                        <option value="05:40">05:40</option>
-                        <option value="05:50">05:50</option>
-                        <option value="06:00">06:00</option>
-                        <option value="06:10">06:10</option>
-                        <option value="06:20">06:20</option>
-                        <option value="06:30">06:30</option>
-                        <option value="06:40">06:40</option>
-                        <option value="06:50">06:50</option>
-                        <option value="07:00">07:00</option>
-                        <option value="07:10">07:10</option>
-                        <option value="07:20">07:20</option>
-                        <option value="07:30">07:30</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
               </div>
-              <div className="block-item">
+              <div className={`task-item sport ${isEnabled(blocks.sport) ? '_enabled' : ''}`}>
                 <div>
-                  <Checkbox
+                  <h3>Зарядка</h3>
+                  <div>
+                    <p>
+                      Ежедневный комплекс упражнений минимум 10 минут на растяжку и укрепление мышц. Ведь вы не получите энергии для реализации целей если ваше тело слабо!
+                    </p>
+                  </div>
+                  {/*<div className="settings">*/}
+                  {/*<label htmlFor="">Комплекс:</label>*/}
+                  {/*<select*/}
+                  {/*onChange={this.setSport}*/}
+                  {/*value={getValue(blocks.sport, 'type')}*/}
+                  {/*>*/}
+                  {/*<option value="1">Легкая разминка</option>*/}
+                  {/*<option value="2">Растяжка</option>*/}
+                  {/*<option value="3">Комплекс спартанца</option>*/}
+                  {/*<option value="4">Базовая йога</option>*/}
+                  {/*<option value="5">Цигун</option>*/}
+                  {/*</select>*/}
+                  {/*</div>*/}
+                </div>
+                <div>
+                  <div className="icon">
+                    <SportIcon />
+                  </div>
+                  <Switcher
                     checked={isEnabled(blocks.sport)}
                     onChange={toggleSport}
                   />
                 </div>
-                <div>
-                  <h3>Зарядка</h3>
-                  <div>
-                    <p>Ежедневный комплекс упражнений минимум 10 минут на растяжку и укрепление мышц. Поддерживает вас в форме, и дает энергии. Ведь вы не получите энергии для реализации целей если ваше тело слабо</p>
-                    {/*<div className="settings">*/}
-                      {/*<label htmlFor="">Комплекс:</label>*/}
-                      {/*<select*/}
-                        {/*onChange={this.setSport}*/}
-                        {/*value={getValue(blocks.sport, 'type')}*/}
-                      {/*>*/}
-                        {/*<option value="1">Легкая разминка</option>*/}
-                        {/*<option value="2">Растяжка</option>*/}
-                        {/*<option value="3">Комплекс спартанца</option>*/}
-                        {/*<option value="4">Базовая йога</option>*/}
-                        {/*<option value="5">Цигун</option>*/}
-                      {/*</select>*/}
-                    {/*</div>*/}
-                  </div>
-                </div>
               </div>
-              <div className="block-item">
-                <div>
-                  <Checkbox
-                    checked={isEnabled(blocks.meditation)}
-                    onChange={toggleMeditation}
-                  />
-                </div>
+              <div className={`task-item meditation ${isEnabled(blocks.meditation) ? '_enabled' : ''}`}>
                 <div>
                   <h3>Медитация</h3>
                   <div>
-                    <p>Гармонизирует дух, и снимает зажимы. Медитация - это необходимая практика, это как тренировка нашего мозга. Даже во сне мы не получаем такого расслабления. Даже 10 минут медитации в день сделают вас более собранным и спокойным</p>
+                    <p>
+                      Гармонизирует дух, и снимает зажимы. Медитация - это необходимая практика, это как тренировка нашего мозга. Даже во сне мы не получаем такого расслабления. Даже 10 минут медитации в день сделают вас более собранным и спокойным
+                    </p>
+                  </div>
+                  {/*<div className="settings">*/}
                     {/*<label htmlFor="">Время:</label>*/}
                     {/*<select*/}
                       {/*onChange={this.setMeditationTime}*/}
@@ -210,16 +232,19 @@ export class ProfileBlocksComponent extends PureComponent {
                       {/*<option value="ocean">Океан</option>*/}
                       {/*<option value="forest">Лес</option>*/}
                     {/*</select>*/}
-                  </div>
+                  {/*</div>*/}
                 </div>
-              </div>
-              <div className="block-item">
                 <div>
-                  <Checkbox
-                    checked={isEnabled(blocks.taskList)}
-                    onChange={toggleTasks}
+                  <div className="icon">
+                    <MeditationIcon />
+                  </div>
+                  <Switcher
+                    checked={isEnabled(blocks.meditation)}
+                    onChange={toggleMeditation}
                   />
                 </div>
+              </div>
+              <div className={`task-item tasks ${isEnabled(blocks.taskList) ? '_enabled' : ''}`}>
                 <div>
                   <h3>3 задачи на день</h3>
                   <div>
@@ -232,14 +257,17 @@ export class ProfileBlocksComponent extends PureComponent {
                     </p>
                   </div>
                 </div>
-              </div>
-              <div className="block-item">
                 <div>
-                  <Checkbox
-                    checked={isEnabled(blocks.water)}
-                    onChange={toggleWater}
+                  <div className="icon">
+                    <TaskIcon />
+                  </div>
+                  <Switcher
+                    checked={isEnabled(blocks.taskList)}
+                    onChange={toggleTasks}
                   />
                 </div>
+              </div>
+              <div className={`task-item water ${isEnabled(blocks.water) ? '_enabled' : ''}`}>
                 <div>
                   <h3>2 литра воды</h3>
                   <div>
@@ -252,14 +280,17 @@ export class ProfileBlocksComponent extends PureComponent {
                     </p>
                   </div>
                 </div>
-              </div>
-              <div className="block-item">
                 <div>
-                  <Checkbox
-                    checked={isEnabled(blocks.kind)}
-                    onChange={toggleKind}
+                  <div className="icon">
+                    <WaterIcon />
+                  </div>
+                  <Switcher
+                    checked={isEnabled(blocks.water)}
+                    onChange={toggleWater}
                   />
                 </div>
+              </div>
+              <div className={`task-item kind ${isEnabled(blocks.kind) ? '_enabled' : ''}`}>
                 <div>
                   <h3>Доброе дело</h3>
                   <div>
@@ -272,14 +303,17 @@ export class ProfileBlocksComponent extends PureComponent {
                     </p>
                   </div>
                 </div>
-              </div>
-              <div className="block-item">
                 <div>
-                  <Checkbox
-                    checked={isEnabled(blocks.report)}
-                    onChange={toggleReport}
+                  <div className="icon">
+                    <KindIcon />
+                  </div>
+                  <Switcher
+                    checked={isEnabled(blocks.kind)}
+                    onChange={toggleKind}
                   />
                 </div>
+              </div>
+              <div className={`task-item report ${isEnabled(blocks.report) ? '_enabled' : ''}`}>
                 <div>
                   <h3>Вечерний отчет</h3>
                   <div>
@@ -290,17 +324,26 @@ export class ProfileBlocksComponent extends PureComponent {
                     </p>
                   </div>
                 </div>
-              </div>
-              <div className="block-item add">
                 <div>
-                  <button className="checkbox add">
-                    <i className="fa fa-plus" />
-                  </button>
-                </div>
-                <div>
-                  <h3>Добавить свое задание</h3>
+                  <div className="icon">
+                    <ReportIcon />
+                  </div>
+                  <Switcher
+                    checked={isEnabled(blocks.report)}
+                    onChange={toggleReport}
+                  />
                 </div>
               </div>
+              {/*<div className="block-item add">*/}
+                {/*<div>*/}
+                  {/*<button className="checkbox add">*/}
+                    {/*<i className="fa fa-plus" />*/}
+                  {/*</button>*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                  {/*<h3>Добавить свое задание</h3>*/}
+                {/*</div>*/}
+              {/*</div>*/}
             </div>
           </div>
         </div>

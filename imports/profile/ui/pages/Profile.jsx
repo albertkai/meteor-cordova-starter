@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 
 import { ProfileTop } from '../components/ProfileTop';
 import { ProfileBlocks } from '../components/ProfileBlocks';
+import { ProfileSettings } from '../components/ProfileSettings';
 
 export class Profile extends PureComponent {
   render() {
@@ -10,7 +11,7 @@ export class Profile extends PureComponent {
         <ProfileTop {...this.props} />
         <div className="content">
           <div className="container paper">
-            <p>Что делать здесь? Нужны ваши идеи! Возможно отслеживать прогресс, или что-то вроде колеса жизни. Можно тупо информацию о пользователе</p>
+            <ProfileSettings {...this.props} />
           </div>
         </div>
       </div>

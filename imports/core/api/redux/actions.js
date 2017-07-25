@@ -16,6 +16,14 @@ export const closeMenu = () => ({
   type: c.CLOSE_MENU,
 });
 
+export const toggleWakeUpModal = () => ({
+  type: c.TOGGLE_WAKE_UP_MODAL,
+});
+
+export const toggleDaySuccessModal = () => ({ type: c.TOGGLE_DAY_SUCCESS_MODAL });
+
+// Placeholder (used by robot)
+
 // Actions with side effect
 export const checkNotificationId = user => () => {
   if (user) {
@@ -23,6 +31,16 @@ export const checkNotificationId = user => () => {
       const { userId } = ids;
       Meteor.call('users.updateNotificationsId', userId);
     });
+  }
+};
+
+export const setStatusBar = type => () => {
+  if (window.StatusBar) {
+    if (type === 'light') {
+      window.StatusBar.styleLightContent();
+    } else if (type === 'default') {
+      window.StatusBar.styleDefault();
+    }
   }
 };
 

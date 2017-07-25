@@ -92,7 +92,7 @@ export class TasksBlockComponent extends PureComponent {
           </div>
           <div>
             <h3>3 задачи на день</h3>
-            <p className="desc">Спланируйте 3 задачи, приближающие вас к вашим целям!</p>
+            <p className="desc">Добавить до 11:00</p>
           </div>
         </div>
         <div>
@@ -105,6 +105,7 @@ export class TasksBlockComponent extends PureComponent {
                 <div>
                   <Checkbox
                     onChange={this.checkFirstTask}
+                    noAnimation
                     checked={block.data && block.data['first'] && block.data['first'].checked}
                   />
                 </div>
@@ -122,6 +123,7 @@ export class TasksBlockComponent extends PureComponent {
                 <div>
                   <Checkbox
                     onChange={this.checkSecondTask}
+                    noAnimation
                     checked={block.data && block.data['second'] && block.data['second'].checked}
                   />
                 </div>
@@ -139,6 +141,7 @@ export class TasksBlockComponent extends PureComponent {
                 <div>
                   <Checkbox
                     onChange={this.checkThirdTask}
+                    noAnimation
                     checked={block.data && block.data['third'] && block.data['third'].checked}
                   />
                 </div>

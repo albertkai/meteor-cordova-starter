@@ -25,3 +25,24 @@ export { Tasks } from './api/models/tasks/tasks.js';
 export { MobileMenu } from './ui/components/MobileMenu.jsx';
 
 export { Groups } from './api/models/groups/groups.js';
+export { Switcher } from './ui/particles/Switcher.jsx';
+
+export { WakeUpModal } from './ui/particles/WakeUpModal.jsx';
+
+export { DaySuccessModal } from './ui/particles/DaySuccessModal.jsx';
+
+export { AlarmIcon } from './ui/particles/AlarmIcon.jsx';
+
+export { CalendarIcon } from './ui/particles/CalendarIcon.jsx';
+
+export { KindIcon } from './ui/particles/KindIcon.jsx';
+
+export { MeditationIcon } from './ui/particles/MeditationIcon.jsx';
+
+export { ReportIcon } from './ui/particles/ReportIcon.jsx';
+
+export { SportIcon } from './ui/particles/SportIcon.jsx';
+
+export { TaskIcon } from './ui/particles/TaskIcon.jsx';
+
+export { WaterIcon } from './ui/particles/WaterIcon.jsx';

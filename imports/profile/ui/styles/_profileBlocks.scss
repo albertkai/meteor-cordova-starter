@@ -14,62 +14,6 @@
       }
     }
   }
-  .main-info {
-    @include flexbox;
-    padding: $base-padding;
-    padding-top: $base-padding / 2;
-    border-bottom: 1px solid $gray-lighter;
-    .item {
-      @include flexbox;
-      @media screen and (max-width: $screen-sm) {
-        &:nth-child(1) {
-          width: 70%;
-        }
-        &:nth-child(2) {
-          width: 30%;
-        }
-        @include flex-direction(column);
-        @include flex-grow(0);
-        @include flex-shrink(0);
-      }
-      h5, p {
-        font-size: 18px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        @media screen and (max-width: $screen-sm) {
-          font-size: 10px;
-          margin-top: 0;
-          margin-bottom: 5px;
-        }
-      }
-      > div {
-        &:nth-child(1) {
-          width: 200px;
-          @media screen and (max-width: $screen-sm) {
-            position: relative;
-            @include flex-grow(0);
-            @include flex-shrink(0);
-            width: 100%;
-          }
-        }
-        @media screen and (max-width: $screen-sm) {
-          select {
-            width: 60%;
-            font-size: 12px;
-            height: 32px;
-          }
-          input {
-            font-size: 14px;
-            height: 32px;
-            @media screen and (max-width: $screen-sm) {
-              border-radius: 0;
-              width: 70% !important;
-            }
-          }
-        }
-      }
-    }
-  }
   .blocks {
     position: relative;
     @include flex-grow(1);
@@ -88,6 +32,291 @@
       height: 100%;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
+    }
+    .task-item {
+      text-align: center;
+      overflow: hidden;
+      padding: 10px 30px 30px 30px;
+      &:not(._enabled) {
+        border-bottom: 1px solid $gray-lighter;
+      }
+      sup {
+        color: $red;
+      }
+      p {
+        font-weight: 400;
+      }
+      .settings {
+        padding-bottom: $base-padding;
+        select {
+          height: 24px;
+        }
+        label {
+          padding-right: 5px;
+        }
+      }
+      svg {
+        position: relative;
+        top: 12px;
+        width: 50px;
+        height: 50px;
+      }
+      &.daily-task {
+        svg {
+          top: 10px;
+          width: 48px;
+          height: 48px;
+        }
+      }
+      &.wake-up {
+        h3 {
+          color: $wake-up-color;
+        }
+        svg {
+          top: 14px;
+          width: 56px;
+          height: 56px;
+        }
+        .switcher {
+          .circle {
+            background: $wake-up-color;
+          }
+          .stripe {
+            .ovrl {
+              background: $wake-up-color;
+            }
+          }
+          &._checked {
+            .control {
+              .stripe {
+                .handle {
+                  border-color: $wake-up-color;
+                }
+              }
+            }
+          }
+        }
+      }
+      &.sport {
+        h3 {
+          color: $sport-color;
+        }
+        .switcher {
+          .circle {
+            background: $sport-color;
+          }
+          .stripe {
+            .ovrl {
+              background: $sport-color;
+            }
+          }
+          &._checked {
+            .control {
+              .stripe {
+                .handle {
+                  border-color: $sport-color;
+                }
+              }
+            }
+          }
+        }
+        &._enabled {
+          svg {
+            fill: $sport-color !important;
+            stroke: white !important;
+          }
+        }
+      }
+      &.meditation {
+        h3 {
+          color: $meditation-color;
+        }
+        .icon {
+          i {
+            color: $meditation-color;
+          }
+        }
+        .switcher {
+          .circle {
+            background: $meditation-color;
+          }
+          .stripe {
+            .ovrl {
+              background: $meditation-color;
+            }
+          }
+          &._checked {
+            .control {
+              .stripe {
+                .handle {
+                  border-color: $meditation-color;
+                }
+              }
+            }
+          }
+        }
+      }
+      &.tasks {
+        h3 {
+          color: $tasks-color;
+        }
+        .icon {
+          i {
+            color: $tasks-color;
+          }
+        }
+        .switcher {
+          .circle {
+            background: $tasks-color;
+          }
+          .stripe {
+            .ovrl {
+              background: $tasks-color;
+            }
+          }
+          &._checked {
+            .control {
+              .stripe {
+                .handle {
+                  border-color: $tasks-color;
+                }
+              }
+            }
+          }
+        }
+      }
+      &.water {
+        h3 {
+          color: $water-block-color;
+        }
+        .icon {
+          i {
+            color: $water-block-color;
+          }
+        }
+        .switcher {
+          .circle {
+            background: $water-block-color;
+          }
+          .stripe {
+            .ovrl {
+              background: $water-block-color;
+            }
+          }
+          &._checked {
+            .control {
+              .stripe {
+                .handle {
+                  border-color: $water-block-color;
+                }
+              }
+            }
+          }
+        }
+      }
+      &.kind {
+        h3 {
+          color: $kind-color;
+        }
+        .icon {
+          i {
+            color: $kind-color;
+          }
+        }
+        .switcher {
+          .circle {
+            background: $kind-color;
+          }
+          .stripe {
+            .ovrl {
+              background: $kind-color;
+            }
+          }
+          &._checked {
+            .control {
+              .stripe {
+                .handle {
+                  border-color: $kind-color;
+                }
+              }
+            }
+          }
+        }
+      }
+      &.report {
+        h3 {
+          color: $report-color;
+        }
+        .icon {
+          i {
+            color: $report-color;
+          }
+        }
+        .switcher {
+          .circle {
+            background: $report-color;
+          }
+          .stripe {
+            .ovrl {
+              background: $report-color;
+            }
+          }
+          &._checked {
+            .control {
+              .stripe {
+                .handle {
+                  border-color: $report-color;
+                }
+              }
+            }
+          }
+        }
+      }
+      &._enabled {
+        h3, p {
+          color: white;
+        }
+        svg {
+          fill: white;
+          stroke: white;
+        }
+      }
+      h3 {
+        position: relative;
+        z-index: 2;
+        font-size: 22px;
+        color: $brand-primary;
+        @include transform(translateZ(0));
+        backface-visibility: hidden;
+      }
+      svg {
+        @include transform(translateZ(0));
+        backface-visibility: hidden;
+      }
+      p {
+        position: relative;
+        z-index: 2;
+        font-size: 14px;
+        margin-bottom: 20px;
+        @include transform(translateZ(0));
+        backface-visibility: hidden;
+      }
+      .icon {
+        position: relative;
+        top: -6px;
+        display: inline-block;
+        margin-right: 20px;
+        z-index: 2;
+      }
+      i {
+        font-size: 40px;
+        color: $brand-primary;
+        @include transform(translateZ(0));
+        backface-visibility: hidden;
+      }
+      .checkbox {
+        z-index: 1;
+      }
     }
   }
   #fee {

@@ -8,9 +8,15 @@
   }
   .task-text {
     p {
-      margin-top: 10px;
+      margin-top: 10px !important;
+      margin-bottom: 10px !important;
       color: $base-text-color;
     }
+  }
+  .desc {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 600;
   }
   .send {
     width: 100%;
@@ -19,5 +25,14 @@
     @media screen and (min-width: $screen-sm) {
       display: none;
     }
+  }
+  .expand {
+    display: none;
+    &._expanded {
+      display: block;
+    }
+  }
+  .symbols-left {
+    font-size: 12px;
   }
 }

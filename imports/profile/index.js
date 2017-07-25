@@ -6,3 +6,5 @@ export { profileReducer } from './api/redux/reducer';
 export * as profileActions from './api/redux/actions';
 
 export { TimezoneSelect } from './ui/particles/TimezoneSelect.jsx';
+
+export { ProfileSettings } from './ui/components/ProfileSettings.jsx';

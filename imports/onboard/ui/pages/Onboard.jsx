@@ -47,7 +47,7 @@ export class OnboardComponent extends PureComponent {
         {
           Object.keys(templatesMap).map((name, i) => {
             const activeClass = name === templateName ? '_active' : '';
-            return <span key={`step-${name}`} className={activeClass}>{i + 1}</span>;
+            return <span key={`step-${name}`} className={activeClass}></span>;
           })
         }
       </div>
@@ -58,7 +58,7 @@ export class OnboardComponent extends PureComponent {
     const { params: { templateName }, ready } = this.props;
     const DynamicTemplate = templatesMap[templateName];
     return (
-      <div id="onboard">
+      <div id="onboard" className={templateName}>
         <div className="ovrl" />
         <header>
           <button

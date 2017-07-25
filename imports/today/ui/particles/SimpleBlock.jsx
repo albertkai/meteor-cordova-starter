@@ -13,9 +13,11 @@ export class SimpleBlockComponent extends PureComponent {
       day: {
         _id,
       },
-      blockName,
+      block: {
+        name,
+      },
     } = this.props;
-    checkSimpleBlock(_id, blockName);
+    checkSimpleBlock(_id, name);
   };
 
   render() {
@@ -32,7 +34,7 @@ export class SimpleBlockComponent extends PureComponent {
       return null;
     })();
     return (
-      <div className={`block-item simple-block ${type}`}>
+      <div className={`block-item simple-block ${type} ${block.name} ${block.passed ? '_passed' : ''}`}>
         <div>
           <Checkbox
             onChange={this.checkSimpleBlock}

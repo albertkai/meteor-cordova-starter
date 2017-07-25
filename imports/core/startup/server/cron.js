@@ -133,6 +133,9 @@ SyncedCron.add({
         console.log('Send motivating notification');
       });
     }
+    if (currentHour === 11) {
+      console.log('Send the daily task notification if not marked');
+    }
     // Days.find({ createdAt: moment().s }).forEach(d => {
     //   console.log(d._id);
     // });

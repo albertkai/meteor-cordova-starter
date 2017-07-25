@@ -1,0 +1,60 @@
+#profile-settings {
+  .main-info {
+    @include flexbox;
+    padding: $base-padding / 2 $base-padding;
+    border-bottom: 1px solid $gray-lighter;
+    .item {
+      @include flexbox;
+      @media screen and (max-width: $screen-sm) {
+        &:nth-child(1) {
+          width: 70%;
+        }
+        &:nth-child(2) {
+          width: 30%;
+        }
+        @include flex-direction(column);
+        @include flex-grow(0);
+        @include flex-shrink(0);
+      }
+      h5 {
+        color: $brand-primary;
+      }
+      h5, p {
+        font-size: 18px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        @media screen and (max-width: $screen-sm) {
+          font-size: 10px;
+          margin-top: 0;
+          margin-bottom: 5px;
+        }
+      }
+      > div {
+        &:nth-child(1) {
+          width: 200px;
+          @media screen and (max-width: $screen-sm) {
+            position: relative;
+            @include flex-grow(0);
+            @include flex-shrink(0);
+            width: 100%;
+          }
+        }
+        @media screen and (max-width: $screen-sm) {
+          select {
+            width: 60%;
+            font-size: 12px;
+            height: 24px;
+          }
+          input {
+            font-size: 14px;
+            height: 24px;
+            @media screen and (max-width: $screen-sm) {
+              border-radius: 0;
+              width: 70% !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

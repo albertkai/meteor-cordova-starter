@@ -19,23 +19,50 @@
       z-index: 2;
     }
   }
+  &.about {
+    .steps {
+      > span._active {
+        background: $green;
+      }
+    }
+  }
+  &.history {
+    .steps {
+      > span._active {
+        background: $lawngreen;
+      }
+    }
+  }
+  &.fees {
+    .steps {
+      > span._active {
+        background: $yellow;
+      }
+    }
+  }
+  &.final {
+    .steps {
+      > span._active {
+        background: $red;
+      }
+    }
+  }
   .steps {
     text-align: center;
     > span {
       display: inline-block;
-      width: 42px;
-      height: 42px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       text-align: center;
       line-height: 40px;
-      border: 2px solid rgba(0, 0, 0, .2);
+      background: $gray-lighter;
       font-size: 20px;
       font-weight: bold;
       color: rgba(0, 0, 0, .2);
-      margin: 0 7px;
+      margin: 0 5px;
       &._active {
-        color: $brand-primary;
-        border-color: $brand-primary;
+        background: $brand-primary;
       }
     }
   }
@@ -65,36 +92,56 @@
       left: 0;
       border-radius: 0;
       width: 100%;
+      padding-top: 35px;
       height: 100%;
-      background: rgba(255, 255, 255, .90);
+      background: rgba(255, 255, 255, 1);
       @include transform(translate(0, 0));
     }
   }
   .content {
     padding: 30px;
     @media screen and (max-width: $screen-sm) {
-      padding: 20px;
+      padding: 10px 0;
     }
     h1, h2, h3, h4 {
       color: $brand-primary;
       text-transform: uppercase;
     }
+    h3 {
+      @media screen and (max-width: $screen-sm) {
+        margin-top: 10px;
+      }
+    }
+    .icon {
+      svg {
+        width: 120px;
+        height: 120px;
+        stroke: $blue;
+        fill: $blue;
+      }
+    }
     p {
       font-size: 16px;
+      @media screen and (max-width: $screen-sm) {
+        font-size: 14px;
+      }
     }
     .footer {
       position: absolute;
       width: 100%;
       left: 0;
-      bottom: 50px;
+      bottom: 30px;
       button {
-        width: 200px;
+        width: 180px;
         font-size: 22px;
+        @media screen and (max-width: $screen-sm) {
+          font-size: 18px;
+        }
       }
       .back {
         position: absolute;
         left: 0;
-        width: 70px;
+        width: 50px;
         border: 0;
         &:hover {
           background-color: transparent;
@@ -103,4 +150,12 @@
       }
     }
   }
+}
+
+svg.onboard-history-icon {
+  position: relative;
+  top: 7px;
+  left: 2px;
+  stroke: $lawngreen !important;
+  fill: $lawngreen !important;
 }

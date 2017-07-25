@@ -32,7 +32,7 @@ export class WakeUpBlockComponent extends PureComponent {
         </div>
         <div>
           <h3>Ранний подъем</h3>
-          <p className="desc">Вам необходимо поставить отметку здесь не позже {block.options.time.replace(/.$/, '5')}</p>
+          <p className="desc">Не позже {block.options.time.replace(/.$/, '5')}</p>
         </div>
       </div>
     );

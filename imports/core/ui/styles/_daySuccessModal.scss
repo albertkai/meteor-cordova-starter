@@ -1,0 +1,23 @@
+#day-success-modal {
+  .modal-cont {
+    .modal-body {
+      h3 {
+        color: $green;
+      }
+    }
+    .modal-header {
+      background: $green;
+    }
+    .icon {
+      i {
+        color: $green;
+      }
+    }
+    .modal-footer {
+      button {
+        border-color: $green;
+        color: $green;
+      }
+    }
+  }
+}

@@ -35,12 +35,13 @@ App.accessRule("*"); // @@@@@@@@@@@@@@@@
 // Set PhoneGap/Cordova preferences
 App.setPreference('BackgroundColor', '0xff0000ff');
 App.setPreference('HideKeyboardFormAccessoryBar', true);
+App.setPreference('DisallowOverscroll', true);
 App.setPreference('BackupWebStorage', 'local');
 App.setPreference('AutoHideSplashScreen', true); // ???
 App.setPreference('KeyboardDisplayRequiresUserAction', false);
 
 // https://github.com/Differential/meteor-mobile-cookbook/blob/master/iOS/Status%20Bar.md
-App.setPreference('StatusBarOverlaysWebView', false);
+App.setPreference('StatusBarOverlaysWebView', true);
 App.setPreference('StatusBarStyle', 'default');
 
 // Pass preferences for a particular PhoneGap/Cordova plugin

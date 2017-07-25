@@ -1,4 +1,18 @@
 #chat-header {
   border-bottom: 1px solid $gray-lighter;
   margin: 0 $base-padding;
+  @media screen and (max-width: $screen-sm) {
+    margin: 0;
+    > ul {
+      @include flexbox;
+      > li {
+        @include flex-grow(1);
+        &.active, &:hover {
+          &:after {
+            background: $red;
+          }
+        }
+      }
+    }
+  }
 }

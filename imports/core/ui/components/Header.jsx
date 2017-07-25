@@ -18,9 +18,12 @@ export class HeaderComponent extends PureComponent {
     const {
       logOut,
       toggleMenu,
+      location: {
+        pathname,
+      },
     } = this.props;
     return (
-      <header id="header">
+      <header id="header" className={pathname.replace('/', '')}>
         <button
           className="toggle-menu"
           onClick={toggleMenu}
@@ -33,10 +36,7 @@ export class HeaderComponent extends PureComponent {
         >
           <i className="fa fa-volume-down" />
         </button>
-        <div className="logo">
-          betterme
-        </div>
-        <div className="hidden-xs hidden-sm">
+        <div>
           <h2>{locationsMap[this.props.location.pathname]}</h2>
         </div>
         <aside className="hidden-sm hidden-xs">
