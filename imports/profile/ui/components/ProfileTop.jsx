@@ -2,20 +2,19 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Avatar, coreConstants } from '/imports/core';
-import { profileActions } from  '/imports/profile';
-import { coreActions } from  '/imports/core';
+import { Avatar, coreConstants, coreActions } from '/imports/core';
+import * as profileActions from '../../api/redux/actions';
 
 const actions = Object.assign({}, profileActions, coreActions);
 
 export class ProfileTopComponent extends PureComponent {
 
   _renderLink(type, name, active) {
-    const { toggleChatType } = this.props;
+    const { toggleTab } = this.props;
     const activeClass = active === type ? 'active' : '';
     const onClick = (e) => {
       e.preventDefault();
-      toggleChatType(type);
+      toggleTab(type);
     };
     return (
       <li className={activeClass}>
@@ -33,6 +32,9 @@ export class ProfileTopComponent extends PureComponent {
           firstName,
           lastName,
         },
+      },
+      profile: {
+        openedTab,
       },
       uploadAvatar,
       uploadBackground,
@@ -57,21 +59,22 @@ export class ProfileTopComponent extends PureComponent {
             />
             <div className="name">
               <h3>{firstName} {lastName}</h3>
-              {/*<p>Отель Летучая рыба, <span>директор</span></p>*/}
-              <button onClick={logOut}>Выйти</button>
             </div>
           </div>
           <div className="change-background">
             <input type="file" onChange={uploadBackground} />
             <i className="fa fa-image" />
           </div>
+          <button className="logout" onClick={logOut}>
+            <i className="fa fa-sign-out" />
+          </button>
         </div>
         <div className="tabs-heading-cont">
           <div className="container">
             <ul className="tabs-heading">
-              <li className="active"><a href="">Информация</a></li>
-              <li><a href="">Приватность</a></li>
-              <li><a href="">Оповещения</a></li>
+              {this._renderLink('info', 'Информация', openedTab)}
+              {this._renderLink('privacy', 'Приватность', openedTab)}
+              {this._renderLink('notifications', 'Оповещения', openedTab)}
             </ul>
           </div>
         </div>

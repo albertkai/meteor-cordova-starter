@@ -1,1 +1,10 @@
-#timezone-select {}
+.timezone {
+  @include flexbox;
+  .time {
+    margin-bottom: 0;
+    margin-top: 5px;
+    font-size: 20px;
+    font-weight: 400;
+    padding-left: 5px;
+  }
+}

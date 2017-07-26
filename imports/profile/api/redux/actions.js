@@ -174,3 +174,7 @@ export const uploadBackground = e => () => {
     return true;
   });
 };
+
+export const toggleNotificationSetting = type => () => Meteor.call('users.toggleNotificationSetting', type);
+
+export const togglePrivacySetting = type => () => Meteor.call('users.togglePrivacySetting', type);

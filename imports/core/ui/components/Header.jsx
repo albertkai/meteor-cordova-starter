@@ -30,12 +30,12 @@ export class HeaderComponent extends PureComponent {
         >
           <i className="fa fa-bars" />
         </button>
-        <button
-          className="toggle-notifications"
-          onClick={toggleMenu}
-        >
-          <i className="fa fa-volume-down" />
-        </button>
+        {/*<button*/}
+          {/*className="toggle-notifications"*/}
+          {/*onClick={toggleMenu}*/}
+        {/*>*/}
+          {/*<i className="fa fa-volume-down" />*/}
+        {/*</button>*/}
         <div>
           <h2>{locationsMap[this.props.location.pathname]}</h2>
         </div>

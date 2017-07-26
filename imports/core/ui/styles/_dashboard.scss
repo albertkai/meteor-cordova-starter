@@ -2,6 +2,14 @@ body {
   background: $gray-lighter;
 }
 
+@media screen and (max-width: $screen-sm) {
+  *::-webkit-scrollbar  {
+    display: none;
+    height: 0;
+    width: 0;
+  }
+}
+
 .paper {
   background: white;
   box-shadow: $main-box-shadow;
@@ -189,6 +197,7 @@ body {
       -webkit-backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
       overflow-y: scroll;
+      overflow-x: hidden;
     }
     @media screen and (max-width: $screen-sm) {
       width: 100vw;

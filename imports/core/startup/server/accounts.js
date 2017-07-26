@@ -124,6 +124,18 @@ Accounts.onCreateUser(function(options, user) {
   }
   user.serviceData = {
     groupId,
+    notifications: {
+      water: true,
+      motivation: true,
+      dailyTask: true,
+      endOfDay: true,
+      chat: true,
+    },
+    privacy: {
+      contacts: true,
+      progress: true,
+      blocks: true,
+    },
   };
   return user;
 });

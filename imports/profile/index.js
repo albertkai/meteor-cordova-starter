@@ -8,3 +8,7 @@ export * as profileActions from './api/redux/actions';
 export { TimezoneSelect } from './ui/particles/TimezoneSelect.jsx';
 
 export { ProfileSettings } from './ui/components/ProfileSettings.jsx';
+
+export { ProfileNotifications } from './ui/components/ProfileNotifications.jsx';
+
+export { ProfilePrivacy } from './ui/components/ProfilePrivacy.jsx';

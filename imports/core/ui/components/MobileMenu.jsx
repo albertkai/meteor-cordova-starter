@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 
 import {
@@ -9,7 +9,7 @@ import {
   HistoryIcon,
 } from '/imports/today';
 
-class Link extends PureComponent {
+class Link extends Component {
 
   goTo = () => {
     browserHistory.push(this.props.to);
@@ -33,7 +33,7 @@ class Link extends PureComponent {
   }
 }
 
-export class MobileMenu extends PureComponent {
+export class MobileMenu extends Component {
 
   render() {
     const {

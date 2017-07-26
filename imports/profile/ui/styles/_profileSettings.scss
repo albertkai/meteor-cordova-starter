@@ -1,7 +1,7 @@
 #profile-settings {
   .main-info {
     @include flexbox;
-    padding: $base-padding / 2 $base-padding;
+    @include flex-direction(column);
     border-bottom: 1px solid $gray-lighter;
     .item {
       @include flexbox;

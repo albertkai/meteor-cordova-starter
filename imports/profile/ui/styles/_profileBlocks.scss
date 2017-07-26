@@ -97,6 +97,36 @@
           }
         }
       }
+      &.daily-task {
+        h3 {
+          color: $daily-task-color;
+        }
+        .switcher {
+          .circle {
+            background: $daily-task-color;
+          }
+          .stripe {
+            .ovrl {
+              background: $daily-task-color;
+            }
+          }
+          &._checked {
+            .control {
+              .stripe {
+                .handle {
+                  border-color: $daily-task-color;
+                }
+              }
+            }
+          }
+        }
+        &._enabled {
+          svg {
+            fill: $daily-task-color !important;
+            stroke: white !important;
+          }
+        }
+      }
       &.sport {
         h3 {
           color: $sport-color;

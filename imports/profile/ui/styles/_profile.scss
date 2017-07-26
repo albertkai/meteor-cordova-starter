@@ -1,1 +1,69 @@
-#profile {}
+#profile {
+  @include flexbox;
+  @include flex-direction(column);
+  @include flex-grow(1);
+  .content {
+    @include flex-grow(1);
+    background: white;
+  }
+  .profile-item {
+    @include flexbox;
+    padding: 15px 20px;
+    > div {
+      &:nth-child(2) {
+        @include flex-grow(1);
+        padding-left: 10px;
+        @include flexbox;
+        @include flex-direction(column);
+        @include justify-content(center);
+        p {
+          margin: 0;
+          font-weight: 500;
+        }
+      }
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid $gray-lighter;
+    }
+  }
+  .profile-form-item {
+    padding: $base-padding / 2 $base-padding;
+    &:not(:last-child) {
+      //border-bottom: 1px solid $gray-lighter;
+    }
+    select {
+      width: 100%;
+    }
+    select {
+      border-radius: 5px;
+      background: transparent;
+    }
+    select, input, textarea {
+      font-size: 20px;
+      font-weight: 400;
+      border-color: lighten($gray-light, 20%);
+    }
+    h5 {
+      margin-top: 0;
+      margin-bottom: 5px;
+      font-size: 16px;
+      color: $brand-primary;
+    }
+    &-fee {
+      > div:nth-child(2) {
+        @include flexbox;
+        span {
+          position: relative;
+          top: 11px;
+          padding-right: 5px;
+          line-height: 45px;
+          font-size: 30px;
+        }
+        input {
+          @include flex-grow(1);
+          font-size: 30px;
+        }
+      }
+    }
+  }
+}

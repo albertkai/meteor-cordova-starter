@@ -2,22 +2,20 @@
   position: relative;
   background: $brand-primary;
   -webkit-background-size: cover;
-  background-size: cover;
-  background-image: url(/images/clouds.jpg);
-  background-position: center center;
+  background-color: $gray-lighter;
   @include flexbox;
   @include flex-direction(column);
   overflow: hidden;
-  &:before {
-    content: '';
-    position: absolute;
-    display: block;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: rgba($brand-primary, .5);
-  }
+  //&:before {
+  //  content: '';
+  //  position: absolute;
+  //  display: block;
+  //  top: 0;
+  //  left: 0;
+  //  height: 100%;
+  //  width: 100%;
+  //  background: rgba($brand-primary, .5);
+  //}
   &:after {
     content: '';
     position: absolute;

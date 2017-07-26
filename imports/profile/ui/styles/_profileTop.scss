@@ -1,4 +1,6 @@
 #profile-top {
+  @include flex-grow(0);
+  @include flex-shrink(0);
   .profile-bg {
     position: relative;
     height: 220px;
@@ -12,7 +14,7 @@
   .change-background {
     position: absolute;
     top: 20px;
-    right: 20px;
+    right: 5px;
     width: 50px;
     height: 50px;
     color: white;
@@ -42,6 +44,14 @@
       top: 50%;
       @include transform(translate(-50%, -60%));
     }
+  }
+  .logout {
+    color: white;
+    border: 0;
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    font-size: 40px;
   }
   .name {
     position: absolute;

@@ -35,6 +35,30 @@ Meteor.methods({
     Meteor.users.update(this.userId, { $set: { 'personalData.timezone': timezone } });
   },
 
+  'users.toggleNotificationSetting': function (type) {
+    const user = Meteor.users.findOne(this.userId);
+    const setting = user.serviceData.notifications[type];
+    if (type) {
+      Meteor.users.update(this.userId, {
+        $set: {
+          [`serviceData.notifications.${type}`]: !setting,
+        },
+      });
+    }
+  },
+
+  'users.togglePrivacySetting': function (type) {
+    const user = Meteor.users.findOne(this.userId);
+    const setting = user.serviceData.privacy[type];
+    if (type) {
+      Meteor.users.update(this.userId, {
+        $set: {
+          [`serviceData.privacy.${type}`]: !setting,
+        },
+      });
+    }
+  },
+
   'users.toggleBlock': function (name) {
     const block = Meteor.users.findOne(this.userId).blocks[name];
     if (!block) {

@@ -1,22 +1,45 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 
 import { ProfileTop } from '../components/ProfileTop';
-import { ProfileBlocks } from '../components/ProfileBlocks';
 import { ProfileSettings } from '../components/ProfileSettings';
+import { ProfileNotifications } from '../components/ProfileNotifications';
+import { ProfilePrivacy } from '../components/ProfilePrivacy';
 
-export class Profile extends PureComponent {
+const componentsMap = {
+  info: ProfileSettings,
+  privacy: ProfilePrivacy,
+  notifications: ProfileNotifications,
+};
+
+export class ProfileComponent extends PureComponent {
   render() {
+    const {
+      profile: {
+        openedTab,
+      },
+    } = this.props;
+    const Dynamic = componentsMap[openedTab];
     return (
       <div id="profile">
         <ProfileTop {...this.props} />
         <div className="content">
-          <div className="container paper">
-            <ProfileSettings {...this.props} />
-          </div>
+          <Dynamic {...this.props} />
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  profile: state.profile.toJS(),
+});
+
+const mapDispatchToProps = dispatch => null;
+
+export const Profile = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ProfileComponent);
 
 export default Profile;

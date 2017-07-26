@@ -4,7 +4,7 @@ import 'moment-timezone';
 
 export class TimezoneSelect extends PureComponent {
 
-  state = { localTime: '' };
+  state = { localTime: moment().tz(this.props.timezone).format('HH:mm:ss') };
 
   componentDidMount() {
     this.timeInterval = Meteor.setInterval(() => {
@@ -32,7 +32,7 @@ export class TimezoneSelect extends PureComponent {
         >
           {names.map(n => <option key={`upload-tz-${n}`} value={n}>{n}</option>)}
         </select>
-        <span className="time"> {this.state.localTime}</span>
+        <p className="time"> {this.state.localTime}</p>
       </div>
     )
   }

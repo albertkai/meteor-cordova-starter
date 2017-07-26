@@ -59,3 +59,105 @@
     }
   }
 }
+
+.historyy-item {
+  position: relative;
+  margin: 10px;
+  background: white;
+  border-radius: 3px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, .2);
+  .stripe {
+    height: 3px;
+    top: 0;
+    @include flexbox;
+    span {
+      display: block;
+      @include flex-grow(1);
+      &:first-child {
+        border-top-left-radius: 3px;
+      }
+      &:last-child {
+        border-top-right-radius: 3px;
+      }
+      background: $blue;
+      &:nth-child(2) {
+        background: $green;
+      }
+      &:nth-child(3) {
+        background: $lawngreen;
+      }
+      &:nth-child(4) {
+        background: $yellow;
+      }
+      &:nth-child(5) {
+        background: $red;
+      }
+      &:nth-child(6) {
+        background: $magenta;
+      }
+      &:nth-child(7) {
+        background: $violet;
+      }
+    }
+  }
+  header, .fee, .text-task {
+    padding: 15px 10px;
+    p {
+      font-weight: 400;
+      &.success {
+        color: $green;
+      }
+    }
+    strong {
+      i {
+        color: $green;
+      }
+    }
+  }
+  header {
+    p:nth-child(2) {
+      font-weight: 200;
+      span {
+        font-weight: 400;
+      }
+    }
+    i {
+      color: $blue;
+    }
+  }
+  p {
+    margin: 0;
+  }
+  header {
+    background: $gray-lighter;
+    @include flexbox;
+    p {
+      @include flex-grow(1);
+      &:nth-child(2) {
+        text-align: right;
+      }
+    }
+  }
+  .fee {
+    background: $red;
+    color: white;
+  }
+  .text-task {
+    &:not(:last-child) {
+      border-bottom: 1px solid $gray-lighter;
+    }
+    @include flexbox;
+    > span {
+      @include flex-grow(1);
+    }
+    &.daily-task {
+      span {
+        font-size: 20px;
+      }
+    }
+    button {
+      border: 0;
+      padding-right: 0;
+    }
+  }
+}

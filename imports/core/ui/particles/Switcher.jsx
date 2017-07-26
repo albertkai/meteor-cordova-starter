@@ -12,10 +12,10 @@ export class Switcher extends PureComponent {
   };
 
   render() {
-    const { checked } = this.props;
+    const { checked, noAnimation } = this.props;
     return (
       <div className={`switcher ${checked ? '_checked' : ''}`}>
-        <div className="circle" />
+        {!noAnimation && <div className="circle" />}
         <div className="control" onClick={this.toggle}>
           <div className="stripe">
             <div className="ovrl" />
