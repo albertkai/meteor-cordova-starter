@@ -46,3 +46,9 @@ export { SportIcon } from './ui/particles/SportIcon.jsx';
 export { TaskIcon } from './ui/particles/TaskIcon.jsx';
 
 export { WaterIcon } from './ui/particles/WaterIcon.jsx';
+
+export { VacationModal } from './ui/particles/VacationModal.jsx';
+
+export { FeesModal } from './ui/particles/FeesModal.jsx';
+
+export { PayFeesModal } from './ui/particles/PayFeesModal.jsx';

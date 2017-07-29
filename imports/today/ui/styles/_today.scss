@@ -19,6 +19,9 @@
         font-size: 14px;
       }
     }
+    strong {
+      color: $brand-primary;
+    }
     .status-stripe {
       position: absolute;
       @include flexbox;

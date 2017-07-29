@@ -2,11 +2,17 @@ body {
   background: $gray-lighter;
 }
 
+::-webkit-scrollbar  {
+  height: 0;
+  width: 0;
+  background: transparent !important;
+}
+
 @media screen and (max-width: $screen-sm) {
-  *::-webkit-scrollbar  {
-    display: none;
+  ::-webkit-scrollbar  {
     height: 0;
     width: 0;
+    background: transparent !important;
   }
 }
 

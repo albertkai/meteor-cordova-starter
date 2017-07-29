@@ -8,7 +8,7 @@ import { Days, Tasks } from '/imports/core';
 SyncedCron.add({
   name: 'Add new days',
   schedule: function(parser) {
-    return parser.text('every hour');
+    return parser.text('every 10 hours');
   },
   job: function() {
     // Need to be optimized using batch insert and aggregation on first major release
@@ -27,10 +27,13 @@ SyncedCron.add({
                 .diff(moment(`${userCreatedAt} 00:00:00`, 'DD/MM/YYYY HH:mm:SS'), 'days') + 1;
             const task = Tasks.findOne({ day });
             const { blocks } = u;
+            let index = currentDay.index || 1;
+            index += 1;
             const obj = {
               userId: u._id,
               createdAt: moment().toISOString(),
               blocks: [],
+              index,
               timezone,
             };
             obj.blocks.push({
@@ -60,18 +63,19 @@ SyncedCron.add({
             Days.insert(obj);
             const uncheckedBlocks = currentDay.blocks.filter(b => !b.passed);
             if (uncheckedBlocks.length > 0) {
-              let { items, toPay, amount, unpaidDate } = u.fees;
-              currentDay.blocks.filter(b => !b.passed).forEach(b => {
-                toPay += amount;
-                items.push(b.name);
+              const { items, toPay, amount } = u.fees;
+              let newToPay = toPay;
+              uncheckedBlocks.forEach((b) => {
+                newToPay += amount;
+                items.push({ name: b.name, date: moment(currentDay.createdAt).valueOf() });
               });
-              Meteor.users.update(this.userId, {
+              const query = {
                 $set: {
-                  'fees.toPay': toPay,
+                  'fees.toPay': newToPay,
                   'fees.items': items,
-                  'fees.unpaidDate': unpaidDate || Date.now(),
                 },
-              });
+              };
+              Meteor.users.update(u._id, query);
             }
           }
         } else {

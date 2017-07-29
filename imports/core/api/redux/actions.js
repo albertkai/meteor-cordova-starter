@@ -1,5 +1,6 @@
 import { browserHistory } from 'react-router';
 import { Meteor } from 'meteor/meteor';
+import { Notify } from '/imports/notifications';
 
 import * as c from './constants';
 
@@ -21,6 +22,12 @@ export const toggleWakeUpModal = () => ({
 });
 
 export const toggleDaySuccessModal = () => ({ type: c.TOGGLE_DAY_SUCCESS_MODAL });
+
+export const toggleVacation = () => ({ type: c.TOGGLE_VACATION });
+
+export const toggleFeesModal = () => ({ type: c.TOGGLE_FEES_MODAL });
+
+export const togglePayFeesModal = () => ({ type: c.TOGGLE_PAY_FEES_MODAL });
 
 // Placeholder (used by robot)
 
@@ -65,5 +72,19 @@ export const loginWithTwitter = () => () => {
 export const logOut = () => () => {
   Meteor.logout(() => {
     browserHistory.push('/login');
+  });
+};
+
+export const takeVacation = (days) => (dispatch) => {
+  Meteor.call('users.takeVacation', days, (err, res) => {
+    if (!err) {
+      Notify.alert({
+        title: 'Вы взяли отпуск!',
+        text: 'Теперь в это время вам не будут приходить штрафы, но все же вы должны будете заполнить пропущенные задания по возвращению',
+      });
+      dispatch({
+        type: 'core/TOGGLE_VACATION',
+      });
+    }
   });
 };

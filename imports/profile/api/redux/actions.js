@@ -117,6 +117,16 @@ export const setFee = e => () => {
   }, 700);
 };
 
+let textTimeout;
+export const setProfileField = (name, e) => () => {
+  e.persist();
+  Meteor.clearTimeout(textTimeout);
+  textTimeout = Meteor.setTimeout(() => {
+    const { value } = e.target;
+    Meteor.call('users.setProfileField', name, value);
+  }, 700);
+};
+
 export const setBlockOption = (name, option, value) => () => {
   Meteor.call('users.setBlockOption', name, option, value);
 };

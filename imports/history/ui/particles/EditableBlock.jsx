@@ -37,13 +37,10 @@ export class EditableBlockComponent extends PureComponent {
   };
 
   render() {
-    const { heading, desc, task, data } = this.props;
+    const { data } = this.props;
     const { isEditing } = this.state;
     return (
       <div className="editable-block">
-        <h3>{heading}</h3>
-        {task && <p className="task" dangerouslySetInnerHTML={{ __html: task }} />}
-        {desc && <p className="desc">{desc}</p>}
         {
           isEditing ?
             <textarea defaultValue={data ? data.text : ''} onChange={this.onChange} /> :
@@ -52,8 +49,8 @@ export class EditableBlockComponent extends PureComponent {
         {
           isEditing ?
             <div className="buttons">
-              <button onClick={this.skip}>Отменить</button>
-              <button onClick={this.save}>Сохранить</button>
+              <button className="skip" onClick={this.skip}>Отменить</button>
+              <button className="save" onClick={this.save}>Сохранить</button>
             </div> :
             <div className="buttons">
               <button onClick={this.toggleEdit}>Редактировать</button>

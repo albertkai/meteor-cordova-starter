@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
 import { check } from 'meteor/check';
 
 const options = {
@@ -59,6 +60,14 @@ Meteor.methods({
     }
   },
 
+  'users.setProfileField': function (name, value) {
+    Meteor.users.update(this.userId, {
+      $set: {
+        [`personalData.${name}`]: value,
+      },
+    });
+  },
+
   'users.toggleBlock': function (name) {
     const block = Meteor.users.findOne(this.userId).blocks[name];
     if (!block) {
@@ -106,6 +115,11 @@ Meteor.methods({
         'personalData.avatar': file,
       },
     });
+  },
+
+  'users.takeVacation': function (days) {
+    const endDate = moment().add(parseInt(days, 10), 'days').toDate();
+    Meteor.users.update(this.userId, { 'fees.vacation': endDate });
   },
 
   'users.uploadBackground': function (file) {

@@ -36,8 +36,16 @@ const daysSchema = new SimpleSchema({
   userId: {
     type: String,
   },
+  index: {
+    type: Number,
+    optional: true,
+  },
   createdAt: {
     type: String,
+  },
+  timezone: {
+    type: String,
+    optional: true,
   },
 });
 

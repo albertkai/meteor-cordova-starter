@@ -1,1 +1,63 @@
-#sign-up {}
+#sign-up {
+  .form-cont {
+    @include flexbox;
+    @include flex-direction(column);
+    padding: 0;
+    .main-cont {
+      @include flex-grow(1);
+      @include flexbox;
+      @include flex-direction(column);
+      @include justify-content(flex-end);
+      padding: 20px;
+      padding-bottom: 30px;
+    }
+  }
+  .betterme-logo {
+    text-align: center;
+    padding: 50px 20px 20px 20px;
+    img {
+      width: 35vw;
+    }
+  }
+  .links {
+    a {
+      color: $base-text-color;
+      strong {
+        color: $brand-primary;
+      }
+    }
+  }
+  form {
+    input {
+      margin-bottom: 5px;
+    }
+  }
+  .form-item {
+    border-color: darken($gray-lighter, 5%);
+    .label {
+      i {
+        color: $brand-primary;
+      }
+    }
+    input {
+      color: $base-text-color;
+      &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+        color:    $gray;
+      }
+      &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color:    $gray;
+        opacity:  1;
+      }
+      &::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color:    $gray;
+        opacity:  1;
+      }
+      &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color:    $gray;
+      }
+      &::-ms-input-placeholder { /* Microsoft Edge */
+        color:    $gray;
+      }
+    }
+  }
+}

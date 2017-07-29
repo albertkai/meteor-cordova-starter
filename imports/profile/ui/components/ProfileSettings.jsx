@@ -12,11 +12,18 @@ export class ProfileSettingsComponent extends PureComponent {
       user: {
         personalData: {
           timezone,
+          city,
+          sphere,
+          facebook,
+          vkontakte,
+          instagram,
+          about,
         },
         fees: {
           amount,
         },
       },
+      setProfileField,
     } = this.props;
     return (
       <div id="profile-settings">
@@ -54,6 +61,8 @@ export class ProfileSettingsComponent extends PureComponent {
               <input
                 type="text"
                 placeholder="напр. Москва"
+                defaultValue={city}
+                onChange={(e) => setProfileField('city', e)}
               />
             </div>
           </div>
@@ -65,6 +74,8 @@ export class ProfileSettingsComponent extends PureComponent {
               <input
                 type="text"
                 placeholder="напр. Веб-разработка"
+                defaultValue={sphere}
+                onChange={(e) => setProfileField('sphere', e)}
               />
             </div>
           </div>
@@ -76,6 +87,8 @@ export class ProfileSettingsComponent extends PureComponent {
               <input
                 type="text"
                 placeholder="https://facebook.com/yourname"
+                defaultValue={facebook}
+                onChange={(e) => setProfileField('facebook', e)}
               />
             </div>
           </div>
@@ -85,9 +98,10 @@ export class ProfileSettingsComponent extends PureComponent {
             </div>
             <div>
               <input
-                id="fee"
                 type="text"
                 placeholder="https://vk.com/yourname"
+                defaultValue={vkontakte}
+                onChange={(e) => setProfileField('vkontakte', e)}
               />
             </div>
           </div>
@@ -99,6 +113,8 @@ export class ProfileSettingsComponent extends PureComponent {
               <input
                 type="text"
                 placeholder="https://instagram.com/yourname"
+                defaultValue={instagram}
+                onChange={(e) => setProfileField('instagram', e)}
               />
             </div>
           </div>
@@ -110,6 +126,8 @@ export class ProfileSettingsComponent extends PureComponent {
               <textarea
                 placeholder="Опишите себя в 3х предложениях"
                 rows="5"
+                defaultValue={about}
+                onChange={(e) => setProfileField('about', e)}
               />
             </div>
           </div>

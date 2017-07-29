@@ -23,11 +23,14 @@ export class SideMenu extends PureComponent {
           toPay,
         },
       },
+      toggleVacation,
+      toggleFeesModal,
+      togglePayFeesModal,
     } = this.props;
     return (
       <div id="side-menu" className="side-menu">
         <header>
-          <p className="logo">Better:me</p>
+          <img src="/images/logo.jpg" alt="logo" />
         </header>
         <div className="content">
           <Link to="/profile" activeClassName="active" className="user-link">
@@ -72,12 +75,16 @@ export class SideMenu extends PureComponent {
           </nav>
           {
             !!toPay && <div className="fee">
-              <h4><i className="fa fa-warning"/> Оплатите штраф:</h4>
-              <h2>1500Р <button>?</button></h2>
-              <button>Оплатить</button>
-              <p>Необходимо оплатить до 23:59 сегодня, иначе вы не сможете пользоваться сервисом</p>
+              <h4><i className="fa fa-warning"/> Оплатите штрафы:</h4>
+              <h2>1500Р <button onClick={toggleFeesModal}>?</button></h2>
+              <button onClick={togglePayFeesModal}>Оплатить</button>
+              <p>Штрафы необходимо погасить не позднее чем через 5 суток после начисления, иначе вы не сможете продолжить пользоваться приложением</p>
             </div>
           }
+          <div className="vacation">
+            <button onClick={toggleVacation}>Взять отпуск</button>
+            {/*<p>Использовано <strong>3</strong> из <strong>7</strong> в этом месяце</p>*/}
+          </div>
           <footer>
             <div className="support">
               <h5>Поддержка:</h5>

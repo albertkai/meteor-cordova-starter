@@ -63,49 +63,80 @@ export class SignUpComponent extends PureComponent {
       <div id="sign-up" className="login-page">
         <div className="ovrl" />
         <div className="form-cont paper">
-          <div className="logo">BETTER:ME<span>beta</span></div>
-          <h5>Зарегистрироваться:</h5>
-          <form action="" onSubmit={this.onSubmit}>
-            <input
-              type="email"
-              name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-              placeholder="Email"
-            />
-            <input
-              type="text"
-              name="firstName"
-              value={this.state.firstName}
-              onChange={this.handleChange}
-              placeholder="Имя"
-            />
-            <input
-              type="text"
-              placeholder="Фамилия"
-              name="lastName"
-              value={this.state.lastName}
-              onChange={this.handleChange}
-            />
-            <input
-              type="password"
-              placeholder="Пароль"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-            <input
-              type="password"
-              placeholder="Повторите пароль"
-              name="passwordRepeat"
-              value={this.state.passwordRepeat}
-              onChange={this.handleChange}
-            />
-            {this.state.error && <p className="error">{this.state.error}</p>}
-            <button>Зарегистироваться</button>
-          </form>
-          <div className="links">
-            <Link to="/login">Уже есть аккаунт? Войдите</Link>
+          <div className="heading">
+            <div className="betterme-logo">
+              <img src="/images/logo.jpg" alt="logo" />
+            </div>
+          </div>
+          <div className="main-cont">
+            <h5>Регистрация:</h5>
+            <form action="" onSubmit={this.onSubmit}>
+              <div className="form-item">
+                <div className="label">
+                  <i className="fa fa-envelope" />
+                </div>
+                <input
+                  type="email"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                  placeholder="Email"
+                />
+              </div>
+              <div className="form-item">
+                <div className="label">
+                  <i className="fa fa-user" />
+                </div>
+                <input
+                  type="text"
+                  name="firstName"
+                  value={this.state.firstName}
+                  onChange={this.handleChange}
+                  placeholder="Имя"
+                />
+              </div>
+              <div className="form-item">
+                <div className="label">
+                  <i className="fa fa-user" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Фамилия"
+                  name="lastName"
+                  value={this.state.lastName}
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div className="form-item">
+                <div className="label">
+                  <i className="fa fa-lock" />
+                </div>
+                <input
+                  type="password"
+                  placeholder="Пароль"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div className="form-item">
+                <div className="label">
+                  <i className="fa fa-lock" />
+                </div>
+                <input
+                  type="password"
+                  placeholder="Повторите пароль"
+                  name="passwordRepeat"
+                  value={this.state.passwordRepeat}
+                  onChange={this.handleChange}
+                />
+              </div>
+              {this.state.error && <p className="error">{this.state.error}</p>}
+              <button>Зарегистироваться</button>
+            </form>
+            <div className="links">
+              <Link to="/login">Уже есть аккаунт? <strong>Войдите</strong></Link>
+            </div>
           </div>
         </div>
       </div>

@@ -5,7 +5,17 @@ import { bindActionCreators } from 'redux';
 import { createContainer } from 'meteor/react-meteor-data';
 import { browserHistory } from 'react-router';
 
-import { SideMenu, Header, FeeModal, MobileMenu, Loading, WakeUpModal, DaySuccessModal } from '/imports/core';
+import {
+  SideMenu,
+  Header,
+  FeesModal,
+  PayFeesModal,
+  MobileMenu,
+  Loading,
+  WakeUpModal,
+  DaySuccessModal,
+  VacationModal,
+} from '/imports/core';
 import * as actions from '../../api/redux/actions';
 
 export class MainLayoutComponent extends PureComponent {
@@ -75,10 +85,16 @@ export class MainLayoutComponent extends PureComponent {
         menuOpened,
         wakeUpModalShown,
         daySuccessModalShown,
+        vacationModalShown,
+        feesModalShown,
+        payFeesModalShown,
       },
       toggleWakeUpModal,
       toggleDaySuccessModal,
       toggleMenu,
+      toggleVacation,
+      toggleFeesModal,
+      togglePayFeesModal,
     } = this.props;
     return (
       <div id="main-layout" className="root">
@@ -110,6 +126,19 @@ export class MainLayoutComponent extends PureComponent {
                 {wakeUpModalShown && <WakeUpModal toggle={toggleWakeUpModal} />}
                 {daySuccessModalShown && <DaySuccessModal toggle={toggleDaySuccessModal} />}
               </div>
+              {vacationModalShown && <VacationModal toggle={toggleVacation} />}
+              {
+                feesModalShown && <FeesModal
+                  toggle={toggleFeesModal}
+                  {...this.props}
+                />
+              }
+              {
+                payFeesModalShown && <PayFeesModal
+                  toggle={togglePayFeesModal}
+                  {...this.props}
+                />
+              }
             </div> :
             <Loading />
         }

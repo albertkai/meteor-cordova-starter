@@ -1,0 +1,11 @@
+.history-text-block {
+  .task-content {
+    display: none;
+    &._expanded {
+      display: block;
+    }
+    .task-text {
+      margin: 10px 0;
+    }
+  }
+}

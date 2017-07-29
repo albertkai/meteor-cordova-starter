@@ -2,7 +2,7 @@
   position: relative;
   background: $brand-primary;
   -webkit-background-size: cover;
-  background-color: $gray-lighter;
+  background-color: white;
   @include flexbox;
   @include flex-direction(column);
   overflow: hidden;
@@ -27,12 +27,42 @@
     width: 2px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .5);
   }
+  nav {
+    @media screen and (max-width: $screen-sm) {
+      display: none;
+    }
+  }
   header {
-    height: $header-height;
+    text-align: center;
+    padding: 20px;
     @extend %no-flex;
+    img {
+      width: 70%;
+    }
+  }
+  .vacation {
+    text-align: center;
+    padding: 20px;
+    button {
+      width: 100%;
+    }
+    p {
+      font-size: 12px;
+    }
+  }
+  .user-link {
+    @media screen and (max-width: $screen-sm) {
+      display: none;
+    }
   }
   .content {
     @include flex-grow(1);
+    @media screen and (max-width: $screen-sm) {
+      @include flexbox;
+      @include flex-direction(column);
+      @include justify-content(flex-end);
+      padding-bottom: 70px;
+    }
   }
   .logo {
     text-align: center;
@@ -42,11 +72,9 @@
     color: white;
   }
   .fee {
-    position: absolute;
     padding: $base-padding;
-    color: white;
+    color: $base-text-color;
     z-index: 10;
-    bottom: 85px;
     h4 {
       margin-bottom: 0;
       font-size: 16px;
@@ -65,13 +93,13 @@
         line-height: 30px;
         padding: 0;
         border-radius: 50%;
-        color: white;
-        border-color: white;
+        color: $brand-primary;
+        border-color: $brand-primary;
         vertical-align: middle;
         margin-left: -7px;
         &:hover {
-          background: white;
-          color: $brand-primary;
+          background: $brand-primary;
+          color: white;
         }
       }
     }
@@ -80,13 +108,13 @@
     }
     > button {
       width: 100%;
-      color: white;
+      color: $brand-primary;
       font-size: 18px;
       text-transform: uppercase;
-      border-color: white;
+      border-color: $brand-primary;
       &:hover {
-        background: white;
-        color: $brand-primary;
+        background: $brand-primary;
+        color: white;
       }
     }
   }
@@ -95,14 +123,14 @@
     width: 100%;
     text-align: center;
     bottom: 20px;
-    color: white;
+    color: $brand-primary;
     h5 {
       margin-bottom: 5px;
       font-size: 14px;
     }
     a {
       font-size: 16px;
-      color: white;
+      color: $brand-primary;
       &:hover {
         text-decoration: underline;
         color: $brand-secondary;

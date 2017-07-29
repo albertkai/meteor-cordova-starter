@@ -1,66 +1,4 @@
 .history-item {
-  &:not(:last-child) {
-    margin-bottom: 70px;
-  }
-  header {
-    @include flexbox;
-    border-bottom: 1px solid $gray-lighter;
-    padding-bottom: 10px;
-    p {
-      width: 50%;
-      margin: 0;
-      font-size: 24px;
-      @media screen and (max-width: $screen-sm) {
-        font-size: 16px;
-      }
-      span {
-        color: $brand-primary;
-      }
-      &:nth-child(2) {
-        text-align: right;
-      }
-    }
-  }
-  .summary {
-    @include flexbox;
-    @include align-items(center);
-    margin: 10px 0;
-    p {
-      margin: 0;
-      font-size: 18px;
-      margin-right: 20px;
-      @media screen and (max-width: $screen-sm) {
-        font-size: 14px;
-      }
-      span {
-        margin-right: 10px;
-      }
-    }
-    >div {
-      padding-right: 10px;
-      > div {
-        width: 33px;
-        height: 33px;
-        border-radius: 50%;
-        border: 1px solid $green;
-        color: $green;
-        line-height: 31px;
-        text-align: center;
-        font-size: 18px;
-      }
-    }
-    &.fails {
-      > div {
-        > div {
-          border-color: $red;
-          color: $red;
-        }
-      }
-    }
-  }
-}
-
-.historyy-item {
   position: relative;
   margin: 10px;
   background: white;
@@ -79,28 +17,36 @@
       &:last-child {
         border-top-right-radius: 3px;
       }
-      background: $blue;
-      &:nth-child(2) {
-        background: $green;
+      &.dailyTask {
+        background: $daily-task-color;
       }
-      &:nth-child(3) {
-        background: $lawngreen;
+      &.wakeUp {
+        background: $wake-up-color;
       }
-      &:nth-child(4) {
-        background: $yellow;
+      &.sport {
+        background: $sport-color;
       }
-      &:nth-child(5) {
-        background: $red;
+      &.meditation {
+        background: $meditation-color;
       }
-      &:nth-child(6) {
-        background: $magenta;
+      &.water {
+        background: $water-block-color;
       }
-      &:nth-child(7) {
-        background: $violet;
+      &.taskList {
+        background: $tasks-color;
+      }
+      &.report {
+        background: $report-color;
+      }
+      &.kind {
+        background: $kind-color;
+      }
+      &.failed {
+        background: lighten($gray-light, 10%);
       }
     }
   }
-  header, .fee, .text-task {
+  header, .history-text-block {
     padding: 15px 10px;
     p {
       font-weight: 400;
@@ -141,18 +87,23 @@
   .fee {
     background: $red;
     color: white;
+    padding: 10px;
   }
-  .text-task {
+  .history-text-block {
     &:not(:last-child) {
       border-bottom: 1px solid $gray-lighter;
     }
-    @include flexbox;
-    > span {
-      @include flex-grow(1);
+    .heading {
+      @include flexbox;
+      > span {
+        @include flex-grow(1);
+      }
     }
-    &.daily-task {
-      span {
-        font-size: 20px;
+    &.dailyTask {
+      .heading {
+        span {
+          font-size: 20px;
+        }
       }
     }
     button {

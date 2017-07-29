@@ -3,4 +3,7 @@ export const TOGGLE_MENU = 'core/TOGGLE_MENU';
 export const CLOSE_MENU = 'core/CLOSE_MENU';
 export const TOGGLE_WAKE_UP_MODAL = 'core/TOGGLE_WAKE_UP_MODAL';
 export const TOGGLE_DAY_SUCCESS_MODAL = 'core/TOGGLE_DAY_SUCCESS_MODAL';
+export const TOGGLE_VACATION = 'core/TOGGLE_VACATION';
+export const TOGGLE_FEES_MODAL = 'core/TOGGLE_FEES_MODAL';
+export const TOGGLE_PAY_FEES_MODAL = 'core/TOGGLE_PAY_FEES_MODAL';
 // Placeholder (used by robot)

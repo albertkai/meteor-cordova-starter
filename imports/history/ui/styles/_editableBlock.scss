@@ -15,8 +15,17 @@
   .buttons {
     text-align: right;
     margin-top: 10px;
+    @include flexbox;
     button {
+      font-size: 12px;
       margin-left: 10px;
+      @include flex-grow(1);
+      &.skip {
+        color: $red;
+      }
+      &.save {
+        color: $green;
+      }
     }
   }
 }
