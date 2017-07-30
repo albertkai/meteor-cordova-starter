@@ -136,6 +136,14 @@ Accounts.onCreateUser(function(options, user) {
       progress: true,
       blocks: true,
     },
+    introduction: {
+      myDay: false,
+      today: false,
+      profile: false,
+      leftMenu: false,
+      chats: false,
+      history: false,
+    },
   };
   return user;
 });

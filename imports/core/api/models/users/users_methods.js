@@ -73,12 +73,10 @@ Meteor.methods({
     if (!block) {
       const query = {
         $set: {
-          [`blocks.${name}`]: {
-            enabled: true,
-          },
+          [`blocks.${name}.enabled`]: true,
         },
       };
-      if (options[name]) query.$set[`blocks.${name}`].options = options;
+      if (options[name]) query.$set[`blocks.${name}.options`] = options[name];
       Meteor.users.update(this.userId, query);
       return true;
     }
@@ -126,6 +124,14 @@ Meteor.methods({
     Meteor.users.update(this.userId, {
       $set: {
         'personalData.background': file,
+      },
+    });
+  },
+
+  'users.setIntroductionSeen': function (name) {
+    Meteor.users.update(this.userId, {
+      $set: {
+        [`serviceData.introduction.${name}`]: true,
       },
     });
   },

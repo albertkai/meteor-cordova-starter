@@ -99,6 +99,52 @@ Meteor.methods({
     }
   },
 
+  'days.addTask'(dayId, text) {
+    const user = Meteor.users.findOne(this.userId);
+    const currentDay = Days.findOne(dayId);
+    const tasksBlock = currentDay.blocks.find(b => b.name === 'taskList');
+    if (tasksBlock) {
+      const { timezone } = user.personalData;
+      const dayTimezone = moment(currentDay.createdAt).tz(timezone).format('DD/MM/YYYY');
+      const currentUsersDayFormat = moment.tz(timezone).format('DD/MM/YYYY');
+      if (dayTimezone === currentUsersDayFormat) {
+        Days.update({
+          _id: dayId,
+          userId: this.userId,
+          'blocks.name': 'taskList',
+        }, {
+          $push: {
+            'blocks.$.data.tasks': { text, checked: false },
+          },
+        });
+      }
+    }
+  },
+
+  'days.removeTask'(dayId, index) {
+    const user = Meteor.users.findOne(this.userId);
+    const currentDay = Days.findOne(dayId);
+    const tasksBlock = currentDay.blocks.find(b => b.name === 'taskList');
+    if (tasksBlock) {
+      const { timezone } = user.personalData;
+      const dayTimezone = moment(currentDay.createdAt).tz(timezone).format('DD/MM/YYYY');
+      const currentUsersDayFormat = moment.tz(timezone).format('DD/MM/YYYY');
+      if (dayTimezone === currentUsersDayFormat) {
+        const currentTasks = tasksBlock.data.tasks;
+        currentTasks.splice(index, 1);
+        Days.update({
+          _id: dayId,
+          userId: this.userId,
+          'blocks.name': 'taskList',
+        }, {
+          $set: {
+            'blocks.$.data.tasks': currentTasks,
+          },
+        });
+      }
+    }
+  },
+
   'days.updateTask'(dayId, text, index) {
     const user = Meteor.users.findOne(this.userId);
     const currentDay = Days.findOne(dayId);
@@ -122,6 +168,7 @@ Meteor.methods({
   },
 
   'days.updateTextBlock'(dayId, name, text) {
+    console.log('Updating', dayId, name, text);
     Days.update({
       _id: dayId,
       userId: this.userId,
@@ -142,15 +189,16 @@ Meteor.methods({
       const dayTimezone = moment(currentDay.createdAt).tz(timezone).format('DD/MM/YYYY');
       const currentUsersDayFormat = moment.tz(timezone).format('DD/MM/YYYY');
       if (dayTimezone === currentUsersDayFormat) {
-        if (tasksBlock.data && tasksBlock.data[index].text) {
+        if (tasksBlock.data && tasksBlock.data.tasks && tasksBlock.data.tasks[index]) {
+          const currentTasks = tasksBlock.data.tasks;
+          currentTasks[index].checked = true;
           const query = {
             $set: {
-              [`blocks.$.data.${index}.checked`]: true,
+              'blocks.$.data.tasks': currentTasks,
             },
           };
-          const allChecked = !indexes
-            .filter(i => i !== index)
-            .map(i => tasksBlock.data[i].checked)
+          const allChecked = !currentTasks
+            .map(task => task.checked)
             .includes(false);
           if (allChecked) query.$set['blocks.$.passed'] = true;
           Days.update({

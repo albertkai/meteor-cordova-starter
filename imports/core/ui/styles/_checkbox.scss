@@ -18,8 +18,10 @@
       font-size: 33px !important;
     }
   }
-  &:hover {
-    background: rgba($gray-light, .5);
+  @media screen and (max-width: $screen-sm) {
+    &:hover {
+      background: lighten($gray-light, 10%);
+    }
   }
   &.missed {
     color: $red;
@@ -30,9 +32,6 @@
   &.tint {
     border-color: rgba($water-color, .5);
     color: rgba($water-color, .5);
-    &:hover {
-      background: rgba($water-color, .2);
-    }
   }
   &.half {
     border-color: $green;
@@ -59,7 +58,7 @@
   &.disabled {
     cursor: default;
     &:hover {
-      background: transparent;
+      background: white;
     }
   }
   &.checked {
@@ -71,6 +70,9 @@
     cursor: default;
     &:hover {
       background: rgba($green, .07);
+    }
+    .half {
+      display: none;
     }
   }
   .half {
@@ -102,7 +104,7 @@
     border-radius: 50%;
     background: $blue;
     &.checked {
-      @include transform(scale(.8));
+      @include transform(scale(1.4));
     }
   }
 }

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
+import { HistoryIcon } from '/imports/onboard';
 import _ from 'underscore';
 
 import { Checkbox, Days } from '/imports/core';
@@ -22,9 +23,15 @@ export class HistoryComponent extends PureComponent {
           ref={(ref) => this.cont = ref}
         >
           {
-            daysReady ?
-              days.map(d => <HistoryItem key={d._id} day={d} user={user} />) :
-              <p><i className="fa fa-spinner fa-spin" /> Загрузка</p>
+            daysReady
+              ? days.length
+                ? days.map(d => <HistoryItem key={d._id} day={d} user={user} />)
+                : <div className="no-items">
+                  <HistoryIcon />
+                  <h3>Здесь будет отображена личная история</h3>
+                  <p>Вы сможете отслеживать свой прогресс, читать свои ответы на текстовые вопросы, а также редактировать их</p>
+                </div>
+              : <p><i className="fa fa-spinner fa-spin" /> Загрузка</p>
           }
         </div>
       </div>

@@ -43,7 +43,7 @@ export class TextBlockComponent extends PureComponent {
     if (task) {
       return (
         <div className={`block-item text ${type} ${block.passed ? '_passed' : ''}`}>
-          <div>
+          <div onClick={this.expand}>
             <div>
               <Checkbox
                 onChange={this.checkTextBlock}
@@ -56,7 +56,7 @@ export class TextBlockComponent extends PureComponent {
               <p>Ежедневное задание</p>
             </div>
             <div>
-              <button className="button-expand" onClick={this.expand}>
+              <button className="button-expand">
                 <i className={`fa fa-chevron-${expanded ? 'up' : 'down'}`} />
               </button>
             </div>
@@ -88,11 +88,12 @@ export class TextBlockComponent extends PureComponent {
                     </p>
                   </div>
               }
-              <button
+              {!block.passed && <button
                 className="send"
                 onClick={this.checkTextBlock}
               >
-                Отправить!</button>
+                Отправить!
+              </button>}
             </div>
           </div>
         </div>
@@ -100,10 +101,10 @@ export class TextBlockComponent extends PureComponent {
     }
     return (
       <div className={`block-item text ${type} ${block.passed ? '_passed' : ''}`}>
-        <div>
+        <div onClick={this.expand}>
           <div>
             <Checkbox
-              onChange={this.checkTextBlock}
+              // onChange={this.checkTextBlock}
               checked={block.passed}
               enableOnly
             />
@@ -112,7 +113,7 @@ export class TextBlockComponent extends PureComponent {
             <h3>{name}</h3>
           </div>
           <div>
-            <button className="button-expand" onClick={this.expand}>
+            <button className="button-expand">
               <i className={`fa fa-chevron-${expanded ? 'up' : 'down'}`} />
             </button>
           </div>

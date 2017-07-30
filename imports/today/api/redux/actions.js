@@ -70,6 +70,14 @@ export const checkWaterBlock = dayId => () => {
   });
 };
 
+export const addTask = (dayId, text) => () => {
+  Meteor.call('days.addTask', dayId, text);
+};
+
+export const removeTask = (dayId, index) => () => {
+  Meteor.call('days.removeTask', dayId, index);
+};
+
 export const updateTask = (dayId, text, index) => () => {
   Meteor.call('days.updateTask', dayId, text, index);
 };

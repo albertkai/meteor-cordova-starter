@@ -2,4 +2,21 @@
   .container {
     background: $gray-lighter;
   }
+  .no-items {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include transform(translate(-50%, -50%));
+    width: 70vw;
+    text-align: center;
+    .onboard-history-icon {
+      width: 30vw;
+      height: 30vw;
+      fill: $green !important;
+      stroke: $green !important;
+    }
+    h3 {
+      color: $green;
+    }
+  }
 }

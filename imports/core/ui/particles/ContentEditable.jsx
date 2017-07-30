@@ -30,7 +30,9 @@ export class ContentEditable extends PureComponent {
           contentEditable={this.props.editable}
           onKeyUp={this.change}
           placeholder={this.props.placeholder}
-        />
+        >
+          {this.props.value}
+        </h4>
       );
     }
     return (

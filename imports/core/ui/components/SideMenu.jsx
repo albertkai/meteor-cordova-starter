@@ -75,15 +75,14 @@ export class SideMenu extends PureComponent {
           </nav>
           {
             !!toPay && <div className="fee">
-              <h4><i className="fa fa-warning"/> Оплатите штрафы:</h4>
-              <h2>1500Р <button onClick={toggleFeesModal}>?</button></h2>
+              <h4><i className="fa fa-warning" /> Оплатите штрафы:</h4>
+              <h2>{toPay}р<button onClick={toggleFeesModal}>?</button></h2>
               <button onClick={togglePayFeesModal}>Оплатить</button>
               <p>Штрафы необходимо погасить не позднее чем через 5 суток после начисления, иначе вы не сможете продолжить пользоваться приложением</p>
             </div>
           }
           <div className="vacation">
             <button onClick={toggleVacation}>Взять отпуск</button>
-            {/*<p>Использовано <strong>3</strong> из <strong>7</strong> в этом месяце</p>*/}
           </div>
           <footer>
             <div className="support">

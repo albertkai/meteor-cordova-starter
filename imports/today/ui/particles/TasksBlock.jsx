@@ -7,81 +7,67 @@ import { Checkbox, ContentEditable } from '/imports/core';
 
 export class TasksBlockComponent extends PureComponent {
 
-  updateFirstTask = (text) => {
+  addTask = (e) => {
+    const { value } = this.add;
     const {
       day: {
         _id,
       },
-      updateTask,
+      addTask,
     } = this.props;
-    updateTask(_id, text, 'first');
+    if (value) {
+      addTask(_id, value);
+      this.add.value = '';
+    }
   };
 
-  updateSecondTask = (text) => {
+  keyUpAdd = (e) => {
+    e.persist();
+    console.log(e.which);
+    if (e.which === 13) {
+      const { value } = this.add;
+      const {
+        day: {
+          _id,
+        },
+        addTask,
+      } = this.props;
+      if (value) {
+        addTask(_id, value);
+        this.add.value = '';
+      }
+    }
+  };
+
+  removeTask = (index) => {
     const {
       day: {
         _id,
       },
-      updateTask,
+      removeTask,
     } = this.props;
-    updateTask(_id, text, 'second');
+    removeTask(_id, index);
   };
 
-  updateThirdTask = (text) => {
-    const {
-      day: {
-        _id,
-      },
-      updateTask,
-    } = this.props;
-    updateTask(_id, text, 'third');
-  };
-
-  checkFirstTask = () => {
+  checkTask = (index) => {
     const {
       day: {
         _id,
       },
       checkTask,
     } = this.props;
-    checkTask(_id, 'first');
-  };
-
-  checkSecondTask = () => {
-    const {
-      day: {
-        _id,
-      },
-      checkTask,
-    } = this.props;
-    checkTask(_id, 'second');
-  };
-
-  checkThirdTask = () => {
-    const {
-      day: {
-        _id,
-      },
-      checkTask,
-    } = this.props;
-    checkTask(_id, 'third');
+    checkTask(_id, index);
   };
 
   render() {
     const {
       block,
     } = this.props;
-    const isHalf = (() => {
-      if (block.passed) {
-        return false;
-      }
-      if (block.data) {
-        return block.data.first && block.data.second && block.data.third;
-      }
-      return false;
-    })();
+    const isHalf = block.data && block.data.tasks && block.data.tasks.length >= 3;
+    let tasks = block.data ? block.data.tasks : [];
+    tasks = tasks || [];
     return (
-      <div className="block-item tasks-block">
+      <div className={`block-item tasks-block ${block.name} ${block.passed ? '_passed' : ''}`}>
         <div>
           <div>
             <Checkbox
@@ -101,70 +87,49 @@ export class TasksBlockComponent extends PureComponent {
           </div>
           <div>
             <div className="tasks">
-              <div className="task">
+              {tasks.map((t, i) => (
+                <div
+                  className="task"
+                  key={`tasks-block-task-${i}`}
+                >
+                  <div>
+                    <Checkbox
+                      onChange={() => this.checkTask(i)}
+                      noAnimation
+                      checked={t.checked}
+                    />
+                  </div>
+                  <div>
+                    <h4>{t.text}</h4>
+                  </div>
+                  <div>
+                    {!block.passed && <button
+                      onClick={() => this.removeTask(i)}
+                      className="remove"
+                    >
+                      <i className="fa fa-times" />
+                    </button>}
+                  </div>
+                </div>
+              ))}
+              {tasks.length < 3 && <div className="task add">
                 <div>
-                  <Checkbox
-                    onChange={this.checkFirstTask}
-                    noAnimation
-                    checked={block.data && block.data['first'] && block.data['first'].checked}
-                  />
+                  <button
+                    className="checkbox add"
+                    onClick={this.addTask}
+                  >
+                    <i className="fa fa-plus" />
+                  </button>
                 </div>
                 <div>
-                  <ContentEditable
-                    editable={!block.data || !block.data['second'] || (block.data && block.data['first'] && !block.data['first'].checked)}
-                    element="h4"
-                    onChange={this.updateFirstTask}
-                    value={block.data && block.data['first'] ? block.data['first'].text : ''}
-                    placeholder="Добавьте первое задание"
+                  <input
+                    ref={(ref) => this.add = ref}
+                    onKeyUp={this.keyUpAdd}
+                    type="text"
+                    placeholder="Текст задания"
                   />
                 </div>
-              </div>
-              <div className="task">
-                <div>
-                  <Checkbox
-                    onChange={this.checkSecondTask}
-                    noAnimation
-                    checked={block.data && block.data['second'] && block.data['second'].checked}
-                  />
-                </div>
-                <div>
-                  <ContentEditable
-                    editable={!block.data || !block.data['second'] || (block.data && block.data['second'] && !block.data['second'].checked)}
-                    element="h4"
-                    onChange={this.updateSecondTask}
-                    value={block.data && block.data['second'] ? block.data['second'].text : ''}
-                    placeholder="Добавьте второе задание"
-                  />
-                </div>
-              </div>
-              <div className="task">
-                <div>
-                  <Checkbox
-                    onChange={this.checkThirdTask}
-                    noAnimation
-                    checked={block.data && block.data['third'] && block.data['third'].checked}
-                  />
-                </div>
-                <div>
-                  <ContentEditable
-                    editable={!block.data || !block.data['third'] || (block.data && block.data['third'] && !block.data['third'].checked)}
-                    element="h4"
-                    onChange={this.updateThirdTask}
-                    value={block.data && block.data['third'] ? block.data['third'].text : ''}
-                    placeholder="Добавьте третье задание"
-                  />
-                </div>
-              </div>
-              {/*<div className="task add">*/}
-              {/*<div>*/}
-              {/*<button className="checkbox add">*/}
-              {/*<i className="fa fa-plus" />*/}
-              {/*</button>*/}
-              {/*</div>*/}
-              {/*<div>*/}
-              {/*<h4>Добавить задачу</h4>*/}
-              {/*</div>*/}
-              {/*</div>*/}
+              </div>}
             </div>
           </div>
         </div>

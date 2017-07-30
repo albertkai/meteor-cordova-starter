@@ -20,9 +20,10 @@ export class WakeUpBlockComponent extends PureComponent {
   render() {
     const {
       block,
+      type,
     } = this.props;
     return (
-      <div className={`block-item wake-up-block`}>
+      <div className={`block-item wake-up-block ${type} ${block.name} ${block.passed ? '_passed' : ''}`}>
         <div>
           <Checkbox
             onChange={this.checkWakeUpBlock}

@@ -17,3 +17,7 @@ export { UserIcon } from './ui/particles/UserIcon.jsx';
 export { HistoryIcon } from './ui/particles/HistoryIcon.jsx';
 
 export { PlusIcon } from './ui/particles/PlusIcon.jsx';
+
+export { FirstDay } from './ui/components/FirstDay.jsx';
+
+export { ArrowIcon } from './ui/particles/ArrowIcon.jsx';

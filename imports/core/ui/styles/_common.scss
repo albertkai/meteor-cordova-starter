@@ -245,11 +245,11 @@
   &.water {
     h3 {
       span {
-        color: $water-color;
+        color: $water-block-color;
       }
     }
     .circle {
-      background-color: $water-color;
+      background-color: $water-block-color;
     }
   }
   &.dailyTask {
@@ -305,6 +305,31 @@
     }
     .circle {
       background-color: $report-color;
+    }
+  }
+  &.wakeUp {
+    h3, .button-expand {
+      color: $wake-up-color;
+    }
+    .checkbox {
+      border-color: $wake-up-color;
+    }
+    .circle {
+      background-color: $wake-up-color;
+    }
+  }
+  &.taskList {
+    h3, .button-expand {
+      color: $tasks-color;
+    }
+    .checkbox {
+      border-color: $tasks-color;
+      .half {
+        background-color: rgba($tasks-color, .2);
+      }
+    }
+    .circle {
+      background-color: $tasks-color;
     }
   }
   &:not(.text) {
@@ -454,6 +479,20 @@
         }
       }
     }
+    &._passed {
+      .tasks {
+        .task {
+          .checkbox {
+            border-color: white;
+            color: white;
+          }
+          h3, h4 {
+            z-index: 2;
+            color: white !important;
+          }
+        }
+      }
+    }
     .tasks {
       margin-top: -35px;
       margin-left: 15px;
@@ -477,6 +516,9 @@
           width: 33px;
           height: 33px;
           padding: 0;
+          &.checked {
+            border-color: $green;
+          }
           i {
             font-size: 18px;
           }

@@ -1,10 +1,20 @@
 .block-item.text {
   .answer {
     padding: 10px;
-    font-size: 16px;
+    font-size: 18px;
     color: $base-text-color;
     background: $gray-lighter;
     border-radius: 7px;
+  }
+  &._passed {
+    .answer {
+      color: white;
+      background: transparent;
+      border: 1px solid white;
+    }
+    i {
+      color: white;
+    }
   }
   .task-text {
     p {

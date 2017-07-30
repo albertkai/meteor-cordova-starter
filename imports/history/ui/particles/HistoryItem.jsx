@@ -40,7 +40,10 @@ export class HistoryItem extends PureComponent {
     return (
       <div className="history-item">
         <div className="stripe">
-          {blocks.map(b => <span key={`stripe-${b.name}`} className={`${b.name} ${b.passed ? 'passed' : 'failed'}`} />)}
+          {
+            blocks
+              .sort((a, b) => (a.passed === b.passed) ? 0 : a.passed ? -1 : 1)
+              .map(b => <span key={`stripe-${b.name}`} className={`${b.name} ${b.passed ? 'passed' : 'failed'}`} />)}
         </div>
         <header>
           <p>{moment(createdAt).format('DD.MM.YYYY')}</p>
@@ -51,25 +54,26 @@ export class HistoryItem extends PureComponent {
           }
         </header>
         {
-          failed.length &&
+          !!failed.length &&
             <div className="fee">Начислен штраф <strong>{failed.length * amount}P</strong></div>
         }
         <HistoryTextBlock
-          title={`<strong>День ${index}</strong>. Задание`}
+          title={`<strong>День ${dailyTask.options.day}</strong>. Задание`}
           name="dailyTask"
           desc={dailyTask.options.html}
-          dayId={dailyTask._id}
+          dayId={_id}
           data={dailyTask.data}
         />
         {
           textBlocks
             .filter(t => blocks.find(b => b.name === t))
-            .map(b => {
+            .map(t => {
+              const b = blocks.find(b => b.name === t);
               return (
                 <HistoryTextBlock
                   title={names[t]}
                   name={t}
-                  dayId={b._id}
+                  dayId={_id}
                   data={b.data}
                 />
               );
@@ -77,39 +81,6 @@ export class HistoryItem extends PureComponent {
         }
       </div>
     );
-    // return (
-    //   <div className="history-item">
-    //     <header>
-    //       <p>{moment(createdAt).format('DD.MM.YYYY')}</p>
-    //       <p>{isFinished ? <span>Выполнено <span>{passed.length}</span> из <span>{blocks.length}</span></span> : <span>Сегодня</span>}</p>
-    //     </header>
-    //     <div className="body">
-    //       {isFinished && !!passed.length && <div className="success summary">
-    //         <div>
-    //           <div>
-    //             <i className="fa fa-check" />
-    //           </div>
-    //         </div>
-    //         <p>{passed.map(b => <span key={`passed-${b.name}`}>{names[b.name]}</span>)}</p>
-    //       </div>}
-    //       {isFinished && !!failed.length && <div className="fails summary">
-    //         <div>
-    //           <div>
-    //             <i className="fa fa-times" />
-    //           </div>
-    //         </div>
-    //         <p>{failed.map(b => <span key={`failed-${b.name}`}>{names[b.name]}</span>)}</p>
-    //       </div>}
-    //     </div>
-    //     <EditableBlock
-    //       heading={`День ${dailyTask.options.day}. Задание`}
-    //       task={dailyTask.options.html}
-    //       data={dailyTask.data}
-    //       dayId={_id}
-    //       name="dailyTask"
-    //     />
-    //   </div>
-    // );
   }
 }
 

@@ -20,10 +20,11 @@ export class WaterBlockComponent extends PureComponent {
   render() {
     const {
       block,
+      type,
     } = this.props;
     const volume = block.data ? block.data.volume : 0;
     return (
-      <div className="block-item water">
+      <div className={`block-item water ${type} ${block.name} ${block.passed ? '_passed' : ''}`}>
         <div>
           <Checkbox
               status="tint"
@@ -33,7 +34,11 @@ export class WaterBlockComponent extends PureComponent {
           />
         </div>
         <div>
-          <h3><span>{(volume / 1000).toFixed(1)}</span> из <span>2</span> литров воды</h3>
+          {
+            block.passed
+              ? <h3>Выпито 2 литра воды</h3>
+              : <h3><span>{(volume / 1000).toFixed(1)}</span> из <span>2</span> литров воды</h3>
+          }
           <p className="desc">Минимум 2 литра</p>
         </div>
       </div>

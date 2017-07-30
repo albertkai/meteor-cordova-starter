@@ -25,7 +25,7 @@ export class HistoryTextBlock extends PureComponent {
         </div>
         <div className={`task-content ${expanded ? '_expanded' : ''}`}>
           <div className="task-text" dangerouslySetInnerHTML={{ __html: desc }} />
-          <EditableBlock data={data} dayId={dayId} />
+          <EditableBlock data={data} dayId={dayId} name={name} />
         </div>
       </div>
     );

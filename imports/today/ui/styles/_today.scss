@@ -1,10 +1,13 @@
 #today {
   header {
     position: relative;
-    padding: $base-padding / 2 $base-padding;
+    padding: $base-padding / 2;
     padding-bottom: 0;
     background: $gray-lighter;
     border-bottom: 1px solid $gray-lighter;
+    .success {
+      color: $green;
+    }
     h2 {
       @include flexbox;
       font-weight: normal;

@@ -8,6 +8,7 @@ import { SimpleBlock } from '../particles/SimpleBlock';
 import { TasksBlock } from '../particles/TasksBlock';
 import { WaterBlock } from '../particles/WaterBlock';
 import { WakeUpBlock } from '../particles/WakeUpBlock';
+import { FirstDay } from '../components/FirstDay';
 
 const blocksMap = {
   dailyTask: {
@@ -57,7 +58,7 @@ const blocksMap = {
     properties: {
       name: 'Отчет за день',
       min: 140,
-      desc: 'Опишите, как ваши действия за сегодня продвинули вас к цели',
+      desc: 'Опишите, как ваши действия сегодня продвинули вас к цели',
     },
   },
   kind: {
@@ -101,16 +102,31 @@ export class TodayComponent extends PureComponent {
   }
 
   render() {
-    const { today, todayReady } = this.props;
+    const {
+      today,
+      todayReady,
+      user: {
+        serviceData: {
+          introduction: {
+            today: todaySeen,
+          },
+        },
+      },
+    } = this.props;
     if (todayReady && today) {
       const itemWidth = window.innerWidth / today.blocks.length;
+      const passedBlocks = today.blocks.filter(b => b.passed);
+      const allPassed = passedBlocks.length === today.blocks.length;
       return (
         <div id="today" className="page">
           <div className="container paper no-padding scroll-wrap">
             <header>
               <h2>
-                <span>Выполнено: <strong>{today.blocks.filter(b => b.passed).length}</strong> из <strong>{today.blocks.length}</strong></span>
-                <span>Осталось: <strong>{this.state.timeLeft}</strong></span>
+                {
+                  allPassed
+                    ? <span className="success"><i className="fa fa-check" /> Все выполнено!</span>
+                    : <span>Выполнено: <strong>{passedBlocks.length}</strong> из <strong>{today.blocks.length}</strong></span>}
+                {!allPassed && <span>Осталось: <strong>{this.state.timeLeft}</strong></span>}
               </h2>
               <div className="status-stripe">
                 {today.blocks.filter(b => b.passed).map(b => (
@@ -136,6 +152,7 @@ export class TodayComponent extends PureComponent {
                     {...blockData.properties}
                   />;
                 })}
+              {!todaySeen && <FirstDay />}
             </div>
           </div>
         </div>

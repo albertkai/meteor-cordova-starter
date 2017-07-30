@@ -8,7 +8,7 @@ import { Days, Tasks } from '/imports/core';
 SyncedCron.add({
   name: 'Add new days',
   schedule: function(parser) {
-    return parser.text('every 10 hours');
+    return parser.text('every 30 minutes');
   },
   job: function() {
     // Need to be optimized using batch insert and aggregation on first major release
@@ -103,6 +103,7 @@ SyncedCron.add({
                 name: block,
                 passed: false,
                 closed: false,
+                index: 1,
               };
               if (options) {
                 blockDoc.options = options;
