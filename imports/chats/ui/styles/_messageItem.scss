@@ -1,1 +1,7 @@
-#message-item {}
+#message-item {
+  .timestamp {
+    strong {
+      margin-right: 3px;
+    }
+  }
+}
