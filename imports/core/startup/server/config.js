@@ -6,6 +6,7 @@ import AWS from 'aws-sdk';
 // Configure meteor email module to use Amazon SES
 Meteor.startup(() => {
   process.env.MAIL_URL = `smtp://${Meteor.settings.smtp.username}:${Meteor.settings.smtp.password}@${Meteor.settings.smtp.host}`;
+  // Meteor.users.remove({});
 });
 
 // ServiceConfiguration.configurations.remove({

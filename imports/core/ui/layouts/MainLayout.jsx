@@ -29,12 +29,12 @@ export class MainLayoutComponent extends PureComponent {
       userReady,
       checkNotificationId,
       setStatusBar,
+      preload,
     } = this.props;
     const {
       user: newUser,
       userReady: newUserReady,
     } = nextProps;
-    console.log('Component will receive');
     if (newUser && newUser.onboard) {
       if (!newUser.onboard.isFinished) {
         browserHistory.push(`/onboard/${newUser.onboard.step}`);
@@ -47,20 +47,24 @@ export class MainLayoutComponent extends PureComponent {
       }
     }
     if (Meteor.isCordova) {
-      console.log('Cordova detected');
       setStatusBar('light');
       if (newUser && newUserReady && !userReady) {
         checkNotificationId(newUser);
       }
     }
+    if (newUser && newUserReady && !userReady) {
+      console.log('preloading');
+      preload(newUser);
+    }
   }
 
-  componentDidMount(prevProps) {
+  componentDidMount() {
     const { location: { pathname } } = this.props;
     const {
       user,
       userReady,
       checkNotificationId,
+      preload,
     } = this.props;
     if (user && user.onboard) {
       if (!user.onboard.isFinished) {

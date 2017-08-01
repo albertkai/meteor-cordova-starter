@@ -73,7 +73,7 @@ const MessagesListContainer = createContainer(({
   } else {
     thread = groupId;
   }
-  const handle = Meteor.subscribe('messages.listMessages', thread);
+  const handle = Meteor.subs.subscribe('messages.listMessages', thread);
   const messages = Messages.find().fetch();
   return {
     messages,

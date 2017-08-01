@@ -2,6 +2,8 @@ import { browserHistory } from 'react-router';
 import { Meteor } from 'meteor/meteor';
 import { Notify } from '/imports/notifications';
 
+import { coreConstants } from '/imports/core';
+
 import * as c from './constants';
 
 // Pure actions
@@ -75,6 +77,41 @@ export const logOut = () => () => {
   });
 };
 
+const cacheImage = (path) => {
+  if (path) {
+    console.log('Preloading image:', path);
+    const image = new Image();
+    image.src = path;
+  }
+};
+
+export const preload = user => () => {
+  console.log('Preloading data');
+  Meteor.subs.subscribe('days.getUserDays');
+  const { background, avatar } = user.personalData;
+  if (avatar) {
+    const url = (() => {
+      if (avatar) {
+        if (avatar.match(/^(http|https)/)) {
+          return avatar;
+        }
+        return `${coreConstants.CLOUDFRONT_URL}images/${avatar}`;
+      }
+      return `${coreConstants.CLOUDFRONT_URL}samples/default_avatar.jpg`;
+    })();
+    cacheImage(url);
+  }
+  if (background) {
+    const backgroundUrl = (() => {
+      if (background.match(/samples/g)) {
+        return `${coreConstants.CLOUDFRONT_URL}${background}`;
+      }
+      return `${coreConstants.CLOUDFRONT_URL}images/${background}`;
+    })();
+    cacheImage(backgroundUrl);
+  }
+};
+
 export const takeVacation = (days) => (dispatch) => {
   Meteor.call('users.takeVacation', days, (err, res) => {
     if (!err) {
@@ -88,3 +125,4 @@ export const takeVacation = (days) => (dispatch) => {
     }
   });
 };
+

@@ -12,7 +12,6 @@ const steps = [
 
 Meteor.methods({
   'onboard.onboardNextStep'(timezone) {
-    console.log('yoo');
     const user = Meteor.users.findOne(this.userId);
     const { step } = user.onboard;
     const query = { $set: {} };

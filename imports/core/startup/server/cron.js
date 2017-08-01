@@ -16,11 +16,16 @@ SyncedCron.add({
       const { timezone } = u.personalData;
       const currentUsersTime = moment.tz(timezone);
       const currentHour = parseInt(currentUsersTime.format('HH'), 10);
+      console.log(currentHour);
       if (currentHour === 5) {
         const currentDay = Days.findOne({ userId: u._id }, { sort: { createdAt: -1 } });
+        console.log('Got current day:', !!currentDay);
         if (currentDay) {
           const createdAtFormat = moment(currentDay.createdAt).tz(timezone).format('DD/MM/YYYY');
           const currentUsersDayFormat = currentUsersTime.format('DD/MM/YYYY');
+          console.log('Day created:', currentDay.createdAt);
+          console.log('creaTED T FORMAt:', createdAtFormat);
+          console.log('current users day format:', currentUsersDayFormat);
           if (createdAtFormat !== currentUsersDayFormat) {
             const userCreatedAt = moment(u.createdAt).tz(timezone).format('DD/MM/YYYY');
             const day = moment(currentUsersTime.format('DD/MM/YYYY HH:mm:SS'), 'DD/MM/YYYY HH:mm:SS')
@@ -60,6 +65,7 @@ SyncedCron.add({
                 obj.blocks.push(blockDoc);
               }
             });
+            console.log('Inserting day:', obj);
             Days.insert(obj);
             const uncheckedBlocks = currentDay.blocks.filter(b => !b.passed);
             if (uncheckedBlocks.length > 0) {

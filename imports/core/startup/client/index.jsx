@@ -1,4 +1,5 @@
 import React from 'react';
+import { SubsManager } from 'meteor/meteorhacks:subs-manager';
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
@@ -26,6 +27,7 @@ if (Meteor.isCordova) {
 
 Meteor.startup(() => {
   initReactFastclick();
+  Meteor.subs = new SubsManager();
   render(
     <Provider store={store}>
       <AppRouter />

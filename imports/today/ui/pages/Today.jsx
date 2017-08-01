@@ -163,7 +163,7 @@ export class TodayComponent extends PureComponent {
 }
 
 export const Today = createContainer(() => {
-  const handle = Meteor.subscribe('days.getToday');
+  const handle = Meteor.subs.subscribe('days.getToday');
   const today = Days.findOne();
   return { today, todayReady: handle.ready() };
 }, TodayComponent);
