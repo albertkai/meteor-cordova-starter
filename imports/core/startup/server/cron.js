@@ -2,8 +2,51 @@ import { Meteor } from 'meteor/meteor';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
 import moment from 'moment';
 import 'moment-timezone';
+import _ from 'underscore';
+import OneSignalClient from 'node-onesignal';
 
 import { Days, Tasks } from '/imports/core';
+
+const client = new OneSignalClient(
+  Meteor.settings.public.oneSignal.appId,
+  Meteor.settings.public.oneSignal.restApiKey,
+);
+
+const waterTexts = [
+  'Выпейте еще воды! Это совсем не сложно, но производит грандиозный эффект в перспективе!',
+  'Вода - главное вещество в нашем огранизме! Не забвайте поддерживать водный баланс - выпейте стакан воды прямо сейчас!',
+  'Сейчас же прервитесь, и выпейте стакан воды! Нельзя допкскать обезвоживания',
+  'Выпейте еще стакан воды!',
+  'Прямо ейчас прервитесь, оглянитесь вокруг, раззлабьтесь и пойдите выпейте стакан воды',
+  'Пожалуйста, выпейте еще стакан воды!',
+  'Не забывайте про водный баланс - это очень важно для всех процессов! Прямо сейчас выпейте стакан воды',
+  'Вода для мозга - это как масло для двигателя в автомобиле. Выпейте стакан воды прямо сейчас',
+  'Водный баланс - это главный секрет молодости тела, живости ума и бодрости духа. Выпейте стакан воды прямо сейчас!',
+  'Стакан воды ждет вас! Идите и выпейте его прямо сейчас',
+];
+
+const motivationTexts = [
+  'Остановитесь на минутку! Серьезно, отложите все дела, и вспомните, ради чего вы все это делаете. К чему вы действительно стремитесь?',
+  'У вас все получится! Если вы будете усердно идти к своей цели, какой бы сложной она вам не казалась, пусть и маленькими шажками, то вы непременно ее достигнете!',
+  'Путь к любой большой цели - это большой набор маленьких действий. Главное - всегда помнить, в каком направдении двигаться! Подумайте еще раз о своих главных целях',
+  'Вы на верном пути! Главное не отчаивайтесь, и продолжайте маленькими шагами создавать лучшего себя',
+  'Помните, все зависит от вашего внутреннего настроя. Просто поверьте в успех, и он придет!',
+  'Вы не представляете, какой силой обладает вера. Поверьте в себя!',
+  'Помните, главное - всегда помнить о том, куда и зачем вы идете. Подумайте об этом!',
+  'Остановитесь! Задумайтесь, ведет ли то что вы делаете сейчас к вашим целям?',
+];
+
+const dailyTaskTexts = [
+  'Ваше дневное задание ждет вас!',
+  'Прочитайте новое задание! Оно сегодня очень интересное',
+  'Для вас новое задание на сегодня, прочтите его прямо сейчас!',
+];
+
+const endOfDayTexts = [
+  'Пожажуйста, выполните все задания на сегодня! У вас еще осталось 2 часа',
+  'Выполните все задания на сегодня, иначе придется заплатить штраф',
+  'Не позволяйте себе слабости! Выполните все задания на сегодня',
+];
 
 SyncedCron.add({
   name: 'Add new days',
@@ -16,16 +59,11 @@ SyncedCron.add({
       const { timezone } = u.personalData;
       const currentUsersTime = moment.tz(timezone);
       const currentHour = parseInt(currentUsersTime.format('HH'), 10);
-      console.log(currentHour);
       if (currentHour === 5) {
         const currentDay = Days.findOne({ userId: u._id }, { sort: { createdAt: -1 } });
-        console.log('Got current day:', !!currentDay);
         if (currentDay) {
           const createdAtFormat = moment(currentDay.createdAt).tz(timezone).format('DD/MM/YYYY');
           const currentUsersDayFormat = currentUsersTime.format('DD/MM/YYYY');
-          console.log('Day created:', currentDay.createdAt);
-          console.log('creaTED T FORMAt:', createdAtFormat);
-          console.log('current users day format:', currentUsersDayFormat);
           if (createdAtFormat !== currentUsersDayFormat) {
             const userCreatedAt = moment(u.createdAt).tz(timezone).format('DD/MM/YYYY');
             const day = moment(currentUsersTime.format('DD/MM/YYYY HH:mm:SS'), 'DD/MM/YYYY HH:mm:SS')
@@ -65,7 +103,6 @@ SyncedCron.add({
                 obj.blocks.push(blockDoc);
               }
             });
-            console.log('Inserting day:', obj);
             Days.insert(obj);
             const uncheckedBlocks = currentDay.blocks.filter(b => !b.passed);
             if (uncheckedBlocks.length > 0) {
@@ -127,29 +164,64 @@ SyncedCron.add({
 SyncedCron.add({
   name: 'Send scheduled notifications',
   schedule: function(parser) {
-    return parser.text('every hour');
+    return parser.text('every 5 seconds');
   },
   job: function() {
-    const { timezone } = u.personalData;
-    const currentUsersTime = moment.tz(timezone);
-    const currentHour = parseInt(currentUsersTime.format('HH'), 10);
-    // Water
-    if ([9, 12, 15, 18, 21].includes(currentHour)) {
-      Meteor.users.find({ 'blocks.water.enabled': true }).forEach(u => {
-        console.log('sending push notification');
-      });
-    }
-    if ([8, 14, 20].includes(currentHour)) {
-      Meteor.users.find().forEach(u => {
-        console.log('Send motivating notification');
-      });
-    }
-    if (currentHour === 11) {
-      console.log('Send the daily task notification if not marked');
-    }
-    // Days.find({ createdAt: moment().s }).forEach(d => {
-    //   console.log(d._id);
-    // });
+    console.log('Sending notification');
+    Meteor.users.find().forEach(u => {
+      const {
+        personalData: {
+          timezone,
+        },
+        serviceData: {
+          notifications: {
+            water,
+            motivation,
+            dailyTask,
+            endOfDay,
+            oneSignalId,
+          },
+        },
+      } = u;
+      const currentUsersTime = moment.tz(timezone);
+      const currentHour = parseInt(currentUsersTime.format('HH'), 10);
+      if (water && [9, 12, 15, 18, 21].includes(currentHour)) {
+        client.sendNotification('2 литра воды в день', {
+          include_player_ids: [oneSignalId],
+          contents: {
+            ru: _.sample(waterTexts),
+          },
+        });
+      }
+      if (motivation && [8, 14, 20].includes(currentHour)) {
+        client.sendNotification('Мотивация', {
+          include_player_ids: [oneSignalId],
+          contents: {
+            ru: _.sample(motivationTexts),
+          },
+        });
+      }
+      if ((dailyTask || endOfDay) && [11, 22].includes(currentHour)) {
+        const currentDay = Days.findOne({ userId: u._id }, { sort: { createdAt: -1 } });
+        const { blocks } = currentDay;
+        if (dailyTask && currentHour === 11 && !blocks['dailyTask'].passed) {
+          client.sendNotification('Дневное задание', {
+            include_player_ids: [oneSignalId],
+            contents: {
+              ru: _.sample(dailyTaskTexts),
+            },
+          });
+        }
+        if (endOfDay && currentHour === 22 && blocks.filter(b => !b.passed).length > 0) {
+          client.sendNotification('Остались невыполненные задания', {
+            include_player_ids: [oneSignalId],
+            contents: {
+              ru: _.sample(endOfDayTexts),
+            },
+          });
+        }
+      }
+    });
   },
 });
 

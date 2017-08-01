@@ -6,10 +6,7 @@ import { Days } from './days.js';
 
 Meteor.publish('days.getUserDays', function (limit) {
   const yesterday = moment().subtract(24, 'hours').toISOString();
-  console.log(yesterday);
-  console.log(this.userId);
-  console.log(Days.find({ createdAt: { $lte: yesterday }, userId: this.userId }).fetch());
-  return Days.find({ createdAt: { $lte: yesterday }, userId: this.userId });
+  return Days.find({ createdAt: { $lte: yesterday }, userId: this.userId }, { limit: 20 });
 });
 
 Meteor.publish('days.getToday', function () {

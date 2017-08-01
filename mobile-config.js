@@ -62,6 +62,7 @@ App.setPreference('KeyboardDisplayRequiresUserAction', false);
 // https://github.com/Differential/meteor-mobile-cookbook/blob/master/iOS/Status%20Bar.md
 App.setPreference('StatusBarOverlaysWebView', true);
 App.setPreference('StatusBarStyle', 'default');
+App.setPreference('Orientation', 'portrait');
 
 // Pass preferences for a particular PhoneGap/Cordova plugin
 // SEE http://cordova.apache.org/docs/en/4.0.0/config_ref_index.md.html#The%20config.xml%20File

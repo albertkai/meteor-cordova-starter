@@ -314,7 +314,9 @@
       h3 {
         position: relative;
         z-index: 2;
-        font-size: 22px;
+        font-size: 24px;
+        margin-top: 24px;
+        margin-bottom: 20px;
         color: $brand-primary;
         @include transform(translateZ(0));
         backface-visibility: hidden;
@@ -326,7 +328,7 @@
       p {
         position: relative;
         z-index: 2;
-        font-size: 14px;
+        font-size: 16px;
         margin-bottom: 20px;
         @include transform(translateZ(0));
         backface-visibility: hidden;

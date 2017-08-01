@@ -181,9 +181,6 @@
       line-height: 32px;
       font-weight: 500;
       color: $base-text-color;
-      @media screen and (max-width: $screen-sm) {
-        font-size: 14px;
-      }
     }
     @media screen and (min-width: $screen-sm) {
       &:hover {
@@ -444,7 +441,7 @@
     margin-top: 5px;
     margin-bottom: 5px;
     @media screen and (max-width: $screen-sm) {
-      font-size: 14px;
+      font-size: 16px;
     }
   }
   &.tasks-block {
