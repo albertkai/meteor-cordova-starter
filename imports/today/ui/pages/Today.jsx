@@ -91,6 +91,7 @@ export class TodayComponent extends PureComponent {
     const { todayReady } = this.props;
     const { todayReady: nextReady, today: { createdAt } } = nextProps;
     if (!todayReady && nextReady) {
+      console.log('today', createdAt);
       const limit = moment(createdAt).add('days', 1).set('hour', 5).set('minute', 0);
       let timeLeft = moment.utc(limit.diff(moment(), 'milliseconds')).format('HH:mm:ss');
       this.setState({ timeLeft });
@@ -164,7 +165,7 @@ export class TodayComponent extends PureComponent {
 
 export const Today = createContainer(() => {
   const handle = Meteor.subs.subscribe('days.getToday');
-  const today = Days.findOne();
+  const today = Days.findOne({}, { sort: { createdAt: -1 } });
   return { today, todayReady: handle.ready() };
 }, TodayComponent);
 

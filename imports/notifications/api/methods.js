@@ -10,10 +10,9 @@ Meteor.methods({
   'push.send'(id) {
     console.log('Calling me');
     Meteor.setTimeout(() => {
-      client.sendNotification('Incoming call', {
+      client.sendNotification('Кириллический текст', {
         include_player_ids: [id],
         contents: {
-          en: 'Hello sweety',
           ru: 'Физкульт, привет!',
         },
         url: 'https://google.com',

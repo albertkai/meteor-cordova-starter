@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { Meteor } from 'meteor/meteor';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 

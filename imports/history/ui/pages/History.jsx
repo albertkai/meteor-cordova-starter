@@ -41,7 +41,7 @@ export class HistoryComponent extends PureComponent {
 
 export const History = createContainer(() => {
   const handle = Meteor.subs.subscribe('days.getUserDays');
-  const days = Days.find().fetch();
+  const days = Days.find({}, { sort: { createdAt: -1 } }).fetch();
   return {
     days,
     daysReady: handle.ready(),

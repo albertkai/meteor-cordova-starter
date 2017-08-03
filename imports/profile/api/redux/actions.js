@@ -131,10 +131,9 @@ export const setBlockOption = (name, option, value) => () => {
   Meteor.call('users.setBlockOption', name, option, value);
 };
 
-export const uploadAvatar = e => () => {
-  const file = e.target.files[0];
+export const uploadAvatar = (e, isMobile) => () => {
   const uploader = new Slingshot.Upload('imageUploads');
-  uploader.send(file, (error, url) => {
+  const handleResponse = (error, url) => {
     if (error) {
       console.error('Error uploading', error);
       Notify.alert({
@@ -155,7 +154,16 @@ export const uploadAvatar = e => () => {
       }
     });
     return true;
-  });
+  };
+  if (isMobile) {
+    console.log('Moddd');
+    navigator.camera.getPicture((picture) => {
+      console.log(picture);
+    });
+  } else {
+    const file = e.target.files[0];
+    uploader.send(file, handleResponse);
+  }
 };
 
 export const uploadBackground = e => () => {

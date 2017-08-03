@@ -50,12 +50,12 @@ const endOfDayTexts = [
 
 SyncedCron.add({
   name: 'Add new days',
-  schedule: function(parser) {
+  schedule: function newDaysSchedule(parser) {
     return parser.text('every 30 minutes');
   },
-  job: function() {
+  job: function newDaysJob() {
     // Need to be optimized using batch insert and aggregation on first major release
-    Meteor.users.find().forEach(u => {
+    Meteor.users.find().forEach((u) => {
       const { timezone } = u.personalData;
       const currentUsersTime = moment.tz(timezone);
       const currentHour = parseInt(currentUsersTime.format('HH'), 10);
@@ -161,14 +161,126 @@ SyncedCron.add({
   },
 });
 
+// SyncedCron.add({
+//   name: 'Test days',
+//   schedule: function newTestDaysSchedule(parser) {
+//     return parser.text('every 10 hours');
+//   },
+//   job: function newTestDaysJob() {
+//     // Need to be optimized using batch insert and aggregation on first major release
+//     Meteor.users.find().forEach((u) => {
+//       const { timezone } = u.personalData;
+//       const currentUsersTime = moment.tz(timezone);
+//       const currentHour = parseInt(currentUsersTime.format('HH'), 10);
+//       if (true) {
+//         const currentDay = Days.findOne({ userId: u._id }, { sort: { createdAt: -1 } });
+//         if (currentDay) {
+//           const createdAtFormat = moment(currentDay.createdAt).tz(timezone).format('DD/MM/YYYY');
+//           const currentUsersDayFormat = currentUsersTime.format('DD/MM/YYYY');
+//           if (true) {
+//             const userCreatedAt = moment(u.createdAt).tz(timezone).format('DD/MM/YYYY');
+//             const day = moment(currentUsersTime.format('DD/MM/YYYY HH:mm:SS'), 'DD/MM/YYYY HH:mm:SS')
+//                 .diff(moment(`${userCreatedAt} 00:00:00`, 'DD/MM/YYYY HH:mm:SS'), 'days') + 1;
+//             const task = Tasks.findOne({ day });
+//             const { blocks } = u;
+//             let index = currentDay.index || 1;
+//             index += 1;
+//             const obj = {
+//               userId: u._id,
+//               createdAt: moment().toISOString(),
+//               blocks: [],
+//               index,
+//               timezone,
+//             };
+//             obj.blocks.push({
+//               name: 'dailyTask',
+//               passed: false,
+//               closed: false,
+//               options: {
+//                 html: task.html,
+//                 day,
+//               },
+//             });
+//             Object.keys(blocks).forEach((block) => {
+//               const blockData = blocks[block];
+//               const { enabled, options } = blockData;
+//               if (enabled) {
+//                 const blockDoc = {
+//                   name: block,
+//                   passed: false,
+//                   closed: false,
+//                 };
+//                 if (options) {
+//                   blockDoc.options = options;
+//                 }
+//                 obj.blocks.push(blockDoc);
+//               }
+//             });
+//             Days.insert(obj);
+//             const uncheckedBlocks = currentDay.blocks.filter(b => !b.passed);
+//             if (uncheckedBlocks.length > 0) {
+//               const { items, toPay, amount } = u.fees;
+//               let newToPay = toPay;
+//               uncheckedBlocks.forEach((b) => {
+//                 newToPay += amount;
+//                 items.push({ name: b.name, date: moment(currentDay.createdAt).valueOf() });
+//               });
+//               const query = {
+//                 $set: {
+//                   'fees.toPay': newToPay,
+//                   'fees.items': items,
+//                 },
+//               };
+//               Meteor.users.update(u._id, query);
+//             }
+//           }
+//         } else {
+//           const { blocks } = u;
+//           const task = Tasks.findOne({ day: 1 });
+//           const obj = {
+//             userId: u._id,
+//             createdAt: moment().toISOString(),
+//             blocks: [],
+//           };
+//           obj.blocks.push({
+//             name: 'dailyTask',
+//             passed: false,
+//             closed: false,
+//             options: {
+//               html: task.html,
+//               day: 1,
+//             },
+//           });
+//           Object.keys(blocks).forEach((block) => {
+//             const blockData = blocks[block];
+//             const { enabled, options } = blockData;
+//             if (enabled) {
+//               const blockDoc = {
+//                 name: block,
+//                 passed: false,
+//                 closed: false,
+//                 index: 1,
+//               };
+//               if (options) {
+//                 blockDoc.options = options;
+//               }
+//               obj.blocks.push(blockDoc);
+//             }
+//           });
+//           Days.insert(obj);
+//         }
+//       }
+//     });
+//   },
+// });
+
 SyncedCron.add({
   name: 'Send scheduled notifications',
-  schedule: function(parser) {
-    return parser.text('every 5 seconds');
+  schedule: function notificationsSchedule(parser) {
+    return parser.text('every hour');
   },
-  job: function() {
-    console.log('Sending notification');
-    Meteor.users.find().forEach(u => {
+  job: function notificationsJob() {
+    Meteor.users.find().forEach((u) => {
       const {
         personalData: {
           timezone,
@@ -186,6 +298,7 @@ SyncedCron.add({
       const currentUsersTime = moment.tz(timezone);
       const currentHour = parseInt(currentUsersTime.format('HH'), 10);
       if (water && [9, 12, 15, 18, 21].includes(currentHour)) {
+        console.log('Send water notification');
         client.sendNotification('2 литра воды в день', {
           include_player_ids: [oneSignalId],
           contents: {
@@ -194,6 +307,7 @@ SyncedCron.add({
         });
       }
       if (motivation && [8, 14, 20].includes(currentHour)) {
+        console.log('Send motivation notification');
         client.sendNotification('Мотивация', {
           include_player_ids: [oneSignalId],
           contents: {
@@ -204,7 +318,8 @@ SyncedCron.add({
       if ((dailyTask || endOfDay) && [11, 22].includes(currentHour)) {
         const currentDay = Days.findOne({ userId: u._id }, { sort: { createdAt: -1 } });
         const { blocks } = currentDay;
-        if (dailyTask && currentHour === 11 && !blocks['dailyTask'].passed) {
+        if (dailyTask && currentHour === 11 && !blocks.dailyTask.passed) {
+          console.log('Send daily task notification');
           client.sendNotification('Дневное задание', {
             include_player_ids: [oneSignalId],
             contents: {
@@ -213,6 +328,7 @@ SyncedCron.add({
           });
         }
         if (endOfDay && currentHour === 22 && blocks.filter(b => !b.passed).length > 0) {
+          console.log('Send end day notification');
           client.sendNotification('Остались невыполненные задания', {
             include_player_ids: [oneSignalId],
             contents: {
