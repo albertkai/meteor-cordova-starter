@@ -88,16 +88,35 @@ export class TodayComponent extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { todayReady } = this.props;
-    const { todayReady: nextReady, today: { createdAt } } = nextProps;
-    if (!todayReady && nextReady) {
-      console.log('today', createdAt);
-      const limit = moment(createdAt).add('days', 1).set('hour', 5).set('minute', 0);
+    const { today } = this.props;
+    const { today: todayNext } = nextProps;
+    const todayCached = today || todayNext;
+    console.log('tdc', todayCached);
+    console.log('tdcss', this.state.timeLeft === '00:00:00');
+    if (todayCached && this.state.timeLeft === '00:00:00' && !this.interval) {
+      const limit = moment(todayCached.createdAt).add(1, 'days').set(0, 'hour').set(0, 'minute');
       let timeLeft = moment.utc(limit.diff(moment(), 'milliseconds')).format('HH:mm:ss');
       this.setState({ timeLeft });
+      console.log('setting', timeLeft);
       this.interval = Meteor.setInterval(() => {
         timeLeft = moment.utc(limit.diff(moment(), 'milliseconds')).format('HH:mm:ss');
         this.setState({ timeLeft });
+        console.log('setting int', timeLeft);
+      }, 1000);
+    }
+  }
+
+  componentDidMount() {
+    const { today } = this.props;
+    if (today && this.state.timeLeft === '00:00:00' && !this.interval) {
+      const limit = moment(today.createdAt).add(1, 'days').set(0, 'hour').set(0, 'minute');
+      let timeLeft = moment.utc(limit.diff(moment(), 'milliseconds')).format('HH:mm:ss');
+      this.setState({ timeLeft });
+      console.log('setting', timeLeft);
+      this.interval = Meteor.setInterval(() => {
+        timeLeft = moment.utc(limit.diff(moment(), 'milliseconds')).format('HH:mm:ss');
+        this.setState({ timeLeft });
+        console.log('setting int', timeLeft);
       }, 1000);
     }
   }
