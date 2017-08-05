@@ -277,7 +277,7 @@ SyncedCron.add({
 SyncedCron.add({
   name: 'Send scheduled notifications',
   schedule: function notificationsSchedule(parser) {
-    return parser.text('every hour');
+    return parser.text('every 1 hour');
   },
   job: function notificationsJob() {
     Meteor.users.find().forEach((u) => {
