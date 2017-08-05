@@ -7,7 +7,7 @@ Slingshot.createDirective('imageUploads', Slingshot.S3Storage, {
   bucket: 'betterme.storage',
   region: 'eu-central-1',
   acl: 'public-read',
-  maxSize: 3 * 1024 * 1024,
+  maxSize: 5 * 1024 * 1024,
   allowedFileTypes: [
     'image/png',
     'image/jpg',
@@ -22,8 +22,9 @@ Slingshot.createDirective('imageUploads', Slingshot.S3Storage, {
     return true;
   },
   key(file) {
-    const ext = _.last(file.name.split('.'));
+    // const ext = _.last(file.name.split('.'));
     const fileName = Random.id();
-    return `images/${fileName}.${ext}`;
+    return `images/${fileName}.jpg`;
+    // return `images/${fileName}.${ext}`;
   },
 });

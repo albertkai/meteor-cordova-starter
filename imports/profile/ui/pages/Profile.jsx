@@ -35,7 +35,7 @@ const mapStateToProps = state => ({
   profile: state.profile.toJS(),
 });
 
-const mapDispatchToProps = dispatch => null;
+const mapDispatchToProps = () => {};
 
 export const Profile = connect(
   mapStateToProps,

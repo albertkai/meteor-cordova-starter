@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Slingshot } from 'meteor/edgee:slingshot';
 
+import { coreHelpers } from '/imports/core';
 import { Notify } from '/imports/notifications';
 import * as c from './constants.js';
 
@@ -56,6 +57,15 @@ export const toggleTab = tab => ({
   type: c.TOGGLE_TAB,
   tab,
 });
+
+export const toggleChoosePictureModal = () => ({ type: c.TOGGLE_CHOOSE_PICTURE_MODAL });
+
+export const setAvatarUploading = isUploading => ({
+  type: c.SET_AVATAR_UPLOADING,
+  isUploading,
+});
+
+export const setBackgroundUploading = () => ({ type: c.SET_BACKGROUND_UPLOADING });
 
 // Placeholder (used by robot)
 
@@ -131,7 +141,7 @@ export const setBlockOption = (name, option, value) => () => {
   Meteor.call('users.setBlockOption', name, option, value);
 };
 
-export const uploadAvatar = (e, isMobile) => () => {
+export const uploadAvatar = (e, isMobile, type) => dispatch => {
   const uploader = new Slingshot.Upload('imageUploads');
   const handleResponse = (error, url) => {
     if (error) {
@@ -141,6 +151,7 @@ export const uploadAvatar = (e, isMobile) => () => {
         text: 'Пожалуйста, обратитесь в службу поддержки',
         type: 'error',
       });
+      dispatch({ type: 'profile/SET_AVATAR_UPLOADING', isUploading: false });
       return false;
     }
     const fileName = _.last(url.split('/'));
@@ -152,24 +163,44 @@ export const uploadAvatar = (e, isMobile) => () => {
           type: 'error',
         });
       }
+      dispatch({ type: 'profile/SET_AVATAR_UPLOADING', isUploading: false });
+      dispatch({ type: 'profile/TOGGLE_CHOOSE_PICTURE_MODAL' });
     });
     return true;
   };
   if (isMobile) {
-    console.log('Moddd');
-    navigator.camera.getPicture((picture) => {
-      console.log(picture);
+    const success = (picture) => {
+      const blob = coreHelpers.dataURItoBlob(`data:image/jpeg;base64,${picture}`);
+      uploader.send(blob, handleResponse);
+    };
+    const failure = (error) => {
+      dispatch({ type: 'profile/SET_AVATAR_UPLOADING', isUploading: false });
+      throw new Meteor.Error('cordovaError', error);
+    };
+    const sourceType = Camera.PictureSourceType[type === 'camera' ? 'CAMERA' : 'PHOTOLIBRARY'];
+    navigator.camera.getPicture(success, failure, {
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType,
+      correctOrientation: true,
+      targetWidth: 260,
+      targetHeight: 260,
+      quality: 100,
     });
+    Meteor.setTimeout(() => {
+      dispatch({ type: 'profile/SET_AVATAR_UPLOADING', isUploading: true });
+    }, 1000);
   } else {
     const file = e.target.files[0];
     uploader.send(file, handleResponse);
+    Meteor.setTimeout(() => {
+      dispatch({ type: 'profile/SET_AVATAR_UPLOADING', isUploading: true });
+    }, 1000);
   }
 };
 
-export const uploadBackground = e => () => {
-  const file = e.target.files[0];
+export const uploadBackground = (e, isMobile) => dispatch => {
   const uploader = new Slingshot.Upload('imageUploads');
-  uploader.send(file, (error, url) => {
+  const handleResponse = (error, url) => {
     if (error) {
       console.error('Error uploading', error);
       Notify.alert({
@@ -177,6 +208,7 @@ export const uploadBackground = e => () => {
         text: 'Пожалуйста, обратитесь в службу поддержки',
         type: 'error',
       });
+      dispatch({ type: 'profile/SET_BACKGROUND_UPLOADING', isUploading: false });
       return false;
     }
     const fileName = _.last(url.split('/'));
@@ -188,9 +220,38 @@ export const uploadBackground = e => () => {
           type: 'error',
         });
       }
+      dispatch({ type: 'profile/SET_BACKGROUND_UPLOADING', isUploading: false });
     });
     return true;
-  });
+  };
+  if (isMobile) {
+    const success = (picture) => {
+      const blob = coreHelpers.dataURItoBlob(`data:image/jpeg;base64,${picture}`);
+      uploader.send(blob, handleResponse);
+    };
+    const failure = (error) => {
+      dispatch({ type: 'profile/SET_BACKGROUND_UPLOADING', isUploading: false });
+      throw new Meteor.Error('cordovaError', error);
+    };
+    const sourceType = Camera.PictureSourceType.PHOTOLIBRARY;
+    navigator.camera.getPicture(success, failure, {
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType,
+      targetWidth: 800,
+      targetHeight: 600,
+      quality: 100,
+      correctOrientation: true,
+    });
+    Meteor.setTimeout(() => {
+      dispatch({ type: 'profile/SET_BACKGROUND_UPLOADING', isUploading: true });
+    }, 1000);
+  } else {
+    const file = e.target.files[0];
+    uploader.send(file, handleResponse);
+    Meteor.setTimeout(() => {
+      dispatch({ type: 'profile/SET_BACKGROUND_UPLOADING', isUploading: true });
+    }, 1000);
+  }
 };
 
 export const toggleNotificationSetting = type => () => Meteor.call('users.toggleNotificationSetting', type);

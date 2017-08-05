@@ -12,3 +12,5 @@ export { ProfileSettings } from './ui/components/ProfileSettings.jsx';
 export { ProfileNotifications } from './ui/components/ProfileNotifications.jsx';
 
 export { ProfilePrivacy } from './ui/components/ProfilePrivacy.jsx';
+
+export { ChoosePictureSource } from './ui/particles/ChoosePictureSource.jsx';

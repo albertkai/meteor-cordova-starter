@@ -3,6 +3,7 @@ export { Home } from './ui/pages/Home';
 
 export * as coreActions from './api/redux/actions';
 export * as coreConstants from './api/helpers/constants';
+export * as coreHelpers from './api/helpers/helpers';
 
 export { SideMenu } from './ui/components/SideMenu.jsx';
 export { Header } from './ui/components/Header.jsx';

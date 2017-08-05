@@ -10,6 +10,10 @@ const actions = Object.assign({}, profileActions, coreActions);
 
 export class ProfileTopComponent extends PureComponent {
 
+  uploadMobile = () => {
+    this.props.uploadBackground(null, true);
+  };
+
   _renderLink(type, name, active) {
     const { toggleTab } = this.props;
     const activeClass = active === type ? 'active' : '';
@@ -36,9 +40,11 @@ export class ProfileTopComponent extends PureComponent {
       },
       profile: {
         openedTab,
+        backgroundIsUploading,
       },
       uploadAvatar,
       uploadBackground,
+      toggleChoosePictureModal,
       logOut,
     } = this.props;
     let backgroundUrl;
@@ -56,14 +62,17 @@ export class ProfileTopComponent extends PureComponent {
           <div className="container">
             <Avatar
               avatar={avatar}
-              onChange={uploadAvatar}
+              onChange={Meteor.isCordova ? toggleChoosePictureModal : uploadAvatar}
             />
             <div className="name">
               <h3>{firstName} {lastName}</h3>
             </div>
           </div>
-          <div className="change-background">
-            <input type="file" onChange={uploadBackground} />
+          {backgroundIsUploading && <div className="uploading-overlay">
+            <i className="fa fa-spinner fa-spin" />
+          </div>}
+          <div className="change-background" onClick={this.uploadMobile}>
+            {!Meteor.isCordova && <input type="file" onChange={uploadBackground} />}
             <i className="fa fa-image" />
           </div>
           <button className="logout" onClick={logOut}>

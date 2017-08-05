@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createContainer } from 'meteor/react-meteor-data';
 import { browserHistory } from 'react-router';
+import { ChoosePictureSource } from '/imports/profile';
 
 import {
   SideMenu,
@@ -16,7 +17,10 @@ import {
   DaySuccessModal,
   VacationModal,
 } from '/imports/core';
-import * as actions from '../../api/redux/actions';
+import * as coreActions from '../../api/redux/actions';
+import { profileActions } from '/imports/profile';
+
+const actions = Object.assign({}, coreActions, profileActions);
 
 export class MainLayoutComponent extends PureComponent {
 
@@ -93,12 +97,16 @@ export class MainLayoutComponent extends PureComponent {
         feesModalShown,
         payFeesModalShown,
       },
+      profile: {
+        choosePictureModalShown,
+      },
       toggleWakeUpModal,
       toggleDaySuccessModal,
       toggleMenu,
       toggleVacation,
       toggleFeesModal,
       togglePayFeesModal,
+      toggleChoosePictureModal,
     } = this.props;
     return (
       <div id="main-layout" className="root">
@@ -129,6 +137,10 @@ export class MainLayoutComponent extends PureComponent {
                 </button>
                 {wakeUpModalShown && <WakeUpModal toggle={toggleWakeUpModal} />}
                 {daySuccessModalShown && <DaySuccessModal toggle={toggleDaySuccessModal} />}
+                {
+                  choosePictureModalShown &&
+                    <ChoosePictureSource toggle={toggleChoosePictureModal} />
+                }
               </div>
               {vacationModalShown && <VacationModal toggle={toggleVacation} />}
               {
@@ -161,6 +173,7 @@ export const MainLayoutContainer = createContainer(() => {
 
 const mapStateToProps = state => ({
   core: state.core.toJS(),
+  profile: state.profile.toJS(),
 });
 
 const mapDispatchToProps = dispatch =>
