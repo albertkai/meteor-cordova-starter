@@ -1,4 +1,18 @@
 #profile-settings {
+  input {
+    border: 0;
+    border-radius: 0;
+    padding: 5px 5px 5px 0;
+    border-bottom: 1px solid $gray-light;
+    &:focus {
+      border-color: $brand-primary;
+    }
+  }
+  h5 {
+    font-weight: 400;
+    margin-bottom: 0;
+    font-size: 14px;
+  }
   .main-info {
     @include flexbox;
     @include flex-direction(column);
@@ -43,11 +57,9 @@
           select {
             width: 60%;
             font-size: 12px;
-            height: 24px;
           }
           input {
             font-size: 16px;
-            height: 24px;
             @media screen and (max-width: $screen-sm) {
               border-radius: 0;
               width: 70% !important;
