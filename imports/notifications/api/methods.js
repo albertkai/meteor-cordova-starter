@@ -7,15 +7,18 @@ const client = new OneSignalClient(
 );
 
 Meteor.methods({
-  'push.send'(id) {
+  'push.send'() {
     console.log('Calling me');
+    const user = Meteor.users.findOne(this.userId);
+    const { oneSignalId } = user.serviceData.notifications;
     Meteor.setTimeout(() => {
+      console.log(oneSignalId);
       client.sendNotification('Кириллический текст', {
-        include_player_ids: [id],
+        include_player_ids: [oneSignalId],
         contents: {
+          en: 'Yoyoyo',
           ru: 'Физкульт, привет!',
         },
-        url: 'https://google.com',
       }, 3000);
     });
   },

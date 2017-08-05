@@ -20,7 +20,7 @@
   }
   @media screen and (max-width: $screen-sm) {
     &:hover {
-      background: lighten($gray-light, 10%);
+      background: transparent;
     }
   }
   &.missed {

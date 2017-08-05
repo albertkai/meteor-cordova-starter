@@ -302,6 +302,7 @@ SyncedCron.add({
         client.sendNotification('2 литра воды в день', {
           include_player_ids: [oneSignalId],
           contents: {
+            en: _.sample(waterTexts),
             ru: _.sample(waterTexts),
           },
         });
@@ -311,6 +312,7 @@ SyncedCron.add({
         client.sendNotification('Мотивация', {
           include_player_ids: [oneSignalId],
           contents: {
+            en: _.sample(motivationTexts),
             ru: _.sample(motivationTexts),
           },
         });
@@ -323,6 +325,7 @@ SyncedCron.add({
           client.sendNotification('Дневное задание', {
             include_player_ids: [oneSignalId],
             contents: {
+              en: _.sample(dailyTaskTexts),
               ru: _.sample(dailyTaskTexts),
             },
           });
@@ -332,6 +335,7 @@ SyncedCron.add({
           client.sendNotification('Остались невыполненные задания', {
             include_player_ids: [oneSignalId],
             contents: {
+              en: _.sample(endOfDayTexts),
               ru: _.sample(endOfDayTexts),
             },
           });
