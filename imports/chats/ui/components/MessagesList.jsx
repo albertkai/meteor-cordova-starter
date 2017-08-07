@@ -7,6 +7,10 @@ import { Messages, MessageItem } from '/imports/chats';
 
 export class MessagesListComponent extends PureComponent {
 
+  componentDidMount() {
+    this.cont.scrollTop = this.cont.scrollHeight;
+  }
+
   componentDidUpdate(prevProps) {
     const {
       messages: prevMessages,
@@ -18,7 +22,7 @@ export class MessagesListComponent extends PureComponent {
       messages,
       chats: {
         chatType,
-      }
+      },
     } = this.props;
     if (
       (prevMessages &&
@@ -28,7 +32,6 @@ export class MessagesListComponent extends PureComponent {
     ) {
       this.cont.scrollTop = this.cont.scrollHeight;
     }
-    // this.cont.scrollTop = this.cont.scrollHeight;
   }
 
   render() {
@@ -74,7 +77,7 @@ const MessagesListContainer = createContainer(({
     thread = groupId;
   }
   const handle = Meteor.subs.subscribe('messages.listMessages', thread);
-  const messages = Messages.find().fetch();
+  const messages = Messages.find({ thread }).fetch();
   return {
     messages,
     messagesReady: handle.ready(),

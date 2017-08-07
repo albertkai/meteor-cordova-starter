@@ -8,21 +8,31 @@
     z-index: 1;
     > div {
       position: absolute;
-      width: 800px;
-      height: 800px;
-      background: $violet;
+      width: 100vh;
+      height: 100vh;
+      background: $green;
       border-radius: 50%;
+      &:nth-child(1) {
+        top: 5vh;
+      }
       &:nth-child(2) {
-        left: -400px;
-        top: 20px;
-        background: $green;
+        left: -45vh;
+        top: 5vh;
+        background: $blue;
       }
       &:nth-child(3) {
-        width: 1200px;
-        height: 1200px;
-        top: 140px;
-        left: -530px;
-        background: $blue;
+        width: 150vh;
+        height: 150vh;
+        top: 22vh;
+        left: -52vh;
+        background: $violet;
+      }
+      &:nth-child(4) {
+        width: 80vh;
+        height: 80vh;
+        top: 20vh;
+        left: 30vh;
+        background: $yellow;
       }
     }
   }

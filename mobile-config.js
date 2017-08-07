@@ -12,44 +12,45 @@ App.info({
 });
 
 App.icons({
-  // iOS
-  'iphone': 'resources/icons/Icon-60.png',
-  'iphone_2x': 'resources/icons/Icon-60@2x.png',
-  'iphone_3x': 'resources/icons/Icon-60@2x.png',
-  'ipad': 'resources/icons/Icon-76.png',
-  'ipad_2x': 'resources/icons/Icon-76@2x.png',
-  'ipad_pro': 'resources/icons/Icon-76@2x.png',
-
-  // Android
-  'android_ldpi': 'resources/icons/icon-ldpi.png',
-  'android_mdpi': 'resources/icons/icon-mdpi.png',
-  'android_hdpi': 'resources/icons/icon-hdpi.png',
-  'android_xhdpi': 'resources/icons/icon-xhdpi.png',
+  iphone_2x: 'resources/icons/iphone_2x.png',
+  iphone_3x: 'resources/icons/iphone_3x.png',
+  ipad: 'resources/icons/ipad.png',
+  ipad_2x: 'resources/icons/ipad_2x.png',
+  ipad_pro: 'resources/icons/ipad_pro.png',
+  ios_settings: 'resources/icons/ios_settings.png',
+  ios_settings_2x: 'resources/icons/ios_settings_2x.png',
+  ios_settings_3x: 'resources/icons/ios_settings_3x.png',
+  ios_spotlight: 'resources/icons/ios_spotlight.png',
+  ios_spotlight_2x: 'resources/icons/ios_spotlight_2x.png',
+  android_mdpi: 'resources/icons/android_mdpi.png',
+  android_hdpi: 'resources/icons/android_hdpi.png',
+  android_xhdpi: 'resources/icons/android_xhdpi.png',
+  android_xxhdpi: 'resources/icons/android_xxhdpi.png',
+  android_xxxhdpi: 'resources/icons/android_xxxhdpi.png',
 });
 
 App.launchScreens({
-  // iOS
-  'iphone': 'resources/splash/splash-320x480.png',
-  'iphone_2x': 'resources/splash/splash-320x480@2x.png',
-  'iphone5': 'resources/splash/splash-320x568@2x.png',
-  'ipad_portrait': 'resources/splash/splash-768x1024.png',
-  'ipad_portrait_2x': 'resources/splash/splash-768x1024@2x.png',
-  'ipad_landscape': 'resources/splash/splash-1024x768.png',
-  'ipad_landscape_2x': 'resources/splash/splash-1024x768@2x.png',
-
-  // Android
-  'android_ldpi_portrait': 'resources/splash/splash-200x320.png',
-  'android_ldpi_landscape': 'resources/splash/splash-320x200.png',
-  'android_mdpi_portrait': 'resources/splash/splash-320x480.png',
-  'android_mdpi_landscape': 'resources/splash/splash-480x320.png',
-  'android_hdpi_portrait': 'resources/splash/splash-480x800.png',
-  'android_hdpi_landscape': 'resources/splash/splash-800x480.png',
-  'android_xhdpi_portrait': 'resources/splash/splash-720x1280.png',
-  'android_xhdpi_landscape': 'resources/splash/splash-1280x720.png'
+  iphone_2x: 'resources/splash/iphone_2x.png',
+  iphone5: 'resources/splash/iphone5.png',
+  iphone6: 'resources/splash/iphone6.png',
+  iphone6p_portrait: 'resources/splash/iphone6p_portrait.png',
+  iphone6p_landscape: 'resources/splash/iphone6p_landscape.png',
+  ipad_portrait: 'resources/splash/ipad_portrait.png',
+  ipad_portrait_2x: 'resources/splash/ipad_portrait_2x.png',
+  ipad_landscape: 'resources/splash/ipad_landscape.png',
+  ipad_landscape_2x: 'resources/splash/ipad_landscape_2x.png',
+  android_mdpi_portrait: 'resources/splash/android_mdpi_portrait.png',
+  android_mdpi_landscape: 'resources/splash/android_mdpi_landscape.png',
+  // android_hdpi_portrait: 'resources/splash/android_hdpi_portrait.png',
+  // android_hdpi_landscape: 'resources/splash/android_hdpi_landscape.png',
+  android_xhdpi_portrait: 'resources/splash/android_xhdpi_portrait.png',
+  android_xhdpi_landscape: 'resources/splash/android_xhdpi_landscape.png',
+  android_xxhdpi_portrait: 'resources/splash/android_xxhdpi_portrait.png',
+  android_xxhdpi_landscape: 'resources/splash/android_xxhdpi_landscape.png',
 });
 
 // Let these urls access the following domains
-App.accessRule("*"); // @@@@@@@@@@@@@@@@
+App.accessRule('*'); // @@@@@@@@@@@@@@@@
 
 // Set PhoneGap/Cordova preferences
 App.setPreference('BackgroundColor', '0xff0000ff');

@@ -59,7 +59,7 @@ export class LoginComponent extends PureComponent {
         <div className="ovrl" />
         <div className="form-cont paper no-padding">
           <div className="logo">
-            <img src="/images/logo.jpg" alt="logo" />
+            <img src="/images/logo.png" alt="logo" />
           </div>
           <div className="stick-down">
             <p className="no-account">Еще нет аккаунта? <Link to="/sign-up">Регистрация</Link></p>
@@ -95,6 +95,7 @@ export class LoginComponent extends PureComponent {
             <h5 className="divide">или</h5>
           </div>
           <div className="circles">
+            <div />
             <div />
             <div />
             <div />
