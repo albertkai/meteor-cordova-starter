@@ -63,7 +63,7 @@
   &._checked {
     .circle {
       right: -480px;
-      @include transform(translateZ(0) scale(1, 1));
+      @include transform(translateZ(0) scale(1.2, 1.2));
     }
     .control {
       border-color: white;

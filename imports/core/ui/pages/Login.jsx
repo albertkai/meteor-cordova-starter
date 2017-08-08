@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, Link } from 'react-router';
 
+import { LogoIcon } from '../particles/LogoIcon';
 import * as actions from '../../api/redux/actions';
 
 export class LoginComponent extends PureComponent {
@@ -59,7 +60,7 @@ export class LoginComponent extends PureComponent {
         <div className="ovrl" />
         <div className="form-cont paper no-padding">
           <div className="logo">
-            <img src="/images/logo.png" alt="logo" />
+            <LogoIcon />
           </div>
           <div className="stick-down">
             <p className="no-account">Еще нет аккаунта? <Link to="/sign-up">Регистрация</Link></p>

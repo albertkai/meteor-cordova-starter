@@ -1,4 +1,14 @@
 .login-page {
+  .logo {
+    width: 100%;
+    left: 0;
+    top: 12vh;
+    height: 200px;
+    text-align: center;
+    svg {
+      width: 45%;
+    }
+  }
   .circles {
     position: absolute;
     width: 100%;
