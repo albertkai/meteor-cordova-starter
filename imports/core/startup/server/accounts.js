@@ -7,7 +7,7 @@ import { Groups } from '../../api/models/groups/groups';
 
 const GROUP_MAX = 20;
 
-Accounts.onCreateUser(function(options, user) {
+Accounts.onCreateUser((options, user) => {
   const background = `samples/${_.random(1, 3)}.jpg`;
   if (user.services.facebook) {
     const {

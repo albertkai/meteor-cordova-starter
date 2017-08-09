@@ -8,4 +8,3 @@ export const Tasks = new Mongo.Collection('Tasks');
 // Tasks.attachSchema(TasksSchema);
 
 export default Tasks;
-  

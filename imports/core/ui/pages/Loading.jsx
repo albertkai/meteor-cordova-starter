@@ -5,7 +5,7 @@ export class Loading extends PureComponent {
     return (
       <div id="loading" className="canvas">
         <div className="center-self">
-          <h4><i className="fa fa-spinner fa-spin" /> Loading...</h4>
+          <h4><i className="fa fa-spinner fa-spin" /> Минуточку...</h4>
         </div>
       </div>
     );

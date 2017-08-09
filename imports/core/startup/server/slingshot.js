@@ -1,13 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { Slingshot } from 'meteor/edgee:slingshot';
 import { Random } from 'meteor/random';
-import _ from 'underscore';
+
+import { IMAGE_MAX_SIZE } from '../../api/helpers/constants';
 
 Slingshot.createDirective('imageUploads', Slingshot.S3Storage, {
   bucket: 'betterme.storage',
   region: 'eu-central-1',
   acl: 'public-read',
-  maxSize: 5 * 1024 * 1024,
+  maxSize: IMAGE_MAX_SIZE * 1024 * 1024,
   allowedFileTypes: [
     'image/png',
     'image/jpg',
@@ -21,10 +22,8 @@ Slingshot.createDirective('imageUploads', Slingshot.S3Storage, {
     }
     return true;
   },
-  key(file) {
-    // const ext = _.last(file.name.split('.'));
+  key() {
     const fileName = Random.id();
     return `images/${fileName}.jpg`;
-    // return `images/${fileName}.${ext}`;
   },
 });

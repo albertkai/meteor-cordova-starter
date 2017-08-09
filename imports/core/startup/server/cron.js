@@ -164,19 +164,16 @@ SyncedCron.add({
 // SyncedCron.add({
 //   name: 'Test days',
 //   schedule: function newTestDaysSchedule(parser) {
-//     return parser.text('every 10 hours');
+//     return parser.text('every 1 second');
 //   },
 //   job: function newTestDaysJob() {
 //     // Need to be optimized using batch insert and aggregation on first major release
 //     Meteor.users.find().forEach((u) => {
 //       const { timezone } = u.personalData;
 //       const currentUsersTime = moment.tz(timezone);
-//       const currentHour = parseInt(currentUsersTime.format('HH'), 10);
 //       if (true) {
 //         const currentDay = Days.findOne({ userId: u._id }, { sort: { createdAt: -1 } });
 //         if (currentDay) {
-//           const createdAtFormat = moment(currentDay.createdAt).tz(timezone).format('DD/MM/YYYY');
-//           const currentUsersDayFormat = currentUsersTime.format('DD/MM/YYYY');
 //           if (true) {
 //             const userCreatedAt = moment(u.createdAt).tz(timezone).format('DD/MM/YYYY');
 //             const day = moment(currentUsersTime.format('DD/MM/YYYY HH:mm:SS'), 'DD/MM/YYYY HH:mm:SS')

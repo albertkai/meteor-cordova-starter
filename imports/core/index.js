@@ -55,3 +55,5 @@ export { FeesModal } from './ui/particles/FeesModal.jsx';
 export { PayFeesModal } from './ui/particles/PayFeesModal.jsx';
 
 export { LogoIcon } from './ui/particles/LogoIcon.jsx';
+
+export { ItemsLoading } from './ui/particles/ItemsLoading.jsx';

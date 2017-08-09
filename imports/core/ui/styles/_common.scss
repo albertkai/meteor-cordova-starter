@@ -670,13 +670,13 @@
         font-weight: 600;
         color: $blue;
       }
-      margin-bottom: 7vh;
+      margin-bottom: 12.5vh;
     }
     .logo {
       width: 100%;
       left: 0;
       top: 12vh;
-      height: 200px;
+      height: 180px;
       text-align: center;
       svg {
         width: 45%;
@@ -816,3 +816,8 @@
 
 }
 
+#loading {
+  h4 {
+    color: $gray-light;
+  }
+}

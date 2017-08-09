@@ -62,8 +62,8 @@ export class OnboardComponent extends PureComponent {
         <div className="ovrl" />
         <header>
           <button
-            className="logout"
-            onClick={this.props.logout}
+              className="logout"
+              onClick={this.props.logout}
           >
             Выйти
           </button>

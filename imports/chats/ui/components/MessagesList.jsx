@@ -3,6 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { ItemsLoading } from '/imports/core';
 import { Messages, MessageItem } from '/imports/chats';
 
 export class MessagesListComponent extends PureComponent {
@@ -47,12 +48,12 @@ export class MessagesListComponent extends PureComponent {
             messagesReady ?
               messages.map(m => (
                 <MessageItem
-                  message={m}
-                  key={m._id}
-                  user={user}
+                    message={m}
+                    key={m._id}
+                    user={user}
                 />
               )) :
-              <p>Loading...</p>
+              <ItemsLoading />
           }
         </div>
       </div>

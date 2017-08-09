@@ -109,6 +109,12 @@
     button {
       border: 0;
       padding-right: 0;
+      @media screen and (max-width: $screen-md) {
+        &:hover {
+          background: white;
+          color: $brand-primary;
+        }
+      }
     }
   }
 }

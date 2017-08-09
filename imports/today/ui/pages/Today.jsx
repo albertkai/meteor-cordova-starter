@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import moment from 'moment';
 
-import { Days } from '/imports/core';
+import { Days, ItemsLoading } from '/imports/core';
 import { TextBlock } from '../particles/TextBlock';
 import { SimpleBlock } from '../particles/SimpleBlock';
 import { TasksBlock } from '../particles/TasksBlock';
@@ -172,7 +172,7 @@ export class TodayComponent extends PureComponent {
         </div>
       );
     }
-    return <p><i className="fa fa-spin fa-spinner" /> Loading...</p>
+    return <ItemsLoading />;
   }
 }
 

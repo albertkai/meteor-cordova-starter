@@ -5,7 +5,7 @@ import { check } from 'meteor/check';
 import { Tasks } from './tasks.js';
 
 Meteor.methods({
-  'tasks.getDailyTask'() {
+  'tasks.getDailyTask': function getDailyTask() {
     const user = Meteor.users.findOne(this.userId);
     const daysDiff = moment().diff(user.createdAt, 'days');
     const task = Tasks.find({ day: daysDiff });

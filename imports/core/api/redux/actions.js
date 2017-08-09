@@ -87,7 +87,7 @@ const cacheImage = (path) => {
 
 export const preload = user => () => {
   console.log('Preloading data');
-  Meteor.subs.subscribe('days.getUserDays');
+  Meteor.subs.subscribe('days.getUserDays', 20);
   const { background, avatar } = user.personalData;
   if (avatar) {
     const url = (() => {

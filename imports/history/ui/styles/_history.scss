@@ -2,6 +2,13 @@
   .container {
     background: $gray-lighter;
   }
+  .load-more {
+    margin-top: 3px;
+    text-align: center;
+    margin-bottom: -2px;
+    color: $gray-light;
+    font-weight: 600;
+  }
   .no-items {
     position: absolute;
     top: 50%;

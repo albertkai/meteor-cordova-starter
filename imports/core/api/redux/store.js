@@ -3,9 +3,10 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import Immutable from 'immutable';
 
-import {coreReducer} from './reducer.js';
+import { coreReducer } from './reducer.js';
 import { profileReducer } from '/imports/profile';
 import { chatsReducer } from '/imports/chats';
+import { historyReducer } from '/imports/history';
 // Placeholder import (used by robot)
 
 const middleware = [thunk];
@@ -47,7 +48,8 @@ const store = createStore(
   combineReducers({
     core: coreReducer,
     profile: profileReducer,
-chats: chatsReducer,
+    chats: chatsReducer,
+    history: historyReducer,
 // Placeholder (used by robot)
   }),
   enhancer,

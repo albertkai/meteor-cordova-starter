@@ -17,26 +17,34 @@ const options = {
 };
 
 Meteor.methods({
-  'users.removeCurrentUser': function () {
+  'users.removeCurrentUser': function removeCurrentUser() {
     Meteor.users.remove(this.userId);
   },
 
-  'users.setFee': function (amount) {
+  'users.setFee': function setFee(amount) {
+    check(amount, String);
+
     const parsed = parseFloat(amount);
     const fee = parsed < 500 ? 500 : parsed;
     Meteor.users.update(this.userId, { $set: { 'fees.amount': fee } });
     return parsed >= 500;
   },
 
-  'users.setCity': function (city) {
+  'users.setCity': function setCity(city) {
+    check(city, String);
+
     Meteor.users.update(this.userId, { $set: { 'personalData.city': city } });
   },
 
-  'users.setTimezone': function (timezone) {
+  'users.setTimezone': function setTimezone(timezone) {
+    check(timezone, String);
+
     Meteor.users.update(this.userId, { $set: { 'personalData.timezone': timezone } });
   },
 
-  'users.toggleNotificationSetting': function (type) {
+  'users.toggleNotificationSetting': function toggleNotificationSetting(type) {
+    check(type, String);
+
     const user = Meteor.users.findOne(this.userId);
     const setting = user.serviceData.notifications[type];
     if (type) {
@@ -48,7 +56,9 @@ Meteor.methods({
     }
   },
 
-  'users.togglePrivacySetting': function (type) {
+  'users.togglePrivacySetting': function togglePrivacySetting(type) {
+    check(type, String);
+
     const user = Meteor.users.findOne(this.userId);
     const setting = user.serviceData.privacy[type];
     if (type) {
@@ -60,7 +70,10 @@ Meteor.methods({
     }
   },
 
-  'users.setProfileField': function (name, value) {
+  'users.setProfileField': function setProfileField(name, value) {
+    check(name, String);
+    check(value, String);
+
     Meteor.users.update(this.userId, {
       $set: {
         [`personalData.${name}`]: value,
@@ -68,7 +81,9 @@ Meteor.methods({
     });
   },
 
-  'users.toggleBlock': function (name) {
+  'users.toggleBlock': function toggleBlock(name) {
+    check(name, String);
+
     const block = Meteor.users.findOne(this.userId).blocks[name];
     if (!block) {
       const query = {
@@ -89,7 +104,11 @@ Meteor.methods({
     return !enabled;
   },
 
-  'users.setBlockOption': function (name, option, value) {
+  'users.setBlockOption': function setBlockOption(name, option, value) {
+    check(name, String);
+    check(option, String);
+    check(value, String);
+
     const block = Meteor.users.findOne(this.userId).blocks[name];
     if (!block) {
       Meteor.users.update(this.userId, {
@@ -107,7 +126,9 @@ Meteor.methods({
     }
   },
 
-  'users.uploadAvatar': function (file) {
+  'users.uploadAvatar': function uploadAvatar(file) {
+    check(file, String);
+
     Meteor.users.update(this.userId, {
       $set: {
         'personalData.avatar': file,
@@ -115,12 +136,16 @@ Meteor.methods({
     });
   },
 
-  'users.takeVacation': function (days) {
+  'users.takeVacation': function takeVacation(days) {
+    check(days, String);
+
     const endDate = moment().add(parseInt(days, 10), 'days').toDate();
     Meteor.users.update(this.userId, { 'fees.vacation': endDate });
   },
 
-  'users.uploadBackground': function (file) {
+  'users.uploadBackground': function uploadBackground(file) {
+    check(file, String);
+
     Meteor.users.update(this.userId, {
       $set: {
         'personalData.background': file,
@@ -128,7 +153,9 @@ Meteor.methods({
     });
   },
 
-  'users.setIntroductionSeen': function (name) {
+  'users.setIntroductionSeen': function setIntroductionSeen(name) {
+    check(name, String);
+
     Meteor.users.update(this.userId, {
       $set: {
         [`serviceData.introduction.${name}`]: true,
@@ -136,16 +163,9 @@ Meteor.methods({
     });
   },
 
-  'users.sendNotif': function () {
-    console.log('Send notification');
-  },
+  'users.updateNotificationsId': function updateNotificationsId(userId) {
+    check(userId, String);
 
-  'users.clear': function () {
-    Meteor.users.remove({});
-  },
-
-  'users.updateNotificationsId': function(userId) {
-    console.log('Updating notifications userId', userId);
     Meteor.users.update(this.userId, { $set: { 'serviceData.notifications.oneSignalId': userId } });
   },
 });

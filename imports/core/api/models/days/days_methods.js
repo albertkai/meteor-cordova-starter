@@ -4,14 +4,13 @@ import { check } from 'meteor/check';
 
 import { Days } from './days.js';
 
-const indexes = ['first', 'second', 'third'];
-
 Meteor.methods({
-  'days.clean'() {
-    Days.remove({});
-  },
+  'days.checkTextBlock': function checkTextBlock(dayId, name, text, min) {
+    check(dayId, String);
+    check(name, String);
+    check(text, String);
+    check(min, Number);
 
-  'days.checkTextBlock'(dayId, name, text, min) {
     if (text.length >= min) {
       const user = Meteor.users.findOne(this.userId);
       const currentDay = Days.findOne(dayId);
@@ -33,9 +32,12 @@ Meteor.methods({
       }, query);
       return currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
     }
+    return false;
   },
 
-  'days.checkWakeUpBlock'(dayId) {
+  'days.checkWakeUpBlock': function checkWakeUpBlock(dayId) {
+    check(dayId, String);
+
     const user = Meteor.users.findOne(this.userId);
     const currentDay = Days.findOne(dayId);
     const wakeUpBlock = currentDay.blocks.find(b => b.name === 'wakeUp');
@@ -66,9 +68,12 @@ Meteor.methods({
         return false;
       }
     }
+    return false;
   },
 
-  'days.checkWaterBlock'(dayId) {
+  'days.checkWaterBlock': function checkWaterBlock(dayId) {
+    check(dayId, String);
+
     const user = Meteor.users.findOne(this.userId);
     const currentDay = Days.findOne(dayId);
     const waterBlock = currentDay.blocks.find(b => b.name === 'water');
@@ -97,9 +102,13 @@ Meteor.methods({
         return 2000 - currentVolume - 200;
       }
     }
+    return false;
   },
 
-  'days.addTask'(dayId, text) {
+  'days.addTask': function addTask(dayId, text) {
+    check(dayId, String);
+    check(text, String);
+
     const user = Meteor.users.findOne(this.userId);
     const currentDay = Days.findOne(dayId);
     const tasksBlock = currentDay.blocks.find(b => b.name === 'taskList');
@@ -121,7 +130,10 @@ Meteor.methods({
     }
   },
 
-  'days.removeTask'(dayId, index) {
+  'days.removeTask': function removeTask(dayId, index) {
+    check(dayId, String);
+    check(index, Number);
+
     const user = Meteor.users.findOne(this.userId);
     const currentDay = Days.findOne(dayId);
     const tasksBlock = currentDay.blocks.find(b => b.name === 'taskList');
@@ -145,7 +157,11 @@ Meteor.methods({
     }
   },
 
-  'days.updateTask'(dayId, text, index) {
+  'days.updateTask': function updateTask(dayId, text, index) {
+    check(dayId, String);
+    check(text, String);
+    check(index, Number);
+
     const user = Meteor.users.findOne(this.userId);
     const currentDay = Days.findOne(dayId);
     const tasksBlock = currentDay.blocks.find(b => b.name === 'taskList');
@@ -167,20 +183,26 @@ Meteor.methods({
     }
   },
 
-  'days.updateTextBlock'(dayId, name, text) {
-    console.log('Updating', dayId, name, text);
+  'days.updateTextBlock': function updateTextBlock(dayId, name, text) {
+    check(dayId, String);
+    check(name, String);
+    check(text, String);
+
     Days.update({
       _id: dayId,
       userId: this.userId,
       'blocks.name': name,
     }, {
       $set: {
-        ['blocks.$.data.text']: text,
+        'blocks.$.data.text': text,
       },
     });
   },
 
-  'days.checkTask'(dayId, index) {
+  'days.checkTask': function checkTask(dayId, index) {
+    check(dayId, String);
+    check(index, Number);
+
     const user = Meteor.users.findOne(this.userId);
     const currentDay = Days.findOne(dayId);
     const tasksBlock = currentDay.blocks.find(b => b.name === 'taskList');
@@ -210,15 +232,16 @@ Meteor.methods({
         }
       }
     }
+    return false;
   },
 
-  'days.checkSimpleBlock'(dayId, blockName) {
+  'days.checkSimpleBlock': function checkSimpleBlock(dayId, blockName) {
+    check(dayId, String);
+    check(blockName, String);
+
     const user = Meteor.users.findOne(this.userId);
     const currentDay = Days.findOne(dayId);
     const tasksBlock = currentDay.blocks.find(b => b.name === blockName);
-    console.log(currentDay);
-    console.log(blockName);
-    console.log(tasksBlock);
     if (tasksBlock) {
       const { timezone } = user.personalData;
       const dayTimezone = moment(currentDay.createdAt).tz(timezone).format('DD/MM/YYYY');
@@ -236,5 +259,11 @@ Meteor.methods({
       }
       return currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
     }
+    return false;
+  },
+
+  'days.countUsersHistory': function countUsersHistory() {
+    const yesterday = moment().subtract(24, 'hours').toISOString();
+    return Days.find({ createdAt: { $lte: yesterday }, userId: this.userId }).count();
   },
 });

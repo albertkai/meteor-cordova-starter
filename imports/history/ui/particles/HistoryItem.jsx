@@ -72,6 +72,7 @@ export class HistoryItem extends PureComponent {
               return (
                 <HistoryTextBlock
                   title={names[t]}
+                  key={`${_id}-${t}`}
                   name={t}
                   dayId={_id}
                   data={b.data}
