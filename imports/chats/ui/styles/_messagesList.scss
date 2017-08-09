@@ -30,6 +30,13 @@ Messages
   position: relative;
   width: 100%;
   border-bottom: 1px solid $gray-lighter;
+  .load-more {
+    margin-top: 3px;
+    text-align: center;
+    margin-bottom: 6px;
+    color: $gray-light;
+    font-weight: 600;
+  }
   & .messages-content {
     position: absolute;
     top: 0;
@@ -49,13 +56,15 @@ Messages
     padding: 6px 10px 7px;
     border-radius: 10px 10px 10px 0;
     background: $brand-primary;
-    margin: 18px 0;
+    margin: 8px 0;
     font-size: 20px;
     line-height: 1.4;
     margin-left: 60px;
     font-weight: 400;
     position: relative;
     color: white;
+    @include transform(translateZ(0));
+    backface-visibility: hidden;
     @media screen and (max-width: $screen-sm) {
       font-size: 16px;
       margin-left: 55px;
@@ -126,9 +135,9 @@ Messages
     }
 
     &.new {
-      transform: scale(0);
-      transform-origin: 0 0;
-      animation: bounce 500ms linear both;
+      //transform: scale(0);
+      //transform-origin: 0 0;
+      //animation: bounce 500ms linear both;
     }
 
     &.loading {
@@ -136,7 +145,7 @@ Messages
       &::before {
         @include ball;
         border: none;
-        animation-delay: .15s;
+        //animation-delay: .15s;
       }
 
       & span {
@@ -147,14 +156,14 @@ Messages
         position: relative;
 
         &::before {
-          @include ball;
+          //@include ball;
           margin-left: -7px;
         }
 
         &::after {
-          @include ball;
+          //@include ball;
           margin-left: 7px;
-          animation-delay: .3s;
+          //animation-delay: .3s;
         }
       }
     }

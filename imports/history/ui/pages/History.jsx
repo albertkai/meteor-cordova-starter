@@ -5,11 +5,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 
+import { Days, ItemsLoading, coreConstants } from '/imports/core';
 import { HistoryIcon } from '/imports/onboard';
-import { Days, ItemsLoading } from '/imports/core';
 import * as actions from '../../api/redux/actions';
 import { HistoryItem } from '../particles/HistoryItem';
-import { coreConstants } from '/imports/core';
 
 export class HistoryComponent extends PureComponent {
 
@@ -23,17 +22,6 @@ export class HistoryComponent extends PureComponent {
       this.props.countUsersHistory();
     }
   }
-
-  // shouldComponentUpdate(nextProps) {
-  //   if (
-  //     !nextProps.daysReady &&
-  //     this.props.daysReady &&
-  //     this.props.days
-  //   ) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
 
   componentDidUpdate(prevProps) {
     if (
@@ -90,11 +78,11 @@ export class HistoryComponent extends PureComponent {
     return (
       <div id="history" className="page">
         <div
-          className="container paper scrollable no-padding"
-          ref={(ref) => this.cont = ref}
-          onScroll={_.throttle(this.checkLoadMore, 100)}
+            className="container paper scrollable no-padding"
+            ref={(ref) => this.cont = ref}
+            onScroll={_.throttle(this.checkLoadMore, 100)}
         >
-          { !daysReady && !days.length && <ItemsLoading/>}
+          { !daysReady && !days.length && <ItemsLoading />}
           {
             days.length
               ? <div>

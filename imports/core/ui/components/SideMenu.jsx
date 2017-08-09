@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router';
 
-import { Avatar } from '/imports/core';
+import { Avatar, LogoIcon } from '/imports/core';
 
 export class SideMenu extends PureComponent {
 
@@ -30,7 +30,7 @@ export class SideMenu extends PureComponent {
     return (
       <div id="side-menu" className="side-menu">
         <header>
-          <img src="/images/logo.jpg" alt="logo" />
+          <LogoIcon />
         </header>
         <div className="content">
           <Link to="/profile" activeClassName="active" className="user-link">

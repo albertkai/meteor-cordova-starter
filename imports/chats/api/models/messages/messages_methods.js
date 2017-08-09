@@ -4,7 +4,11 @@ import { check } from 'meteor/check';
 import { Messages } from './messages.js';
 
 Meteor.methods({
-  'messages.send'(thread, content, type) {
+  'messages.send': function send(thread, content, type) {
+    check(thread, String);
+    check(content, String);
+    check(type, String);
+
     const {
       personalData: {
         avatar,
@@ -24,9 +28,5 @@ Meteor.methods({
       type,
       createdAt: Date.now(),
     });
-  },
-
-  'messages.clean'() {
-    Messages.remove({});
   },
 });

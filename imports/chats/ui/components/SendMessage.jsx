@@ -48,7 +48,7 @@ export class SendMessageComponent extends PureComponent {
           className="message-submit"
           onClick={this.sendMessage}
         >
-          Send
+          <i className="fa fa-send" />
         </button>
       </div>
     );

@@ -1,12 +1,20 @@
 import React, { PureComponent } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
+import _ from 'underscore';
+import { Counts } from 'meteor/tmeasday:publish-counts';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { ItemsLoading } from '/imports/core';
 import { Messages, MessageItem } from '/imports/chats';
+import * as actions from '../../api/redux/actions';
 
 export class MessagesListComponent extends PureComponent {
+
+  constructor(props) {
+    super(props);
+    this.wasScrolled = false;
+  }
 
   componentDidMount() {
     this.cont.scrollTop = this.cont.scrollHeight;
@@ -15,45 +23,94 @@ export class MessagesListComponent extends PureComponent {
   componentDidUpdate(prevProps) {
     const {
       messages: prevMessages,
+      messagesReady: prevMessagesReady,
       chats: {
         chatType: prevChatType,
+        limit: prevLimit,
       },
     } = prevProps;
     const {
       messages,
+      messagesReady,
       chats: {
-        chatType,
+        scrollHeight,
+        initiallyScrolled,
       },
+      setInitiallyScrolled,
     } = this.props;
-    if (
-      (prevMessages &&
-      messages &&
-      prevMessages.length !== messages.length) ||
-      prevChatType !== chatType
-    ) {
+    // TODO think about the better way to scroll down to the message
+    // if (
+    //   prevMessages &&
+    //   messages &&
+    //   prevMessages.length === messages.length &&
+    //   this.cont.scrollHeight - this.cont.scrollTop < 100 &&
+    // ) {
+    //   this.setWasScrolled();
+    //   this.cont.scrollTop = this.cont.scrollHeight;
+    // }
+    if (messagesReady && messages.length > 0 && !initiallyScrolled) {
+      setInitiallyScrolled();
       this.cont.scrollTop = this.cont.scrollHeight;
     }
+    if (
+      messages.length !== prevMessages.length ||
+      (messagesReady && !prevMessagesReady)
+    ) {
+      if (scrollHeight) {
+        Meteor.defer(() => {
+          console.log('Adjust scroll height');
+          this.cont.scrollTop = this.cont.scrollHeight - scrollHeight;
+        });
+      }
+    }
   }
+
+  componentWillUnmount() {
+    this.props.resetMessagesLimit();
+  }
+
+  loadMore = () => {
+    if (this.props.gotMore) {
+      this.props.messagesLoadMore(this.cont);
+    }
+  };
+
+  setWasScrolled = () => {
+    this.wasScrolled = true;
+    Meteor.setTimeout(() => {
+      this.wasScrolled = false;
+    }, 30);
+  };
 
   render() {
     const {
       user,
       messages,
       messagesReady,
+      gotMore,
+      messagesCount,
     } = this.props;
     return (
       <div id="messages-list">
-        <div className="messages-content" ref={ref => this.cont = ref}>
+        <div
+            className="messages-content"
+            ref={(ref) => this.cont = ref}
+            onScroll={_.throttle(this.loadMore, 100)}
+        >
           {
-            messagesReady ?
-              messages.map(m => (
-                <MessageItem
-                    message={m}
-                    key={m._id}
-                    user={user}
-                />
-              )) :
-              <ItemsLoading />
+            gotMore
+              ? <div className="load-more"><i className="fa fa-spin fa-spinner" /> Загружаем...</div>
+              : <div className="load-more">Все загружено (${messagesCount})</div>
+          }
+          {!messagesReady && !messages.length && <ItemsLoading />}
+          {
+            messages.map(m => (
+              <MessageItem
+                  message={m}
+                  key={m._id}
+                  user={user}
+              />
+            ))
           }
         </div>
       </div>
@@ -64,6 +121,7 @@ export class MessagesListComponent extends PureComponent {
 const MessagesListContainer = createContainer(({
   chats: {
     chatType,
+    limit,
   },
   user: {
     serviceData: {
@@ -77,11 +135,18 @@ const MessagesListContainer = createContainer(({
   } else {
     thread = groupId;
   }
-  const handle = Meteor.subs.subscribe('messages.listMessages', thread);
-  const messages = Messages.find({ thread }).fetch();
+  const handle = Meteor.subs.subscribe('messages.listMessages', thread, limit);
+  Meteor.subscribe('messages.countMessages', thread);
+  const messages = Messages
+    .find({ thread }, { sort: { createdAt: -1 }, limit })
+    .fetch()
+    .reverse();
+  const messagesCount = Counts.get('messagesLength');
   return {
+    gotMore: messagesCount ? limit < messagesCount : null,
     messages,
     messagesReady: handle.ready(),
+    messagesCount,
   };
 }, MessagesListComponent);
 
@@ -90,7 +155,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({}, dispatch);
+  bindActionCreators(actions, dispatch);
 
 export const MessagesList = connect(
   mapStateToProps,

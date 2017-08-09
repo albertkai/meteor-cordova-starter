@@ -11,4 +11,20 @@ export const toggleChatType = chatType => ({
   chatType,
 });
 
+export const incrementMessagesLimit = () => ({ type: c.INCREMENT_MESSAGES_LIMIT });
+
+export const resetMessagesLimit = () => ({ type: c.RESET_MESSAGES_LIMIT });
+
+export const setInitiallyScrolled = () => ({ type: c.SET_INITIALLY_SCROLLED });
+
 // Placeholder (used by robot)
+
+export const messagesLoadMore = elem => (dispatch) => {
+  if (elem.scrollTop === 0) {
+    const scrollHeight = elem.scrollHeight;
+    dispatch({
+      type: c.INCREMENT_MESSAGES_LIMIT,
+      scrollHeight,
+    });
+  }
+};
