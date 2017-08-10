@@ -1,6 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
+import _ from 'underscore';
 import { check } from 'meteor/check';
+
+import { Days, Tasks } from '/imports/core';
 
 const options = {
   wakeUp: {
@@ -167,5 +170,75 @@ Meteor.methods({
     check(userId, String);
 
     Meteor.users.update(this.userId, { $set: { 'serviceData.notifications.oneSignalId': userId } });
+  },
+
+  'users.goToDay': function goToDay(userId, day) {
+    check(userId, String);
+    check(day, Number);
+
+    if (!this.isSimulation) {
+      const user = Meteor.users.findOne(userId);
+      const { blocks, personalData: { timezone } } = user;
+      const newCreatedAt = moment().subtract(day - 1, 'days').valueOf();
+      Meteor.users.update(userId, { $set: { createdAt: newCreatedAt, 'fees.items': [], 'fees.toPay': 0 } });
+      Days.remove({ userId });
+      _.range(0, day).forEach((n) => {
+        console.log('Adding day', n + 1);
+        const task = Tasks.findOne({ day: n + 1 });
+        if (n + 1 !== day) {
+          Days.insert({
+            userId,
+            index: n + 1,
+            createdAt: moment(newCreatedAt).add(n, 'days').subtract(1, 'hour').toISOString(),
+            timezone,
+            blocks: [
+              {
+                name: 'dailyTask',
+                passed: true,
+                closed: false,
+                timezone,
+                options: {
+                  html: task.html,
+                  day: n + 1,
+                },
+              },
+            ],
+          });
+        } else {
+          const newBlocks = [];
+          newBlocks.push({
+            name: 'dailyTask',
+            passed: false,
+            closed: false,
+            options: {
+              html: task.html,
+              day,
+            },
+          });
+          Object.keys(blocks).forEach((block) => {
+            const blockData = blocks[block];
+            const { enabled, options: opt } = blockData;
+            if (enabled) {
+              const blockDoc = {
+                name: block,
+                passed: false,
+                closed: false,
+              };
+              if (opt) {
+                blockDoc.options = opt;
+              }
+              newBlocks.push(blockDoc);
+            }
+          });
+          Days.insert({
+            userId,
+            index: n + 1,
+            createdAt: moment(newCreatedAt).add(n, 'days').subtract(1, 'hour').startOf('day').toISOString(),
+            timezone,
+            blocks: newBlocks,
+          });
+        }
+      });
+    }
   },
 });

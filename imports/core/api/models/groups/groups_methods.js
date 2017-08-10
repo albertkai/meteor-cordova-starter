@@ -8,6 +8,6 @@ Meteor.methods({
     check(groupId, String);
     check(name, String);
 
-    Groups.update({ $set: { name } });
+    Groups.update(groupId, { $set: { name } });
   },
 });
