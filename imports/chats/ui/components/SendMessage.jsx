@@ -23,14 +23,16 @@ export class SendMessageComponent extends PureComponent {
       sendMessage,
     } = this.props;
     const content = this.input.value;
-    let thread;
-    if (chatType === 'common' || chatType === 'insights') {
-      thread = chatType;
-    } else {
-      thread = groupId;
+    if (content) {
+      let thread;
+      if (chatType === 'common' || chatType === 'insights') {
+        thread = chatType;
+      } else {
+        thread = groupId;
+      }
+      sendMessage(thread, content, 'text');
+      this.input.value = '';
     }
-    sendMessage(thread, content, 'text');
-    this.input.value = '';
   };
 
   render() {

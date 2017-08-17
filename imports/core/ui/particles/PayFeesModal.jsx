@@ -1,8 +1,53 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export class PayFeesModal extends PureComponent {
+import * as coreActions from '../../api/redux/actions';
+
+export class PayFeesModalComponent extends PureComponent {
+
+  propTypes = {
+    user: React.PropTypes.object,
+    core: React.PropTypes.object,
+    toggle: React.PropTypes.func,
+    payFee: React.PropTypes.func,   // Initialize Braintree UI
+    getPaymentToken: React.PropTypes.func,   // Get token on mount
+    resetPaymentToken: React.PropTypes.func,   // Remove token on unmount
+  };
+
+  componentDidMount() {
+    const {
+      user: {
+        fees: {
+          toPay,
+        },
+      },
+      getPaymentToken,
+    } = this.props;
+    getPaymentToken(toPay);
+  }
+
+  componentWillUnmount() {
+    this.props.resetPaymentToken();
+  }
+
+  pay = () => {
+    const {
+      user: {
+        fees: {
+          toPay,
+        },
+      },
+      payFee,
+    } = this.props;
+    payFee(toPay);
+  };
+
   render() {
     const {
+      core: {
+        paymentToken,
+      },
       user: {
         fees: {
           toPay,
@@ -25,12 +70,28 @@ export class PayFeesModal extends PureComponent {
             <p className="desc">Пока мы не подключили оплату, так что плиз переведи Гале на счет как обычно, я вручную добавлю в базу данных. Постараюсь автоматизировать этот момент как только утрясем с поставщиком услуг онлайн оплаты</p>
           </div>
           <div className="modal-footer">
-            <button onClick={this.props.toggle}>Оплатить!</button>
+            <button onClick={this.pay} disabled={!paymentToken}>
+              {paymentToken ? 'Оплатить!' : <i className="fa fa-spinner fa-spin" />}
+            </button>
           </div>
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    core: state.core.toJS(),
+  };
+};
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(coreActions, dispatch);
+
+export const PayFeesModal = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PayFeesModalComponent);
 
 export default PayFeesModal;

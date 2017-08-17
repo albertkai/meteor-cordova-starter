@@ -18,6 +18,7 @@ export class MessagesListComponent extends PureComponent {
 
   componentDidMount() {
     this.cont.scrollTop = this.cont.scrollHeight;
+    Meteor.subs.reset();
   }
 
   componentDidUpdate(prevProps) {
@@ -100,7 +101,7 @@ export class MessagesListComponent extends PureComponent {
           {
             gotMore
               ? <div className="load-more"><i className="fa fa-spin fa-spinner" /> Загружаем...</div>
-              : <div className="load-more">Все загружено (${messagesCount})</div>
+              : <div className="load-more">Все загружено ({messagesCount})</div>
           }
           {!messagesReady && !messages.length && <ItemsLoading />}
           {

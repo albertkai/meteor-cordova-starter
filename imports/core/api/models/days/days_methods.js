@@ -266,4 +266,8 @@ Meteor.methods({
     const yesterday = moment().subtract(24, 'hours').toISOString();
     return Days.find({ createdAt: { $lte: yesterday }, userId: this.userId }).count();
   },
+
+  'days.addNewTestOne'() {
+
+  }
 });

@@ -19,9 +19,50 @@ export const closeMenu = () => ({
   type: c.CLOSE_MENU,
 });
 
-export const toggleWakeUpModal = () => ({
-  type: c.TOGGLE_WAKE_UP_MODAL,
-});
+export const resetPaymentToken = () => ({ type: c.SET_PAYMENT_TOKEN, token: '' });
+
+export const toggleWakeUpModal = () => ({ type: c.TOGGLE_WAKE_UP_MODAL });
+
+export const getPaymentToken = () => (dispatch) => {
+  Meteor.call('braintree.getToken', (err, token) => {
+    console.log(token);
+    window.BraintreePlugin.initialize(token,
+      () => {
+        dispatch({
+          type: c.SET_PAYMENT_TOKEN,
+          token,
+        });
+      },
+      (error) => {
+        console.error(error);
+      },
+    );
+    dispatch({
+      type: c.SET_PAYMENT_TOKEN,
+      token,
+    });
+  });
+};
+
+export const payFee = amount => (dispatch) => {
+  window.BraintreePlugin.presentDropInPaymentUI({ amount }, (result) => {
+    if (result.userCancelled) {
+      console.debug('User cancelled payment dialog.');
+    } else {
+      Meteor.call('braintree.transaction', result.nonce, (err, success) => {
+        if (success) {
+          Notify.alert({
+            title: 'Отлично!',
+            text: 'Ваш платеж принят! Надеемся вам больше не придется платить штраф',
+          });
+          dispatch({
+            type: c.TOGGLE_PAY_FEES_MODAL,
+          });
+        }
+      });
+    }
+  });
+};
 
 export const toggleDaySuccessModal = () => ({ type: c.TOGGLE_DAY_SUCCESS_MODAL });
 

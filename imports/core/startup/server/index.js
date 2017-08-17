@@ -4,6 +4,7 @@ import '/imports/chats/startup/server';
 import '/imports/notifications/startup/server';
 
 import './accounts';
+import './braintree';
 import './config';
 import './cron';
 import './slingshot';
@@ -19,3 +20,6 @@ import '../../api/models/tasks/tasks_fixture.js';
 
 import '../../api/models/groups/groups_methods.js';
 import '../../api/models/groups/groups_pubs.js';
+
+import '../../api/models/transactions/transactions_methods.js';
+import '../../api/models/transactions/transactions_pubs.js';

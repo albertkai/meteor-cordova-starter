@@ -10,6 +10,7 @@ const initialState = fromJS({
   vacationModalShown: false,
   feesModalShown: false,
   payFeesModalShown: false,
+  paymentToken: '',
 });
 
 export function coreReducer(state = initialState, action) {
@@ -20,6 +21,8 @@ export function coreReducer(state = initialState, action) {
 			return state.set('menuOpened', !state.get('menuOpened'));
 		case c.CLOSE_MENU:
       return state.set('menuOpened', false);
+    case c.SET_PAYMENT_TOKEN:
+      return state.set('paymentToken', action.token);
 		case c.TOGGLE_WAKE_UP_MODAL:
 			return state.set('wakeUpModalShown', !state.get('wakeUpModalShown'));
 		case c.TOGGLE_DAY_SUCCESS_MODAL:

@@ -13,12 +13,14 @@
     "babel-runtime": "^6.20.0",
     "bas-meteor-facebook-login": "^1.1.0",
     "bcrypt": "^0.8.7",
+    "braintree": "^2.2.0",
     "faker": "^4.1.0",
     "immutable": "^3.8.1",
     "meteor-node-stubs": "~0.2.4",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "node-onesignal": "^0.3.1",
+    "plist": "^2.1.0",
     "react": "^15.4.2",
     "react-addons-perf": "^15.4.1",
     "react-addons-pure-render-mixin": "^15.3.2",
@@ -32,7 +34,8 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
     "redux-thunk": "^2.1.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "xcode": "^0.9.3"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",

@@ -57,3 +57,5 @@ export { PayFeesModal } from './ui/particles/PayFeesModal.jsx';
 export { LogoIcon } from './ui/particles/LogoIcon.jsx';
 
 export { ItemsLoading } from './ui/particles/ItemsLoading.jsx';
+
+export { Transactions } from './api/models/transactions/transactions.js';
