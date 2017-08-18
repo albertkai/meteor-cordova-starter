@@ -47,6 +47,10 @@ const daysSchema = new SimpleSchema({
     type: String,
     optional: true,
   },
+  isVacation: {
+    type: Boolean,
+    optional: true,
+  },
 });
 
 Days.attachSchema(daysSchema);

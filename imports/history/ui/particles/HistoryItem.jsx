@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
-import _ from 'underscore';
 
-import { EditableBlock } from '../particles/EditableBlock';
 import { HistoryTextBlock } from '../particles/HistoryTextBlock';
 
 const names = {
@@ -19,14 +18,24 @@ const names = {
 const textBlocks = ['report', 'kind'];
 
 export class HistoryItem extends PureComponent {
+
+  static propTypes = {
+    day: PropTypes.object,
+    user: PropTypes.object,
+  };
+
+  static defaultProps = {
+    day: null,
+    user: null,
+  };
+
   render() {
     const {
       day: {
         _id,
-        name,
         createdAt,
         blocks,
-        index,
+        isVacation,
       },
       user: {
         fees: {
@@ -48,34 +57,41 @@ export class HistoryItem extends PureComponent {
         <header>
           <p>{moment(createdAt).format('DD.MM.YYYY')}</p>
           {
-            !failed.length
-              ? <p className="success"><strong><i className="fa fa-check" /> Все выполнено!</strong></p>
-              : <p>Выполнено: <span>{passed.length}</span> из <span>{blocks.length}</span></p>
+            !isVacation &&
+            (
+              !failed.length
+                ? <p className="success"><strong><i className="fa fa-check" /> Все выполнено!</strong></p>
+                : <p>Выполнено: <span>{passed.length}</span> из <span>{blocks.length}</span></p>
+            )
           }
         </header>
         {
-          !!failed.length &&
+          !!failed.length && !isVacation &&
             <div className="fee">Начислен штраф <strong>{failed.length * amount}P</strong></div>
         }
+        {
+          isVacation &&
+            <div className="vacation"><i className="fa fa-sun-o" /> В отпуске</div>
+        }
         <HistoryTextBlock
-          title={`<strong>День ${dailyTask.options.day}</strong>. Задание`}
-          name="dailyTask"
-          desc={dailyTask.options.html}
-          dayId={_id}
-          data={dailyTask.data}
+            title={`<strong>День ${dailyTask.options.day}</strong>. Задание`}
+            name="dailyTask"
+            desc={dailyTask.options.html}
+            dayId={_id}
+            data={dailyTask.data}
         />
         {
-          textBlocks
-            .filter(t => blocks.find(b => b.name === t))
-            .map(t => {
-              const b = blocks.find(b => b.name === t);
+          !isVacation && textBlocks
+            .filter(t => blocks.find(bl => bl.name === t))
+            .map((t) => {
+              const b = blocks.find(bl => bl.name === t);
               return (
                 <HistoryTextBlock
-                  title={names[t]}
-                  key={`${_id}-${t}`}
-                  name={t}
-                  dayId={_id}
-                  data={b.data}
+                    title={names[t]}
+                    key={`${_id}-${t}`}
+                    name={t}
+                    dayId={_id}
+                    data={b.data}
                 />
               );
             })

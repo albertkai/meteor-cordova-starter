@@ -82,7 +82,7 @@ Meteor.methods({
       const dayTimezone = moment(currentDay.createdAt).tz(timezone).format('DD/MM/YYYY');
       const currentUsersDayFormat = moment.tz(timezone).format('DD/MM/YYYY');
       if (dayTimezone === currentUsersDayFormat) {
-        const currentVolume = waterBlock.data ? waterBlock.data.volume : 0;
+        const currentVolume = (waterBlock.data && waterBlock.data.volume) || 0;
         const isCheck = currentVolume >= 1800;
         const query = {
           $inc: {

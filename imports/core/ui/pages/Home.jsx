@@ -23,11 +23,7 @@ class HomeComponent extends PureComponent {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    core: state.core.toJS(),
-  };
-};
+const mapStateToProps = state => ({ core: state.core.toJS() });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(coreActions, dispatch);

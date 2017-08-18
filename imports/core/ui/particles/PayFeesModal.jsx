@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -6,13 +7,17 @@ import * as coreActions from '../../api/redux/actions';
 
 export class PayFeesModalComponent extends PureComponent {
 
-  propTypes = {
-    user: React.PropTypes.object,
-    core: React.PropTypes.object,
-    toggle: React.PropTypes.func,
-    payFee: React.PropTypes.func,   // Initialize Braintree UI
-    getPaymentToken: React.PropTypes.func,   // Get token on mount
-    resetPaymentToken: React.PropTypes.func,   // Remove token on unmount
+  static propTypes = {
+    user: PropTypes.object,
+    core: PropTypes.object.isRequired,
+    toggle: PropTypes.func.isRequired,
+    payFee: PropTypes.func.isRequired,   // Initialize Braintree UI
+    getPaymentToken: PropTypes.func.isRequired,   // Get token on mount
+    resetPaymentToken: PropTypes.func.isRequired,   // Remove token on unmount
+  };
+
+  static defaultProps = {
+    user: null,
   };
 
   componentDidMount() {
@@ -67,7 +72,7 @@ export class PayFeesModalComponent extends PureComponent {
             </div>
             <h3>Оплата:</h3>
             <p className="amount">Сумма: <strong>{toPay}p</strong></p>
-            <p className="desc">Пока мы не подключили оплату, так что плиз переведи Гале на счет как обычно, я вручную добавлю в базу данных. Постараюсь автоматизировать этот момент как только утрясем с поставщиком услуг онлайн оплаты</p>
+            <p className="desc">Оплата осуществляется с помощью сервиса Braintree от Paypal. Выши данные будут надежно защищены</p>
           </div>
           <div className="modal-footer">
             <button onClick={this.pay} disabled={!paymentToken}>
@@ -80,11 +85,7 @@ export class PayFeesModalComponent extends PureComponent {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    core: state.core.toJS(),
-  };
-};
+const mapStateToProps = state => ({ core: state.core.toJS() });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(coreActions, dispatch);

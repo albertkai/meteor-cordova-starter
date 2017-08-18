@@ -153,12 +153,13 @@ export const preload = user => () => {
   }
 };
 
-export const takeVacation = (days) => (dispatch) => {
-  Meteor.call('users.takeVacation', days, (err, res) => {
+export const takeVacation = days => (dispatch) => {
+  Meteor.call('users.takeVacation', days, (err) => {
     if (!err) {
       Notify.alert({
         title: 'Вы взяли отпуск!',
         text: 'Теперь в это время вам не будут приходить штрафы, но все же вы должны будете заполнить пропущенные задания по возвращению',
+        type: 'success',
       });
       dispatch({
         type: 'core/TOGGLE_VACATION',
@@ -167,3 +168,17 @@ export const takeVacation = (days) => (dispatch) => {
   });
 };
 
+export const stopVacation = () => (dispatch) => {
+  Meteor.call('users.stopVacation', (err) => {
+    if (!err) {
+      Notify.alert({
+        title: 'Вы закончили отпуск!',
+        text: 'Вы настолько стремитесь к саморазвитию, тчо закончили отпуск ранбше времени! Вы многого добьетесь с таким настроем!',
+        type: 'success',
+      });
+      dispatch({
+        type: 'core/TOGGLE_VACATION',
+      });
+    }
+  });
+};

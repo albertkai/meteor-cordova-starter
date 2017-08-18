@@ -6,7 +6,7 @@ export class FeeModal extends PureComponent {
       <div id="fee-modal" className="modal">
         <div className="modal-cont paper">
           <button
-            className="close"
+              className="close"
           >
             <i className="fa fa-times" />
           </button>

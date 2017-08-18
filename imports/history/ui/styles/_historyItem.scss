@@ -89,6 +89,15 @@
     color: white;
     padding: 10px;
   }
+  .vacation {
+    background: $blue;
+    color: white;
+    padding: 10px;
+    font-weight: 400;
+    i {
+      margin-right: 5px;
+    }
+  }
   .history-text-block {
     &:not(:last-child) {
       border-bottom: 1px solid $gray-lighter;

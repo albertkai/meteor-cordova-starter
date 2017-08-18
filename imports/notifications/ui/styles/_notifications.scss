@@ -1,16 +1,21 @@
 .ui-pnotify {
-  background: rgba($brand-primary, .88);
+  background: $brand-primary;
+  padding-top: 12px;
   border-radius: 7px;
   overflow: hidden;
   border: 1px solid rgba(white, .3);
+  &-container {
+    box-shadow: none !important;
+  }
   &-title {
     color: white;
-    font-size: 18px;
+    font-size: 24px;
     margin-bottom: 0;
   }
   &-text {
     color: white;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 400;
   }
   &.success {
     background: $green;

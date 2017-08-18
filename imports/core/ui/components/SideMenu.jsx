@@ -19,6 +19,9 @@ export class SideMenu extends PureComponent {
           lastName,
           avatar,
         },
+        serviceData: {
+          vacationUntil,
+        },
         fees: {
           toPay,
         },
@@ -82,7 +85,7 @@ export class SideMenu extends PureComponent {
             </div>
           }
           <div className="vacation">
-            <button onClick={toggleVacation}>Взять отпуск</button>
+            <button onClick={toggleVacation}>{vacationUntil ? 'Вы в отпуске' : 'Взять отпуск'}</button>
           </div>
           <footer>
             <div className="support">

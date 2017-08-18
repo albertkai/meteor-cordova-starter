@@ -142,8 +142,20 @@ Meteor.methods({
   'users.takeVacation': function takeVacation(days) {
     check(days, String);
 
-    const endDate = moment().add(parseInt(days, 10), 'days').toDate();
-    Meteor.users.update(this.userId, { 'fees.vacation': endDate });
+    const endDate = moment().add(parseInt(days, 10) + 1, 'days').startOf('day').valueOf();
+    Meteor.users.update(this.userId, {
+      $set: {
+        'serviceData.vacationUntil': endDate,
+      },
+    });
+  },
+
+  'users.stopVacation': function takeVacation() {
+    Meteor.users.update(this.userId, {
+      $set: {
+        'serviceData.vacationUntil': null,
+      },
+    });
   },
 
   'users.uploadBackground': function uploadBackground(file) {

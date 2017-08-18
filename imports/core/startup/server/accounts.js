@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { HTTP } from 'meteor/http';
 import _ from 'underscore';
@@ -8,6 +7,7 @@ import { Groups } from '../../api/models/groups/groups';
 const GROUP_MAX = 20;
 
 Accounts.onCreateUser((options, user) => {
+  const newUser = user;
   const background = `samples/${_.random(1, 3)}.jpg`;
   if (user.services.facebook) {
     const {
@@ -27,7 +27,7 @@ Accounts.onCreateUser((options, user) => {
         height: 320,
       },
     });
-    user.personalData = {
+    newUser.personalData = {
       avatar: picResult ? picResult.data.data.url : '',
       email,
       gender,
@@ -42,7 +42,7 @@ Accounts.onCreateUser((options, user) => {
   }
   if (user.services.vk) {
     const {
-      accessToken,
+      // accessToken,
       first_name,
       last_name,
       photo_big,
@@ -50,7 +50,7 @@ Accounts.onCreateUser((options, user) => {
       sex,
       email,
     } = user.services.vk;
-    user.personalData = {
+    newUser.personalData = {
       avatar: photo_big ? photo_big : '',
       email,
       gender: sex === 2 ? 'male' : 'female',
@@ -69,7 +69,7 @@ Accounts.onCreateUser((options, user) => {
       lang,
       id,
     } = user.services.twitter;
-    user.personalData = {
+    newUser.personalData = {
       avatar: profile_image_url_https ? profile_image_url_https : '',
       gender: 'male',
       twitterId: id,
@@ -88,7 +88,7 @@ Accounts.onCreateUser((options, user) => {
       },
       email,
     } = options;
-    user.personalData = {
+    newUser.personalData = {
       avatar: null,
       gender: 'male',
       email,
@@ -99,12 +99,12 @@ Accounts.onCreateUser((options, user) => {
       language: '',
     };
   }
-  user.blocks = {};
-  user.blocked = false;
-  user.onboard = {
+  newUser.blocks = {};
+  newUser.blocked = false;
+  newUser.onboard = {
     step: 'intro',
   };
-  user.fees = {
+  newUser.fees = {
     amount: 500,
     toPay: 0,
     items: [],
@@ -122,7 +122,7 @@ Accounts.onCreateUser((options, user) => {
       people: 1,
     });
   }
-  user.serviceData = {
+  newUser.serviceData = {
     groupId,
     notifications: {
       water: true,
@@ -145,5 +145,5 @@ Accounts.onCreateUser((options, user) => {
       history: false,
     },
   };
-  return user;
+  return newUser;
 });

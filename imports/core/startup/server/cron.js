@@ -56,11 +56,19 @@ SyncedCron.add({
   job: function newDaysJob() {
     // Need to be optimized using batch insert and aggregation on first major release
     Meteor.users.find().forEach((u) => {
-      const { timezone } = u.personalData;
+      const {
+        personalData: {
+          timezone,
+        },
+        serviceData: {
+          vacationUntil,
+        },
+      } = u;
       const currentUsersTime = moment.tz(timezone);
       const currentHour = parseInt(currentUsersTime.format('HH'), 10);
       if (currentHour === 0) {
         const currentDay = Days.findOne({ userId: u._id }, { sort: { createdAt: -1 } });
+        const now = Date.now();
         if (currentDay) {
           const createdAtFormat = moment(currentDay.createdAt).tz(timezone).format('DD/MM/YYYY');
           const currentUsersDayFormat = currentUsersTime.format('DD/MM/YYYY');
@@ -79,6 +87,7 @@ SyncedCron.add({
               index,
               timezone,
             };
+            if (vacationUntil && vacationUntil >= now) obj.isVacation = true;
             obj.blocks.push({
               name: 'dailyTask',
               passed: false,
@@ -105,7 +114,7 @@ SyncedCron.add({
             });
             Days.insert(obj);
             const uncheckedBlocks = currentDay.blocks.filter(b => !b.passed);
-            if (uncheckedBlocks.length > 0) {
+            if (uncheckedBlocks.length > 0 && !vacationUntil) {
               const { items, toPay, amount } = u.fees;
               let newToPay = toPay;
               uncheckedBlocks.forEach((b) => {
@@ -119,6 +128,13 @@ SyncedCron.add({
                 },
               };
               Meteor.users.update(u._id, query);
+            }
+            if (vacationUntil && vacationUntil <= now) {
+              Meteor.users.update(u._id, {
+                $set: {
+                  'serviceData.vacationUntil': null,
+                },
+              });
             }
           }
         } else {
@@ -169,8 +185,16 @@ SyncedCron.add({
 //   job: function newTestDaysJob() {
 //     // Need to be optimized using batch insert and aggregation on first major release
 //     Meteor.users.find().forEach((u) => {
-//       const { timezone } = u.personalData;
+//       const {
+//         personalData: {
+//           timezone,
+//         },
+//         serviceData: {
+//           vacationUntil,
+//         },
+//       } = u;
 //       const currentUsersTime = moment.tz(timezone);
+//       const now = Date.now();
 //       if (true) {
 //         const currentDay = Days.findOne({ userId: u._id }, { sort: { createdAt: -1 } });
 //         if (currentDay) {
@@ -184,11 +208,12 @@ SyncedCron.add({
 //             index += 1;
 //             const obj = {
 //               userId: u._id,
-//               createdAt: moment().toISOString(),
+//               createdAt: moment().subtract('days', 2).toISOString(),
 //               blocks: [],
 //               index,
 //               timezone,
 //             };
+//             if (vacationUntil && vacationUntil >= now) obj.isVacation = true;
 //             obj.blocks.push({
 //               name: 'dailyTask',
 //               passed: false,
@@ -213,9 +238,10 @@ SyncedCron.add({
 //                 obj.blocks.push(blockDoc);
 //               }
 //             });
+//             console.log(obj);
 //             Days.insert(obj);
 //             const uncheckedBlocks = currentDay.blocks.filter(b => !b.passed);
-//             if (uncheckedBlocks.length > 0) {
+//             if (uncheckedBlocks.length > 0 && !vacationUntil) {
 //               const { items, toPay, amount } = u.fees;
 //               let newToPay = toPay;
 //               uncheckedBlocks.forEach((b) => {
@@ -229,6 +255,13 @@ SyncedCron.add({
 //                 },
 //               };
 //               Meteor.users.update(u._id, query);
+//             }
+//             if (vacationUntil && vacationUntil <= now) {
+//               Meteor.users.update(u._id, {
+//                 $set: {
+//                   'serviceData.vacationUntil': null,
+//                 },
+//               });
 //             }
 //           }
 //         } else {
@@ -264,6 +297,7 @@ SyncedCron.add({
 //               obj.blocks.push(blockDoc);
 //             }
 //           });
+//           console.log(obj);
 //           Days.insert(obj);
 //         }
 //       }
@@ -282,7 +316,11 @@ SyncedCron.add({
         personalData: {
           timezone,
         },
+        blocks: {
+          water: waterBlock,
+        },
         serviceData: {
+          vacationUntil,
           notifications: {
             water,
             motivation,
@@ -292,50 +330,59 @@ SyncedCron.add({
           },
         },
       } = u;
-      const currentUsersTime = moment.tz(timezone);
-      const currentHour = parseInt(currentUsersTime.format('HH'), 10);
-      if (water && [9, 12, 15, 18, 21].includes(currentHour)) {
-        console.log('Send water notification');
-        client.sendNotification('2 литра воды в день', {
-          include_player_ids: [oneSignalId],
-          contents: {
-            en: _.sample(waterTexts),
-            ru: _.sample(waterTexts),
-          },
-        });
-      }
-      if (motivation && [8, 14, 20].includes(currentHour)) {
-        console.log('Send motivation notification');
-        client.sendNotification('Мотивация', {
-          include_player_ids: [oneSignalId],
-          contents: {
-            en: _.sample(motivationTexts),
-            ru: _.sample(motivationTexts),
-          },
-        });
-      }
-      if ((dailyTask || endOfDay) && [11, 22].includes(currentHour)) {
-        const currentDay = Days.findOne({ userId: u._id }, { sort: { createdAt: -1 } });
-        const { blocks } = currentDay;
-        if (dailyTask && currentHour === 11 && !blocks.dailyTask.passed) {
-          console.log('Send daily task notification');
-          client.sendNotification('Дневное задание', {
+      if (!vacationUntil) {
+        const currentUsersTime = moment.tz(timezone);
+        const currentHour = parseInt(currentUsersTime.format('HH'), 10);
+        if (
+          water &&
+          waterBlock &&
+          waterBlock.enabled &&
+          [9, 12, 15, 18, 21].includes(currentHour)
+        ) {
+          client.sendNotification('2 литра воды в день', {
             include_player_ids: [oneSignalId],
             contents: {
-              en: _.sample(dailyTaskTexts),
-              ru: _.sample(dailyTaskTexts),
+              en: _.sample(waterTexts),
+              ru: _.sample(waterTexts),
             },
           });
         }
-        if (endOfDay && currentHour === 22 && blocks.filter(b => !b.passed).length > 0) {
-          console.log('Send end day notification');
-          client.sendNotification('Остались невыполненные задания', {
+        if (motivation && [8, 14, 20].includes(currentHour)) {
+          client.sendNotification('Мотивация', {
             include_player_ids: [oneSignalId],
             contents: {
-              en: _.sample(endOfDayTexts),
-              ru: _.sample(endOfDayTexts),
+              en: _.sample(motivationTexts),
+              ru: _.sample(motivationTexts),
             },
           });
+        }
+        if (
+          (dailyTask || endOfDay) &&
+          [11, 22].includes(currentHour)
+        ) {
+          const currentDay = Days.findOne({ userId: u._id }, { sort: { createdAt: -1 } });
+          const { blocks } = currentDay;
+          if (dailyTask && currentHour === 11 && !blocks.dailyTask.passed) {
+            client.sendNotification('Дневное задание', {
+              include_player_ids: [oneSignalId],
+              contents: {
+                en: _.sample(dailyTaskTexts),
+                ru: _.sample(dailyTaskTexts),
+              },
+            });
+          }
+          if (
+            endOfDay &&
+            currentHour === 22 && blocks.filter(b => !b.passed).length > 0
+          ) {
+            client.sendNotification('Остались невыполненные задания', {
+              include_player_ids: [oneSignalId],
+              contents: {
+                en: _.sample(endOfDayTexts),
+                ru: _.sample(endOfDayTexts),
+              },
+            });
+          }
         }
       }
     });

@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createContainer } from 'meteor/react-meteor-data';
 import { browserHistory } from 'react-router';
-import { ChoosePictureSource } from '/imports/profile';
 
 import {
   SideMenu,
@@ -17,19 +17,55 @@ import {
   DaySuccessModal,
   VacationModal,
 } from '/imports/core';
+import { profileActions, ChoosePictureSource } from '/imports/profile';
 import * as coreActions from '../../api/redux/actions';
-import { profileActions } from '/imports/profile';
 
 const actions = Object.assign({}, coreActions, profileActions);
 
 export class MainLayoutComponent extends PureComponent {
+
+  static propTypes = {
+    user: PropTypes.object,
+    userReady: PropTypes.bool.isRequired,
+    location: PropTypes.object.isRequired,
+    children: PropTypes.object.isRequired,
+    core: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
+    checkNotificationId: PropTypes.func.isRequired,
+    setStatusBar: PropTypes.func.isRequired,
+    preload: PropTypes.func.isRequired,
+    toggleWakeUpModal: PropTypes.func.isRequired,
+    toggleDaySuccessModal: PropTypes.func.isRequired,
+    toggleMenu: PropTypes.func.isRequired,
+    toggleVacation: PropTypes.func.isRequired,
+    toggleFeesModal: PropTypes.func.isRequired,
+    togglePayFeesModal: PropTypes.func.isRequired,
+    toggleChoosePictureModal: PropTypes.func.isRequired,
+  };
+
+  componentDidMount() {
+    const { location: { pathname } } = this.props;
+    const {
+      user,
+      checkNotificationId,
+    } = this.props;
+    if (user && user.onboard) {
+      if (!user.onboard.isFinished) {
+        browserHistory.push(`/onboard/${user.onboard.step}`);
+      } else if (user.blocked) {
+        browserHistory.push('/pay');
+      } else if (pathname === '/') {
+        browserHistory.push('/today');
+      }
+    }
+    if (Meteor.isCordova) checkNotificationId(user);
+  }
 
   componentWillReceiveProps(nextProps) {
     const {
       location: {
         pathname,
       },
-      user,
       userReady,
       checkNotificationId,
       setStatusBar,
@@ -42,12 +78,10 @@ export class MainLayoutComponent extends PureComponent {
     if (newUser && newUser.onboard) {
       if (!newUser.onboard.isFinished) {
         browserHistory.push(`/onboard/${newUser.onboard.step}`);
-      } else {
-        if (newUser.blocked) {
-          browserHistory.push('/pay');
-        } else if (pathname === '/') {
-          browserHistory.push('/today');
-        }
+      } else if (newUser.blocked) {
+        browserHistory.push('/pay');
+      } else if (pathname === '/') {
+        browserHistory.push('/today');
       }
     }
     if (Meteor.isCordova) {
@@ -57,31 +91,8 @@ export class MainLayoutComponent extends PureComponent {
       }
     }
     if (newUser && newUserReady && !userReady) {
-      console.log('preloading');
       preload(newUser);
     }
-  }
-
-  componentDidMount() {
-    const { location: { pathname } } = this.props;
-    const {
-      user,
-      userReady,
-      checkNotificationId,
-      preload,
-    } = this.props;
-    if (user && user.onboard) {
-      if (!user.onboard.isFinished) {
-        browserHistory.push(`/onboard/${user.onboard.step}`);
-      } else {
-        if (user.blocked) {
-          browserHistory.push('/pay');
-        } else if (pathname === '/') {
-          browserHistory.push('/today');
-        }
-      }
-    }
-    if (Meteor.isCordova) checkNotificationId(user);
   }
 
   render() {
@@ -121,8 +132,8 @@ export class MainLayoutComponent extends PureComponent {
                 </div>
                 <MobileMenu {...this.props} />
                 <button
-                  className="close-overlay"
-                  onClick={toggleMenu}
+                    className="close-overlay"
+                    onClick={toggleMenu}
                 >
                   <div>
                     <span><i className="fa fa-chevron-left" /></span>
@@ -142,17 +153,22 @@ export class MainLayoutComponent extends PureComponent {
                     <ChoosePictureSource toggle={toggleChoosePictureModal} />
                 }
               </div>
-              {vacationModalShown && <VacationModal toggle={toggleVacation} />}
+              {
+                vacationModalShown && <VacationModal
+                    toggle={toggleVacation}
+                    {...this.props}
+                />
+              }
               {
                 feesModalShown && <FeesModal
-                  toggle={toggleFeesModal}
-                  {...this.props}
+                    toggle={toggleFeesModal}
+                    {...this.props}
                 />
               }
               {
                 payFeesModalShown && <PayFeesModal
-                  toggle={togglePayFeesModal}
-                  {...this.props}
+                    toggle={togglePayFeesModal}
+                    {...this.props}
                 />
               }
             </div> :

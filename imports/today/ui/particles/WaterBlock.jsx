@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -6,6 +7,19 @@ import { Checkbox } from '/imports/core';
 import { todayActions } from '/imports/today';
 
 export class WaterBlockComponent extends PureComponent {
+
+  static propTypes = {
+    checkWaterBlock: PropTypes.func.isRequired,
+    day: PropTypes.object,
+    block: PropTypes.object,
+    type: PropTypes.string,
+  };
+
+  static defaultProps = {
+    day: null,
+    block: null,
+    type: '',
+  };
 
   checkWaterBlock = () => {
     const {
