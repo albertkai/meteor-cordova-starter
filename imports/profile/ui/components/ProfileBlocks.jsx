@@ -12,7 +12,11 @@ import {
   TaskIcon,
   WaterIcon,
 } from '/imports/core';
+import { PlusIcon } from '/imports/today';
 import { profileActions } from '/imports/profile';
+import { mydayActions, CustomTaskItem } from '/imports/myday';
+
+const actions = Object.assign({}, profileActions, mydayActions);
 
 const isEnabled = block => block ? block.enabled : false;
 
@@ -21,6 +25,10 @@ const getValue = (block, option) => {
 }
 
 export class ProfileBlocksComponent extends PureComponent {
+
+  componentDidMount() {
+    console.log('mount');
+  }
 
   setWakeUp = (e) => {
     const { value } = e.target;
@@ -56,48 +64,14 @@ export class ProfileBlocksComponent extends PureComponent {
       toggleWater,
       toggleKind,
       toggleReport,
-      setTimezone,
-      setFee,
+      openCustomTaskModal,
       user: {
         blocks,
-        personalData: {
-          timezone,
-        },
-        fees: {
-          amount,
-        },
       },
     } = this.props;
     return (
       <div id="profile-blocks">
         <div className="container paper no-padding">
-          {/*<div className="main-info">*/}
-            {/*<div className="item">*/}
-              {/*<div>*/}
-                {/*<h5>Временная зона:</h5>*/}
-              {/*</div>*/}
-              {/*<div>*/}
-                {/*<TimezoneSelect*/}
-                  {/*timezone={timezone}*/}
-                  {/*setTimezone={setTimezone}*/}
-                {/*/>*/}
-              {/*</div>*/}
-            {/*</div>*/}
-            {/*<div className="item">*/}
-              {/*<div>*/}
-                {/*<h5>Сумма штрафа:</h5>*/}
-              {/*</div>*/}
-              {/*<div>*/}
-                {/*<input*/}
-                  {/*id="fee"*/}
-                  {/*type="number"*/}
-                  {/*defaultValue={amount}*/}
-                  {/*onChange={setFee}*/}
-                {/*/>*/}
-                {/*<span><i className="fa fa-rouble" /></span>*/}
-              {/*</div>*/}
-            {/*</div>*/}
-          {/*</div>*/}
           <div className="blocks">
             <div className="blocks-cont">
               <div className="task-item required daily-task _enabled">
@@ -157,8 +131,8 @@ export class ProfileBlocksComponent extends PureComponent {
                     <AlarmIcon />
                   </div>
                   <Switcher
-                    checked={isEnabled(blocks.wakeUp)}
-                    onChange={toggleWakeUp}
+                      checked={isEnabled(blocks.wakeUp)}
+                      onChange={toggleWakeUp}
                   />
                 </div>
               </div>
@@ -329,21 +303,21 @@ export class ProfileBlocksComponent extends PureComponent {
                     <ReportIcon />
                   </div>
                   <Switcher
-                    checked={isEnabled(blocks.report)}
-                    onChange={toggleReport}
+                      checked={isEnabled(blocks.report)}
+                      onChange={toggleReport}
                   />
                 </div>
               </div>
-              {/*<div className="block-item add">*/}
-                {/*<div>*/}
-                  {/*<button className="checkbox add">*/}
-                    {/*<i className="fa fa-plus" />*/}
-                  {/*</button>*/}
-                {/*</div>*/}
-                {/*<div>*/}
-                  {/*<h3>Добавить свое задание</h3>*/}
-                {/*</div>*/}
-              {/*</div>*/}
+              {
+                blocks.custom && blocks.custom.map(cb => <CustomTaskItem key={cb._id} block={cb} />)
+              }
+              <button
+                  className="block-item add"
+                  onClick={() => openCustomTaskModal({})}
+              >
+                <PlusIcon />
+                <p>Добавить свое задание</p>
+              </button>
             </div>
           </div>
         </div>
@@ -357,7 +331,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(profileActions, dispatch);
+  bindActionCreators(actions, dispatch);
 
 export const ProfileBlocks = connect(
   mapStateToProps,

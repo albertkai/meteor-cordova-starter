@@ -6,6 +6,8 @@ import { Days, ItemsLoading } from '/imports/core';
 import { TextBlock } from '../particles/TextBlock';
 import { SimpleBlock } from '../particles/SimpleBlock';
 import { TasksBlock } from '../particles/TasksBlock';
+import { MeditationBlock } from '../particles/MeditationBlock';
+import { SportBlock } from '../particles/SportBlock';
 import { WaterBlock } from '../particles/WaterBlock';
 import { WakeUpBlock } from '../particles/WakeUpBlock';
 import { FirstDay } from '../components/FirstDay';
@@ -26,16 +28,14 @@ const blocksMap = {
   },
   sport: {
     sort: 3,
-    component: SimpleBlock,
+    component: SportBlock,
     properties: {
-      type: 'video',
       name: 'Зарядка',
-      desc: '15 минутный комплекс',
     },
   },
   meditation: {
     sort: 4,
-    component: SimpleBlock,
+    component: MeditationBlock,
     properties: {
       type: 'audio',
       name: 'Медитация',
@@ -103,7 +103,7 @@ export class TodayComponent extends PureComponent {
   }
 
   componentDidMount() {
-    const { today } = this.props;
+    const { today, user: { blocks: { sport } } } = this.props;
     if (today && this.state.timeLeft === '00:00:00' && !this.interval) {
       const limit = moment(today.createdAt).add(1, 'days').set(0, 'hour').set(0, 'minute');
       let timeLeft = moment.utc(limit.diff(moment(), 'milliseconds')).format('HH:mm:ss');
@@ -112,6 +112,11 @@ export class TodayComponent extends PureComponent {
         timeLeft = moment.utc(limit.diff(moment(), 'milliseconds')).format('HH:mm:ss');
         this.setState({ timeLeft });
       }, 1000);
+    }
+    if (sport && sport.enabled) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.body.appendChild(tag);
     }
   }
 

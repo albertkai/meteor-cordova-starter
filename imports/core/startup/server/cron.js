@@ -208,7 +208,7 @@ SyncedCron.add({
 //             index += 1;
 //             const obj = {
 //               userId: u._id,
-//               createdAt: moment().subtract('days', 2).toISOString(),
+//               createdAt: moment().toISOString(),
 //               blocks: [],
 //               index,
 //               timezone,

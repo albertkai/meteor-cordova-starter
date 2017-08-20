@@ -1,0 +1,7 @@
+.sport-block {
+  > div {
+    &:nth-child(2) {
+      display: block !important;
+    }
+  }
+}

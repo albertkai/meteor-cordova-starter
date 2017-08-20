@@ -59,3 +59,4 @@ export { LogoIcon } from './ui/particles/LogoIcon.jsx';
 export { ItemsLoading } from './ui/particles/ItemsLoading.jsx';
 
 export { Transactions } from './api/models/transactions/transactions.js';
+export { Settings } from './api/models/settings/settings.js';

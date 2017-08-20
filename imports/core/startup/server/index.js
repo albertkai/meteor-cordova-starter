@@ -23,3 +23,6 @@ import '../../api/models/groups/groups_pubs.js';
 
 import '../../api/models/transactions/transactions_methods.js';
 import '../../api/models/transactions/transactions_pubs.js';
+
+import '../../api/models/settings/settings_methods.js';
+import '../../api/models/settings/settings_pubs.js';

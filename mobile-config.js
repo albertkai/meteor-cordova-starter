@@ -51,9 +51,13 @@ App.launchScreens({
 
 // Let these urls access the following domains
 App.accessRule('*'); // @@@@@@@@@@@@@@@@
+App.accessRule('https://*.youtube.com', { type: 'navigation' });
 
 // Set PhoneGap/Cordova preferences
 App.setPreference('BackgroundColor', '0xff0000ff');
+App.setPreference('AllowInlineMediaPlayback', true);
+App.setPreference('MediaPlaybackRequiresUserAction', false);
+App.setPreference('MediaPlaybackAllowsAirPlay', true);
 App.setPreference('HideKeyboardFormAccessoryBar', true);
 App.setPreference('DisallowOverscroll', true);
 App.setPreference('BackupWebStorage', 'local');

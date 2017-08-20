@@ -8,7 +8,7 @@ export class Checkbox extends PureComponent {
     } else if (!this.props.checked) {
       this.props.onChange(e);
     }
-  }
+  };
 
   render() {
     const {

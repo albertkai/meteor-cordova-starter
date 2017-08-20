@@ -7,6 +7,7 @@ import { coreReducer } from './reducer.js';
 import { profileReducer } from '/imports/profile';
 import { chatsReducer } from '/imports/chats';
 import { historyReducer } from '/imports/history';
+import { mydayReducer } from '/imports/myday';
 // Placeholder import (used by robot)
 
 const middleware = [thunk];
@@ -50,7 +51,8 @@ const store = createStore(
     profile: profileReducer,
     chats: chatsReducer,
     history: historyReducer,
-// Placeholder (used by robot)
+    myday: mydayReducer,
+    // Placeholder (used by robot)
   }),
   enhancer,
 );

@@ -235,6 +235,42 @@ Meteor.methods({
     return false;
   },
 
+  'days.checkMeditationBlock': function checkMeditationBlock() {
+    const currentDay = Days.findOne({ userId: this.userId }, { sort: { createdAt: -1 } });
+    const targetBlock = currentDay.blocks.find(b => b.name === 'meditation');
+    if (targetBlock) {
+      Days.update({
+        _id: currentDay._id,
+        userId: this.userId,
+        'blocks.name': 'meditation',
+      }, {
+        $set: {
+          'blocks.$.passed': true,
+        },
+      });
+      return currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
+    }
+    return false;
+  },
+
+  'days.checkSportBlock': function checkSportBlock() {
+    const currentDay = Days.findOne({ userId: this.userId }, { sort: { createdAt: -1 } });
+    const targetBlock = currentDay.blocks.find(b => b.name === 'sport');
+    if (targetBlock) {
+      Days.update({
+        _id: currentDay._id,
+        userId: this.userId,
+        'blocks.name': 'sport',
+      }, {
+        $set: {
+          'blocks.$.passed': true,
+        },
+      });
+      return currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
+    }
+    return false;
+  },
+
   'days.checkSimpleBlock': function checkSimpleBlock(dayId, blockName) {
     check(dayId, String);
     check(blockName, String);
@@ -266,8 +302,4 @@ Meteor.methods({
     const yesterday = moment().subtract(24, 'hours').toISOString();
     return Days.find({ createdAt: { $lte: yesterday }, userId: this.userId }).count();
   },
-
-  'days.addNewTestOne'() {
-
-  }
 });

@@ -1,0 +1,27 @@
+#sport-overlay {
+  position: absolute;
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: black;
+  #player {
+    position: absolute;
+    top: 50%;
+    @include transform(translate(0, -50%));
+    left: 0;
+  }
+  .close {
+    color: white;
+    position: absolute;
+    z-index: 2;
+    border: 0;
+    top: 30px;
+    right: 10px;
+    font-size: 32px;
+    &:hover {
+      background: transparent;
+    }
+  }
+}

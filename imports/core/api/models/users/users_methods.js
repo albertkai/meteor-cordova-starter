@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
+import { Random } from 'meteor/random';
 import _ from 'underscore';
 import { check } from 'meteor/check';
 
@@ -82,6 +83,75 @@ Meteor.methods({
         [`personalData.${name}`]: value,
       },
     });
+  },
+
+  'users.addCustomTask': function addCustomTask(task) {
+    check(task, Object);
+
+    if (task.name) {
+      const taskObj = Object.assign({}, task);
+      taskObj._id = Random.id();
+      taskObj.createdAt = Date.now();
+      taskObj.enabled = true;
+      console.log(taskObj);
+      Meteor.users.update(this.userId, {
+        $addToSet: {
+          'blocks.custom': taskObj,
+        },
+      });
+      return true;
+    }
+    throw new Meteor.Error('Name needs to be provided');
+  },
+
+  'users.updateCustomTask': function addCustomTask(task) {
+    check(task, Object);
+
+    if (task.name) {
+      Meteor.users.update({ _id: this.userId, 'blocks.custom._id': task._id }, {
+        $set: {
+          'blocks.custom.$.name': task.name,
+          'blocks.custom.$.frequency': task.frequency,
+          'blocks.custom.$.color': task.color,
+          'blocks.custom.$.type': task.type,
+        },
+      });
+      return true;
+    }
+    throw new Meteor.Error('Name needs to be provided');
+  },
+
+  'users.removeCustomTask': function addCustomTask(task) {
+    check(task, Object);
+
+    Meteor.users.update(this.userId, {
+      $pull: {
+        'blocks.custom': task,
+      },
+    });
+    return true;
+  },
+
+  'users.toggleCustomBlock': function toggleCustomBlock(_id) {
+    check(_id, String);
+
+    const customBlocks = Meteor.users.findOne(this.userId).blocks.custom;
+    if (customBlocks) {
+      const block = customBlocks.find(b => b._id === _id);
+      if (block) {
+        const { enabled } = block;
+        Meteor.users.update(
+          { _id: this.userId, 'blocks.custom._id': _id },
+          {
+            $set: {
+              'blocks.custom.$.enabled': !enabled,
+            },
+          },
+        );
+        return !enabled;
+      }
+    }
+    return false;
   },
 
   'users.toggleBlock': function toggleBlock(name) {

@@ -17,10 +17,12 @@ import {
   DaySuccessModal,
   VacationModal,
 } from '/imports/core';
+import { MeditationOverlay, SportOverlay } from '/imports/today';
+import { mydayActions, CustomTaskModal } from '/imports/myday';
 import { profileActions, ChoosePictureSource } from '/imports/profile';
 import * as coreActions from '../../api/redux/actions';
 
-const actions = Object.assign({}, coreActions, profileActions);
+const actions = Object.assign({}, coreActions, profileActions, mydayActions);
 
 export class MainLayoutComponent extends PureComponent {
 
@@ -31,16 +33,24 @@ export class MainLayoutComponent extends PureComponent {
     children: PropTypes.object.isRequired,
     core: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
+    myday: PropTypes.object.isRequired,
     checkNotificationId: PropTypes.func.isRequired,
     setStatusBar: PropTypes.func.isRequired,
     preload: PropTypes.func.isRequired,
     toggleWakeUpModal: PropTypes.func.isRequired,
     toggleDaySuccessModal: PropTypes.func.isRequired,
+    closeCustomTaskModal: PropTypes.func.isRequired,
     toggleMenu: PropTypes.func.isRequired,
     toggleVacation: PropTypes.func.isRequired,
     toggleFeesModal: PropTypes.func.isRequired,
     togglePayFeesModal: PropTypes.func.isRequired,
     toggleChoosePictureModal: PropTypes.func.isRequired,
+    toggleMeditationOverlay: PropTypes.func.isRequired,
+    toggleSportOverlay: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    user: null,
   };
 
   componentDidMount() {
@@ -107,10 +117,16 @@ export class MainLayoutComponent extends PureComponent {
         vacationModalShown,
         feesModalShown,
         payFeesModalShown,
+        openedMeditationName,
+        openedSportName,
       },
       profile: {
         choosePictureModalShown,
       },
+      myday: {
+        customTaskModalData,
+      },
+      closeCustomTaskModal,
       toggleWakeUpModal,
       toggleDaySuccessModal,
       toggleMenu,
@@ -118,6 +134,8 @@ export class MainLayoutComponent extends PureComponent {
       toggleFeesModal,
       togglePayFeesModal,
       toggleChoosePictureModal,
+      toggleMeditationOverlay,
+      toggleSportOverlay,
     } = this.props;
     return (
       <div id="main-layout" className="root">
@@ -146,11 +164,38 @@ export class MainLayoutComponent extends PureComponent {
                     <span>Ь</span>
                   </div>
                 </button>
-                {wakeUpModalShown && <WakeUpModal toggle={toggleWakeUpModal} />}
-                {daySuccessModalShown && <DaySuccessModal toggle={toggleDaySuccessModal} />}
+                {
+                  wakeUpModalShown &&
+                    <WakeUpModal toggle={toggleWakeUpModal} />
+                }
+                {
+                  daySuccessModalShown &&
+                    <DaySuccessModal toggle={toggleDaySuccessModal} />
+                }
                 {
                   choosePictureModalShown &&
                     <ChoosePictureSource toggle={toggleChoosePictureModal} />
+                }
+                {
+                  customTaskModalData &&
+                    <CustomTaskModal
+                        toggle={closeCustomTaskModal}
+                        task={customTaskModalData}
+                    />
+                }
+                {
+                  openedMeditationName &&
+                    <MeditationOverlay
+                        name={openedMeditationName}
+                        toggle={() => toggleMeditationOverlay(null)}
+                    />
+                }
+                {
+                  openedSportName &&
+                    <SportOverlay
+                        name={openedSportName}
+                        toggle={() => toggleSportOverlay(null)}
+                    />
                 }
               </div>
               {
@@ -190,6 +235,7 @@ export const MainLayoutContainer = createContainer(() => {
 const mapStateToProps = state => ({
   core: state.core.toJS(),
   profile: state.profile.toJS(),
+  myday: state.myday.toJS(),
 });
 
 const mapDispatchToProps = dispatch =>

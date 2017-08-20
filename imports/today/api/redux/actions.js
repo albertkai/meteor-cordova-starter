@@ -70,6 +70,59 @@ export const checkWaterBlock = dayId => () => {
   });
 };
 
+export const setMeditationChecked = () => (dispatch) => {
+  console.log('Setting meditation checked');
+  Meteor.call('days.checkMeditationBlock', (err, allFinished) => {
+    dispatch({
+      type: 'core/TOGGLE_MEDITATION_OVERLAY',
+      name: null,
+    });
+    if (err) {
+      Notify.alert({
+        title: 'Произошла ошибка',
+        text: 'Пожалуйста напишите в службу поддержки',
+        type: 'error',
+      });
+    } else {
+      Notify.alert({
+        title: 'Класс!',
+        text: 'Настрой и состояние ума - одни из главных составляющих успеха. Практикуйте медитацию каждый день!',
+        type: 'success',
+      });
+    }
+    if (allFinished) {
+      dispatch({ type: 'core/TOGGLE_DAY_SUCCESS_MODAL' });
+    }
+  });
+};
+
+export const setSportChecked = () => (dispatch) => {
+  console.log('Setting sport checked');
+  Meteor.call('days.checkSportBlock', (err, allFinished) => {
+    dispatch({
+      type: 'core/TOGGLE_SPORT_OVERLAY',
+      name: null,
+    });
+    if (err) {
+      Notify.alert({
+        title: 'Произошла ошибка',
+        text: 'Пожалуйста напишите в службу поддержки',
+        type: 'error',
+      });
+    } else {
+      Notify.alert({
+        title: 'Отличная работа!',
+        text: 'Даже короткая ежедневная зарядка поможет вам держать тело в форме, и оно даст вам энергию, необходимую для ваших больших свершений',
+        type: 'success',
+        delay: 5000,
+      });
+    }
+    if (allFinished) {
+      dispatch({ type: 'core/TOGGLE_DAY_SUCCESS_MODAL' });
+    }
+  });
+};
+
 export const addTask = (dayId, text) => () => {
   Meteor.call('days.addTask', dayId, text);
 };

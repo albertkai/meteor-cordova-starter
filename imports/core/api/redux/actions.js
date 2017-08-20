@@ -64,6 +64,16 @@ export const payFee = amount => (dispatch) => {
   });
 };
 
+let youTubeLoaded = false;
+export const loadYoutubeApi = () => () => {
+  if (!youTubeLoaded) {
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.body.appendChild(tag);
+    youTubeLoaded = true;
+  }
+};
+
 export const toggleDaySuccessModal = () => ({ type: c.TOGGLE_DAY_SUCCESS_MODAL });
 
 export const toggleVacation = () => ({ type: c.TOGGLE_VACATION });
@@ -71,6 +81,15 @@ export const toggleVacation = () => ({ type: c.TOGGLE_VACATION });
 export const toggleFeesModal = () => ({ type: c.TOGGLE_FEES_MODAL });
 
 export const togglePayFeesModal = () => ({ type: c.TOGGLE_PAY_FEES_MODAL });
+
+export const toggleMeditationOverlay = name => ({
+  type: c.TOGGLE_MEDITATION_OVERLAY,
+  name,
+});
+export const toggleSportOverlay = name => ({
+  type: c.TOGGLE_SPORT_OVERLAY,
+  name,
+});
 
 // Placeholder (used by robot)
 

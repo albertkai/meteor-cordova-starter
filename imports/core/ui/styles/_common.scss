@@ -266,6 +266,9 @@
     }
     .checkbox {
       border-color: $meditation-color;
+      i {
+        color: $meditation-color;
+      }
     }
     .circle {
       background-color: $meditation-color;
@@ -277,6 +280,9 @@
     }
     .checkbox {
       border-color: $sport-color;
+      i {
+        color: $sport-color;
+      }
     }
     .circle {
       background-color: $sport-color;
@@ -360,6 +366,12 @@
         color: white !important;
       }
       background: transparent;
+    }
+    .dropdown {
+      .cont {
+        color: white !important;
+        border-color: rgba(white, .5);
+      }
     }
   }
   h3 {

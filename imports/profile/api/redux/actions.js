@@ -112,6 +112,10 @@ export const toggleReport = () => {
   };
 };
 
+export const toggleCustomBlock = _id => () => {
+  Meteor.call('users.toggleCustomBlock', _id, notifyChange);
+};
+
 export const setTimezone = (e) => () => {
   const { value } = e.target;
   Meteor.call('users.setTimezone', value);

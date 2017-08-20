@@ -1,0 +1,29 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+  &._disabled {
+    select {
+      visibility: hidden;
+    }
+  }
+  .cont {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 5px 0;
+    z-index: 1;
+    i {
+      float: right;
+    }
+    border-bottom: 1px solid lighten($gray-light, 20%);
+  }
+  select {
+    position: relative;
+    z-index: 2;
+    height: 30px;
+    opacity: 0;
+    display: inline;
+  }
+}

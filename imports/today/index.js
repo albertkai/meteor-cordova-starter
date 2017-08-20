@@ -21,3 +21,13 @@ export { PlusIcon } from './ui/particles/PlusIcon.jsx';
 export { FirstDay } from './ui/components/FirstDay.jsx';
 
 export { ArrowIcon } from './ui/particles/ArrowIcon.jsx';
+
+export { MeditationOverlay } from './ui/components/MeditationOverlay.jsx';
+
+export { MeditationBlock } from './ui/particles/MeditationBlock.jsx';
+
+export { Dropdown } from './ui/particles/Dropdown.jsx';
+
+export { SportBlock } from './ui/particles/SportBlock.jsx';
+
+export { SportOverlay } from './ui/components/SportOverlay.jsx';

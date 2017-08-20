@@ -355,4 +355,28 @@
     width: 80px;
     margin-right: 5px;
   }
+  .add {
+    width: 100%;
+    border: 0;
+    @include flex-direction(column);
+    padding: 20px 0 !important;
+    text-align: center !important;
+    @include justify-content(center);
+    @include align-items(center);
+    &:hover {
+      background: transparent;
+    }
+    svg {
+      stroke: $green;
+      fill: $green;
+      width: 120px;
+      height: 120px;
+      margin: 20px auto;
+    }
+    p {
+      font-size: 22px;
+      color: $green;
+      font-weight: bold;
+    }
+  }
 }

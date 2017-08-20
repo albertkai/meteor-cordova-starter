@@ -176,6 +176,10 @@ const userSchema = new SimpleSchema({
   personalData: {
     type: personalDataSchema,
   },
+  services: {
+    type: Object,
+    blackbox: true,
+  },
   blocked: {
     type: Boolean,
     defaultValue: false,
