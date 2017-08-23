@@ -16,17 +16,15 @@ export class SendMessageComponent extends PureComponent {
 
   sendMessage = () => {
     const {
-      chats: {
-        chatType,
-      },
+      thread: threadType,
       groupId,
       sendMessage,
     } = this.props;
     const content = this.input.value;
     if (content) {
       let thread;
-      if (chatType === 'common' || chatType === 'insights') {
-        thread = chatType;
+      if (threadType === 'common' || threadType === 'insights') {
+        thread = threadType;
       } else {
         thread = groupId;
       }

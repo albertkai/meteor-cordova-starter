@@ -14,13 +14,13 @@ const namesMap = {
 };
 
 const daysMap = {
-  monday: 'Пн',
-  tuesday: 'Вт',
-  wednesday: 'Ср',
-  thursday: 'Чт',
-  friday: 'Пт',
-  saturday: 'Сб',
-  sunday: 'Вс',
+  1: 'Пн',
+  2: 'Вт',
+  3: 'Ср',
+  4: 'Чт',
+  5: 'Пт',
+  6: 'Сб',
+  7: 'Вс',
 };
 
 export class CustomTaskItemComponent extends PureComponent {
@@ -40,6 +40,8 @@ export class CustomTaskItemComponent extends PureComponent {
       return 'Ежедневно';
     } else if (frequency.name === 'days') {
       return `${frequency.options.dayNames.map(d => daysMap[d]).join(', ')}`;
+    } else if (frequency.name === 'monthly') {
+      return `Раз в месяц ${frequency.options.date} числа`;
     }
     return '';
   };

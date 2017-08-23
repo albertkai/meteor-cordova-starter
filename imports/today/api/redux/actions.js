@@ -1,6 +1,6 @@
 import { Notify } from '/imports/notifications';
 
-export const checkTextBlock = (dayId, blockName, text, min) => (dispatch) => {
+export const checkTextBlock = (dayId, blockName, text, min, customId) => (dispatch) => {
   if (text.length < min) {
     Notify.alert({
       title: 'Слишком короткий ответ',
@@ -8,7 +8,7 @@ export const checkTextBlock = (dayId, blockName, text, min) => (dispatch) => {
       type: 'error',
     });
   } else {
-    Meteor.call('days.checkTextBlock', dayId, blockName, text, min, (err, allFinished) => {
+    Meteor.call('days.checkTextBlock', dayId, blockName, text, min, customId, (err, allFinished) => {
       if (err) {
         Notify.alert({
           title: 'Произошла ошибка',
@@ -71,7 +71,6 @@ export const checkWaterBlock = dayId => () => {
 };
 
 export const setMeditationChecked = () => (dispatch) => {
-  console.log('Setting meditation checked');
   Meteor.call('days.checkMeditationBlock', (err, allFinished) => {
     dispatch({
       type: 'core/TOGGLE_MEDITATION_OVERLAY',
@@ -97,7 +96,6 @@ export const setMeditationChecked = () => (dispatch) => {
 };
 
 export const setSportChecked = () => (dispatch) => {
-  console.log('Setting sport checked');
   Meteor.call('days.checkSportBlock', (err, allFinished) => {
     dispatch({
       type: 'core/TOGGLE_SPORT_OVERLAY',
@@ -155,8 +153,8 @@ export const checkTask = (dayId, index) => () => {
   });
 };
 
-export const checkSimpleBlock = (dayId, blockName) => (dispatch) => {
-  Meteor.call('days.checkSimpleBlock', dayId, blockName, (err, allFinished) => {
+export const checkSimpleBlock = (dayId, blockName, customId) => (dispatch) => {
+  Meteor.call('days.checkSimpleBlock', dayId, blockName, customId, (err, allFinished) => {
     if (err) {
       Notify.alert({
         title: 'Произошла ошибка',

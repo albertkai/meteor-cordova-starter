@@ -34,7 +34,7 @@ export class MeditationOverlayComponent extends PureComponent {
   componentDidMount() {
     const meditation = mediationsMap[this.props.name];
     const mediaSuccess = () => this.setMeditationChecked();
-    const mediaError = () => console.log('hey');
+    const mediaError = (e) => console.log(e);
     const mediaStatus = status => console.log(status);
     this.media = new Media(`${coreConstants.CLOUDFRONT_URL}${meditation.path}`, mediaSuccess, mediaError, mediaStatus);
     Meteor.media = this.media;

@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -7,17 +8,36 @@ import { todayActions } from '/imports/today';
 
 export class SimpleBlockComponent extends PureComponent {
 
+  static propTypes = {
+    checkSimpleBlock: PropTypes.func.isRequired,
+    day: PropTypes.object.isRequired,
+    block: PropTypes.object.isRequired,
+    name: PropTypes.string,
+    desc: PropTypes.string,
+    color: PropTypes.string,
+    customId: PropTypes.string,
+    type: PropTypes.string.isRequired,
+  };
+
+  static defaultProps = {
+    desc: '',
+    name: '',
+    color: '',
+    customId: '',
+  };
+
   checkSimpleBlock = () => {
     const {
       checkSimpleBlock,
       day: {
         _id,
       },
+      customId,
       block: {
         name,
       },
     } = this.props;
-    checkSimpleBlock(_id, name);
+    checkSimpleBlock(_id, name, customId);
   };
 
   render() {
@@ -26,21 +46,15 @@ export class SimpleBlockComponent extends PureComponent {
       name,
       desc,
       block,
+      color,
     } = this.props;
-    const status = (() => {
-      if (type === 'video' || type === 'audio') {
-        return 'play';
-      }
-      return null;
-    })();
     return (
-      <div className={`block-item simple-block ${type} ${block.name} ${block.passed ? '_passed' : ''}`}>
+      <div className={`block-item simple-block ${type} ${block.name} ${color} ${block.passed ? '_passed' : ''}`}>
         <div>
           <Checkbox
-            onChange={this.checkSimpleBlock}
-            checked={block.passed}
-            enableOnly
-            // status={status}
+              onChange={this.checkSimpleBlock}
+              checked={block.passed}
+              enableOnly
           />
         </div>
         <div>

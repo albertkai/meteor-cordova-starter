@@ -12,6 +12,25 @@ import { WaterBlock } from '../particles/WaterBlock';
 import { WakeUpBlock } from '../particles/WakeUpBlock';
 import { FirstDay } from '../components/FirstDay';
 
+const customBlocksMap = {
+  text: {
+    component: TextBlock,
+  },
+  checkbox: {
+    component: SimpleBlock,
+  },
+};
+
+const daysMap = {
+  1: 'Пн',
+  2: 'Вт',
+  3: 'Ср',
+  4: 'Чт',
+  5: 'Пт',
+  6: 'Сб',
+  7: 'Вс',
+};
+
 const blocksMap = {
   dailyTask: {
     sort: 1,
@@ -70,6 +89,9 @@ const blocksMap = {
       desc: 'Какое доброе дело вы сделали сегодня?',
     },
   },
+  custom: {
+    sort: 9,
+  },
 };
 
 export class TodayComponent extends PureComponent {
@@ -100,6 +122,7 @@ export class TodayComponent extends PureComponent {
         this.setState({ timeLeft });
       }, 1000);
     }
+    console.log('changing');
   }
 
   componentDidMount() {
@@ -119,6 +142,17 @@ export class TodayComponent extends PureComponent {
       document.body.appendChild(tag);
     }
   }
+
+  getFrequency = (frequency) => {
+    if (frequency.name === 'daily') {
+      return 'Ежедневно';
+    } else if (frequency.name === 'days') {
+      return `${frequency.options.dayNames.map(d => daysMap[d]).join(', ')}`;
+    } else if (frequency.name === 'monthly') {
+      return `Раз в месяц ${frequency.options.date} числа`;
+    }
+    return '';
+  };
 
   render() {
     const {
@@ -160,16 +194,36 @@ export class TodayComponent extends PureComponent {
             <div className="content scrollable">
               {today.blocks
                 .sort((a, b) => blocksMap[a.name].sort > blocksMap[b.name].sort)
-                .map(b => {
-                  const blockData = blocksMap[b.name];
-                  const Dynamic = blockData.component;
-                  return <Dynamic
-                    type={b.name}
-                    day={today}
-                    block={b}
-                    key={`block-${b.name}`}
-                    {...blockData.properties}
-                  />;
+                .map((b) => {
+                  if (b.name === 'custom') {
+                    const blockData = customBlocksMap[b.options.type];
+                    const Dynamic = blockData.component;
+                    const desc = this.getFrequency(b.options.frequency);
+                    return (
+                      <Dynamic
+                          type="custom-block"
+                          day={today}
+                          block={b}
+                          key={`block-${b.options.name}`}
+                          name={b.options.name}
+                          color={b.options.color}
+                          desc={desc}
+                          customId={b.options._id}
+                      />
+                    );
+                  } else {
+                    const blockData = blocksMap[b.name];
+                    const Dynamic = blockData.component;
+                    return (
+                      <Dynamic
+                        type={b.name}
+                        day={today}
+                        block={b}
+                        key={`block-${b.name}`}
+                        {...blockData.properties}
+                      />
+                    );
+                  }
                 })}
               {!todaySeen && <FirstDay />}
             </div>

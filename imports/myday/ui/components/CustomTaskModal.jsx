@@ -7,13 +7,13 @@ import { bindActionCreators } from 'redux';
 import * as actions from '../../api/redux/actions';
 
 const days = [
-  { name: 'Пн', value: 'monday' },
-  { name: 'Вт', value: 'tuesday' },
-  { name: 'Ср', value: 'wednesday' },
-  { name: 'Чт', value: 'thursday' },
-  { name: 'Пт', value: 'friday' },
-  { name: 'Сб', value: 'saturday' },
-  { name: 'Вс', value: 'sunday' },
+  { name: 'Пн', value: '1' },
+  { name: 'Вт', value: '2' },
+  { name: 'Ср', value: '3' },
+  { name: 'Чт', value: '4' },
+  { name: 'Пт', value: '5' },
+  { name: 'Сб', value: '6' },
+  { name: 'Вс', value: '7' },
 ];
 
 const frequencies = [
@@ -65,7 +65,7 @@ export class CustomTaskModalComponent extends PureComponent {
 
   setName = (e) => {
     e.persist();
-    this.setState({ name: e.target.value.trim() });
+    this.setState({ name: e.target.value });
   };
 
   setColor = (e) => {
@@ -76,8 +76,15 @@ export class CustomTaskModalComponent extends PureComponent {
     this.setState({ type: e.target.value });
   };
 
-  setFrequencyDate = (date) => {
-    this.setState({ frequency: { name: 'monthly', date } });
+  setFrequencyDate = (e) => {
+    this.setState({
+      frequency: {
+        name: 'monthly',
+        options: {
+          date: e.target.value,
+        },
+      },
+    });
   };
 
   setFrequencyName = (e, name) => {
@@ -156,7 +163,7 @@ export class CustomTaskModalComponent extends PureComponent {
   renderMonthlySelect = () => (
     <div className="monthly-select options-cont">
       <label htmlFor="select-date">Выберите дату:</label>
-      <select id="select-date" onChange={this.setFrequencyDate}>
+      <select id="select-date" onChange={this.setFrequencyDate} value={this.state.frequency.options.date}>
         {_.range(1, 32).map(n => <option key={`day-${n}`} value={n}>{n}</option>)}
       </select>
     </div>

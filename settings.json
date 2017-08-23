@@ -7,7 +7,8 @@
   },
   "galaxy.meteor.com": {
     "env": {
-      "MONGO_URL": "mongodb://dbuser1:56114144as@betterme-shard-00-00-o6zcu.mongodb.net:27017,betterme-shard-00-01-o6zcu.mongodb.net:27017,betterme-shard-00-02-o6zcu.mongodb.net:27017/betterme_db?ssl=true&replicaSet=betterme-shard-0&authSource=admin"
+      "MONGO_URL": "mongodb://dbuser1:56114144as@betterme-shard-00-00-o6zcu.mongodb.net:27017,betterme-shard-00-01-o6zcu.mongodb.net:27017,betterme-shard-00-02-o6zcu.mongodb.net:27017/betterme_db?ssl=true&replicaSet=betterme-shard-0&authSource=admin",
+      "ROOT_URL": "https://betterme.meteorapp.com/"
     }
   },
   "vk": {

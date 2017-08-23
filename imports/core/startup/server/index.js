@@ -26,3 +26,6 @@ import '../../api/models/transactions/transactions_pubs.js';
 
 import '../../api/models/settings/settings_methods.js';
 import '../../api/models/settings/settings_pubs.js';
+
+import '../../api/models/activity/activity_methods.js';
+import '../../api/models/activity/activity_pubs.js';

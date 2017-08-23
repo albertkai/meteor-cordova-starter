@@ -5,7 +5,7 @@ import * as c from './constants.js';
 
 const initialState = fromJS({
   initiallyScrolled: false,
-  chatType: 'group',
+  component: 'chat',
   limit: coreConstants.MESSAGES_LIMIT,
   scrollHeight: null,
 });
@@ -14,7 +14,7 @@ export function chatsReducer(state = initialState, action) {
   switch (action.type) {
     case c.TOGGLE_CHAT_TYPE:
       return state.withMutations((st) => {
-        st.set('chatType', action.chatType);
+        st.set('component', action.chatType);
         st.set('initiallyScrolled', false);
         st.set('limit', coreConstants.MESSAGES_LIMIT);
       });

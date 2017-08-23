@@ -7,7 +7,7 @@ import { coreActions } from '/imports/core';
 const locationsMap = {
   '/today': 'Сегодня',
   '/history': 'История',
-  '/chats': 'Чаты',
+  '/group': 'Моя группа',
   '/my-day': 'Мой распорядок',
   '/goals': 'Цели',
   '/profile': 'Профиль',

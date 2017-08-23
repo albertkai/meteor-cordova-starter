@@ -15,19 +15,20 @@ export class ChatHeaderComponent extends React.Component {
     };
     return (
       <li className={activeClass}>
-        <a onClick={onClick}>{name}</a>
+        <a onClick={onClick} dangerouslySetInnerHTML={{ __html: name }} />
       </li>
     );
   }
 
   render() {
-    const { chats: { chatType } } = this.props;
+    const { chats: { component } } = this.props;
     return (
       <div id="chat-header">
         <ul className="tabs-heading">
-          {this._renderLink('group', 'Чат группы', chatType)}
-          {this._renderLink('common', 'Общий чат', chatType)}
-          {this._renderLink('insights', 'Инсайты', chatType)}
+          {this._renderLink('chat', '<i class="fa fa-commenting-o" />', component)}
+          {this._renderLink('members', '<i class="fa fa-users" />', component)}
+          {this._renderLink('progress', '<i class="fa fa-list-ul" />', component)}
+          {this._renderLink('insights', '<i class="fa fa-lightbulb-o" />', component)}
         </ul>
       </div>
     );

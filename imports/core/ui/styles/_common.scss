@@ -335,6 +335,94 @@
       background-color: $tasks-color;
     }
   }
+  &.red {
+    h3, .button-expand {
+      color: $red;
+    }
+    .checkbox {
+      border-color: $red;
+    }
+    .circle {
+      background-color: $red;
+    }
+  }
+  &.orange {
+    h3, .button-expand {
+      color: $orange;
+    }
+    .checkbox {
+      border-color: $orange;
+    }
+    .circle {
+      background-color: $orange;
+    }
+  }
+  &.yellow {
+    h3, .button-expand {
+      color: $yellow;
+    }
+    .checkbox {
+      border-color: $yellow;
+    }
+    .circle {
+      background-color: $yellow;
+    }
+  }
+  &.lawngreen {
+    h3, .button-expand {
+      color: $lawngreen;
+    }
+    .checkbox {
+      border-color: $lawngreen;
+    }
+    .circle {
+      background-color: $lawngreen;
+    }
+  }
+  &.green {
+    h3, .button-expand {
+      color: $green;
+    }
+    .checkbox {
+      border-color: $green;
+    }
+    .circle {
+      background-color: $green;
+    }
+  }
+  &.blue {
+    h3, .button-expand {
+      color: $blue;
+    }
+    .checkbox {
+      border-color: $blue;
+    }
+    .circle {
+      background-color: $blue;
+    }
+  }
+  &.violet {
+    h3, .button-expand {
+      color: $violet;
+    }
+    .checkbox {
+      border-color: $violet;
+    }
+    .circle {
+      background-color: $violet;
+    }
+  }
+  &.magenta {
+    h3, .button-expand {
+      color: $magenta;
+    }
+    .checkbox {
+      border-color: $magenta;
+    }
+    .circle {
+      background-color: $magenta;
+    }
+  }
   &:not(.text) {
     > div {
       padding-right: 10px;

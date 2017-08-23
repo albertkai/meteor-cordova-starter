@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -6,6 +7,29 @@ import { Checkbox } from '/imports/core';
 import { todayActions } from '/imports/today';
 
 export class TextBlockComponent extends PureComponent {
+
+  static propTypes = {
+    min: PropTypes.number,
+    checkTextBlock: PropTypes.func.isRequired,
+    day: PropTypes.object.isRequired,
+    block: PropTypes.object.isRequired,
+    name: PropTypes.string,
+    desc: PropTypes.string,
+    color: PropTypes.string,
+    customId: PropTypes.string,
+    type: PropTypes.string.isRequired,
+    task: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    min: 140,
+    task: false,
+    desc: '',
+    name: '',
+    color: '',
+    customId: '',
+  };
+
   state = {
     left: this.props.min,
     expanded: false,
@@ -22,13 +46,14 @@ export class TextBlockComponent extends PureComponent {
     const { value } = this.textInput;
     const {
       checkTextBlock,
+      customId,
       day: {
         _id,
       },
       block,
       min,
     } = this.props;
-    checkTextBlock(_id, block.name, value, min);
+    checkTextBlock(_id, block.name, value, min, customId);
   };
 
   render() {
@@ -38,17 +63,18 @@ export class TextBlockComponent extends PureComponent {
       block,
       type,
       task,
+      color,
     } = this.props;
     const { expanded } = this.state;
     if (task) {
       return (
-        <div className={`block-item text ${type} ${block.passed ? '_passed' : ''}`}>
+        <div className={`block-item text ${type} ${color} ${block.passed ? '_passed' : ''}`}>
           <div onClick={this.expand}>
             <div>
               <Checkbox
-                onChange={this.checkTextBlock}
-                checked={block.passed}
-                enableOnly
+                  onChange={this.checkTextBlock}
+                  checked={block.passed}
+                  enableOnly
               />
             </div>
             <div>
@@ -73,13 +99,13 @@ export class TextBlockComponent extends PureComponent {
                     <p className="answer">{block.data.text}</p>
                   </div> :
                   <div>
-                <textarea
-                  ref={ref => this.textInput = ref}
-                  cols="30"
-                  rows="5"
-                  onChange={this.onChange}
-                  placeholder="Напишите ответ, а затем отметьте задание как выполненное"
-                />
+                    <textarea
+                        ref={ref => this.textInput = ref}
+                        cols="30"
+                        rows="5"
+                        onChange={this.onChange}
+                        placeholder="Напишите ответ, а затем отметьте задание как выполненное"
+                    />
                     <p className="symbols-left">
                       {this.state.left > 0 ?
                         <span>Еще минимум {this.state.left} символов</span> :
@@ -100,13 +126,13 @@ export class TextBlockComponent extends PureComponent {
       );
     }
     return (
-      <div className={`block-item text ${type} ${block.passed ? '_passed' : ''}`}>
+      <div className={`block-item text ${type} ${color} ${block.passed ? '_passed' : ''}`}>
         <div onClick={this.expand}>
           <div>
             <Checkbox
-              // onChange={this.checkTextBlock}
-              checked={block.passed}
-              enableOnly
+                // onChange={this.checkTextBlock}
+                checked={block.passed}
+                enableOnly
             />
           </div>
           <div>
@@ -131,11 +157,11 @@ export class TextBlockComponent extends PureComponent {
                 </div> :
                 <div>
                 <textarea
-                  ref={ref => this.textInput = ref}
-                  cols="30"
-                  rows="5"
-                  onChange={this.onChange}
-                  placeholder="Напишите ответ, а затем отметьте задание как выполненное"
+                    ref={ref => this.textInput = ref}
+                    cols="30"
+                    rows="5"
+                    onChange={this.onChange}
+                    placeholder="Напишите ответ, а затем отметьте задание как выполненное"
                 />
                   <p className="symbols-left">
                     {this.state.left > 0 ?
@@ -144,8 +170,8 @@ export class TextBlockComponent extends PureComponent {
                     }
                   </p>
                   <button
-                    className="send"
-                    onClick={this.checkTextBlock}
+                      className="send"
+                      onClick={this.checkTextBlock}
                   >
                     Отправить!
                   </button>

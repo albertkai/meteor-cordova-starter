@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { ItemsLoading } from '/imports/core';
-import { Messages, MessageItem } from '/imports/chats';
+import { Messages, MessageItem, SendMessage } from '/imports/chats';
 import * as actions from '../../api/redux/actions';
 
 export class MessagesListComponent extends PureComponent {
@@ -90,6 +90,12 @@ export class MessagesListComponent extends PureComponent {
       messagesReady,
       gotMore,
       messagesCount,
+      thread,
+      user: {
+        serviceData: {
+          groupId,
+        },
+      },
     } = this.props;
     return (
       <div id="messages-list">
@@ -114,6 +120,7 @@ export class MessagesListComponent extends PureComponent {
             ))
           }
         </div>
+        <SendMessage thread={thread} groupId={groupId} />
       </div>
     );
   }
@@ -121,9 +128,9 @@ export class MessagesListComponent extends PureComponent {
 
 const MessagesListContainer = createContainer(({
   chats: {
-    chatType,
     limit,
   },
+  thread: threadName,
   user: {
     serviceData: {
       groupId,
@@ -131,8 +138,8 @@ const MessagesListContainer = createContainer(({
   },
 }) => {
   let thread;
-  if (chatType === 'common' || chatType === 'insights') {
-    thread = chatType;
+  if (threadName === 'common' || threadName === 'insights') {
+    thread = threadName;
   } else {
     thread = groupId;
   }

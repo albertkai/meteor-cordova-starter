@@ -61,7 +61,7 @@ export class MobileMenu extends Component {
               </Link>
             </li>
             <li>
-              <Link to="/chats" active={pathname}>
+              <Link to="/group" active={pathname}>
                 <ChatIcon />
               </Link>
             </li>

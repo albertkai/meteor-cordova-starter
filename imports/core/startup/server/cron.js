@@ -5,7 +5,7 @@ import 'moment-timezone';
 import _ from 'underscore';
 import OneSignalClient from 'node-onesignal';
 
-import { Days, Tasks } from '/imports/core';
+import { Days, Tasks, Activity } from '/imports/core';
 
 const client = new OneSignalClient(
   Meteor.settings.public.oneSignal.appId,
@@ -59,9 +59,15 @@ SyncedCron.add({
       const {
         personalData: {
           timezone,
+          firstName,
+          lastName,
         },
         serviceData: {
+          groupId,
           vacationUntil,
+          privacy: {
+            progress,
+          },
         },
       } = u;
       const currentUsersTime = moment.tz(timezone);
@@ -99,23 +105,62 @@ SyncedCron.add({
             });
             Object.keys(blocks).forEach((block) => {
               const blockData = blocks[block];
-              const { enabled, options } = blockData;
-              if (enabled) {
-                const blockDoc = {
-                  name: block,
-                  passed: false,
-                  closed: false,
-                };
-                if (options) {
-                  blockDoc.options = options;
+              if (block !== 'custom') {
+                const { enabled, options } = blockData;
+                if (enabled) {
+                  const blockDoc = {
+                    name: block,
+                    passed: false,
+                    closed: false,
+                  };
+                  if (options) {
+                    blockDoc.options = options;
+                  }
+                  obj.blocks.push(blockDoc);
                 }
-                obj.blocks.push(blockDoc);
+              } else {
+                blockData.filter(data => data.enabled).forEach(data => {
+                  const {
+                    name,
+                    color,
+                    frequency,
+                    type,
+                    _id: blockId,
+                  } = data;
+                  const isToAdd = (() => {
+                    if (frequency.name === 'daily') {
+                      return true;
+                    } else if (frequency.name === 'days') {
+                      const userMoment = moment(currentUsersTime.format('DD/MM/YYYY HH:mm:SS'), 'DD/MM/YYYY HH:mm:SS');
+                      const weekday = `${userMoment.weekday() + 1}`;
+                      return frequency.options.dayNames.includes(weekday);
+                    } else if (frequency.name === 'monthly') {
+                      const userMoment = moment(currentUsersTime.format('DD/MM/YYYY HH:mm:SS'), 'DD/MM/YYYY HH:mm:SS');
+                      return frequency.options.date === `${userMoment.date()}`;
+                    }
+                  })();
+                  if (isToAdd) {
+                    const blockDoc = {
+                      name: 'custom',
+                      options: {
+                        color,
+                        type,
+                        frequency,
+                        name,
+                        _id: blockId,
+                      },
+                      passed: false,
+                      closed: false,
+                    };
+                    obj.blocks.push(blockDoc);
+                  }
+                });
               }
             });
             Days.insert(obj);
             const uncheckedBlocks = currentDay.blocks.filter(b => !b.passed);
             if (uncheckedBlocks.length > 0 && !vacationUntil) {
-              const { items, toPay, amount } = u.fees;
+              const { items = [], toPay, amount } = u.fees;
               let newToPay = toPay;
               uncheckedBlocks.forEach((b) => {
                 newToPay += amount;
@@ -128,6 +173,18 @@ SyncedCron.add({
                 },
               };
               Meteor.users.update(u._id, query);
+              if (progress) {
+                Activity.insert({
+                  groupId,
+                  userData: {
+                    _id: u._id,
+                    firstName,
+                    lastName,
+                  },
+                  type: 'FEE',
+                  name: newToPay,
+                });
+              }
             }
             if (vacationUntil && vacationUntil <= now) {
               Meteor.users.update(u._id, {
@@ -212,6 +269,7 @@ SyncedCron.add({
 //               blocks: [],
 //               index,
 //               timezone,
+//               isFake: true,
 //             };
 //             if (vacationUntil && vacationUntil >= now) obj.isVacation = true;
 //             obj.blocks.push({
@@ -225,17 +283,63 @@ SyncedCron.add({
 //             });
 //             Object.keys(blocks).forEach((block) => {
 //               const blockData = blocks[block];
-//               const { enabled, options } = blockData;
-//               if (enabled) {
-//                 const blockDoc = {
-//                   name: block,
-//                   passed: false,
-//                   closed: false,
-//                 };
-//                 if (options) {
-//                   blockDoc.options = options;
+//               if (block !== 'custom') {
+//                 const { enabled, options } = blockData;
+//                 if (enabled) {
+//                   const blockDoc = {
+//                     name: block,
+//                     passed: false,
+//                     closed: false,
+//                   };
+//                   if (options) {
+//                     blockDoc.options = options;
+//                   }
+//                   obj.blocks.push(blockDoc);
 //                 }
-//                 obj.blocks.push(blockDoc);
+//               } else {
+//                 console.log('custom block detected');
+//                 blockData.filter(data => data.enabled).forEach(data => {
+//                   console.log('customData', data);
+//                   const {
+//                     name,
+//                     color,
+//                     frequency,
+//                     type,
+//                     _id: blockData,
+//                   } = data;
+//                   const isToAdd = (()=> {
+//                     if (frequency.name === 'daily') {
+//                       return true;
+//                     } else if (frequency.name === 'days') {
+//                       const userMoment = moment(currentUsersTime.format('DD/MM/YYYY HH:mm:SS'), 'DD/MM/YYYY HH:mm:SS');
+//                       console.log(userMoment.toDate());
+//                       const weekday = `${userMoment.weekday() + 1}`;
+//                       console.log('Weekday', weekday);
+//                       console.log('Week', frequency.options.dayNames);
+//                       return frequency.options.dayNames.includes(weekday);
+//                     } else if (frequency.name === 'monthly') {
+//                       const userMoment = moment(currentUsersTime.format('DD/MM/YYYY HH:mm:SS'), 'DD/MM/YYYY HH:mm:SS');
+//                       console.log(userMoment.date());
+//                       console.log(frequency.options.date);
+//                       return frequency.options.date === `${userMoment.date()}`;
+//                     }
+//                   })();
+//                   if (isToAdd) {
+//                     const blockDoc = {
+//                       name: 'custom',
+//                       options: {
+//                         color,
+//                         type,
+//                         frequency,
+//                         name,
+//                         _id: blockData,
+//                       },
+//                       passed: false,
+//                       closed: false,
+//                     };
+//                     obj.blocks.push(blockDoc);
+//                   }
+//                 });
 //               }
 //             });
 //             console.log(obj);

@@ -1,15 +1,45 @@
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 
 import { Days } from './days.js';
+import { Activity } from '../activity/activity';
+
+const insertActivity = Meteor.bindEnvironment((name, type, user) => {
+  const {
+    _id,
+    personalData: {
+      firstName,
+      lastName,
+    },
+    serviceData: {
+      groupId,
+      privacy: {
+        progress,
+      },
+    },
+  } = user;
+  if (progress) {
+    Activity.insert({
+      groupId,
+      name,
+      userData: {
+        _id,
+        firstName,
+        lastName,
+      },
+      type,
+    });
+  }
+});
 
 Meteor.methods({
-  'days.checkTextBlock': function checkTextBlock(dayId, name, text, min) {
+  'days.checkTextBlock': function checkTextBlock(dayId, name, text, min, customId) {
     check(dayId, String);
     check(name, String);
     check(text, String);
-    check(min, Number);
+    check(customId, Match.Maybe(String));
+    check(min, Match.Maybe(Number));
 
     if (text.length >= min) {
       const user = Meteor.users.findOne(this.userId);
@@ -30,7 +60,11 @@ Meteor.methods({
         userId: this.userId,
         'blocks.name': name,
       }, query);
-      return currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
+      const allPassed =
+        currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
+      insertActivity(name, 'PASSED', user);
+      if (allPassed) insertActivity('All', 'ALL', user);
+      return allPassed;
     }
     return false;
   },
@@ -63,6 +97,10 @@ Meteor.methods({
               'blocks.$.data.time': usersTimeNow,
             },
           });
+          const allPassed =
+            currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
+          insertActivity('wakeUp', 'PASSED', user);
+          if (allPassed) insertActivity('All', 'ALL', user);
           return true;
         }
         return false;
@@ -99,6 +137,8 @@ Meteor.methods({
           userId: this.userId,
           'blocks.name': 'water',
         }, query);
+        insertActivity('water', 'WATER', user);
+        if (isCheck) insertActivity('water', 'PASSED', user);
         return 2000 - currentVolume - 200;
       }
     }
@@ -228,6 +268,12 @@ Meteor.methods({
             userId: this.userId,
             'blocks.name': 'taskList',
           }, query);
+          if (allChecked) {
+            insertActivity('taskList', 'PASSED', user);
+            const allPassed =
+              currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
+            if (allPassed) insertActivity('All', 'ALL', user);
+          }
           return allChecked;
         }
       }
@@ -236,6 +282,7 @@ Meteor.methods({
   },
 
   'days.checkMeditationBlock': function checkMeditationBlock() {
+    const user = Meteor.users.findOne(this.userId);
     const currentDay = Days.findOne({ userId: this.userId }, { sort: { createdAt: -1 } });
     const targetBlock = currentDay.blocks.find(b => b.name === 'meditation');
     if (targetBlock) {
@@ -248,12 +295,17 @@ Meteor.methods({
           'blocks.$.passed': true,
         },
       });
-      return currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
+      insertActivity('meditation', 'PASSED', user);
+      const allPassed =
+        currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
+      if (allPassed) insertActivity('All', 'ALL', user);
+      return allPassed;
     }
     return false;
   },
 
   'days.checkSportBlock': function checkSportBlock() {
+    const user = Meteor.users.findOne(this.userId);
     const currentDay = Days.findOne({ userId: this.userId }, { sort: { createdAt: -1 } });
     const targetBlock = currentDay.blocks.find(b => b.name === 'sport');
     if (targetBlock) {
@@ -266,14 +318,19 @@ Meteor.methods({
           'blocks.$.passed': true,
         },
       });
-      return currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
+      insertActivity('sport', 'PASSED', user);
+      const allPassed =
+        currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
+      if (allPassed) insertActivity('All', 'ALL', user);
+      return allPassed;
     }
     return false;
   },
 
-  'days.checkSimpleBlock': function checkSimpleBlock(dayId, blockName) {
+  'days.checkSimpleBlock': function checkSimpleBlock(dayId, blockName, customId) {
     check(dayId, String);
     check(blockName, String);
+    check(customId, Match.Maybe(String));
 
     const user = Meteor.users.findOne(this.userId);
     const currentDay = Days.findOne(dayId);
@@ -293,7 +350,11 @@ Meteor.methods({
           },
         });
       }
-      return currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
+      insertActivity(blockName, 'PASSED', user);
+      const allPassed =
+        currentDay.blocks.filter(b => b.passed).length + 1 === currentDay.blocks.length;
+      if (allPassed) insertActivity('All', 'ALL', user);
+      return allPassed;
     }
     return false;
   },

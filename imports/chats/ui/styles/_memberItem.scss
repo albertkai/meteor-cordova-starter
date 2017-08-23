@@ -1,0 +1,21 @@
+.member-item {
+  @include flexbox;
+  border-bottom: 1px solid $gray-lighter;
+  > div {
+    padding: 10px;
+    &:nth-child(1) {
+      margin-left: 10px;
+    }
+    &:nth-child(2) {
+      @include flexbox;
+      @include flex-direction(column);
+      @include justify-content(center);
+      padding-left: 0;
+    }
+    p {
+      font-weight: 400;
+      margin: 0;
+      font-size: 22px;
+    }
+  }
+}

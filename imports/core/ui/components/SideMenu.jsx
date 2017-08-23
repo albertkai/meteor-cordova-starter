@@ -65,8 +65,8 @@ export class SideMenu extends PureComponent {
                 </Link>
               </li>
               <li>
-                <Link to="/chats" activeClassName="active">
-                   Чаты
+                <Link to="/group" activeClassName="active">
+                   Моя группа
                 </Link>
               </li>
               {/*<li>*/}

@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 const personalDataSchema = new SimpleSchema({
@@ -62,6 +61,7 @@ const personalDataSchema = new SimpleSchema({
   },
   background: {
     type: String,
+    optional: true,
   },
   createdAt: {
     type: Number,
@@ -71,6 +71,7 @@ const personalDataSchema = new SimpleSchema({
   },
   language: {
     type: String,
+    optional: true,
   },
 });
 

@@ -30,7 +30,7 @@ export const AppRouter = () => (
 			<Route path="/goals" component={Goals} />
 			<Route path="/profile" component={Profile} />
 			<Route path="/my-day" component={MyDay} />
-			<Route path="/chats" component={Chats} />
+			<Route path="/group" component={Chats} />
 			{/* Placeholder (used by robot) */}
     </Route>
     <Route component={EmptyLayout}>

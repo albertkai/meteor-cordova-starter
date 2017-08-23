@@ -6,6 +6,9 @@
     > ul {
       @include flexbox;
       > li {
+        i {
+          font-size: 24px;
+        }
         @include flex-grow(1);
         &.active, &:hover {
           &:after {

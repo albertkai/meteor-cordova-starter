@@ -51,6 +51,10 @@ const daysSchema = new SimpleSchema({
     type: Boolean,
     optional: true,
   },
+  isFake: {
+    type: Boolean,
+    optional: true,
+  },
 });
 
 Days.attachSchema(daysSchema);

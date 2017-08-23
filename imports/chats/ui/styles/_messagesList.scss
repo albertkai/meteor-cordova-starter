@@ -37,8 +37,12 @@ Messages
     color: $gray-light;
     font-weight: 600;
   }
+  @include flexbox;
+  @include flex-direction(column);
+  .messages-content {
+    @include flex-grow(1);
+  }
   & .messages-content {
-    position: absolute;
     top: 0;
     left: 0;
     height: 101%;
