@@ -38,6 +38,7 @@ Meteor.methods({
       if (transaction.success) {
         Meteor.users.update(this.userId, {
           $set: {
+            blocked: false,
             'fees.toPay': 0,
             'fees.items': [],
           },

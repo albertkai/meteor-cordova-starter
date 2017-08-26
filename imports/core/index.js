@@ -61,3 +61,4 @@ export { ItemsLoading } from './ui/particles/ItemsLoading.jsx';
 export { Transactions } from './api/models/transactions/transactions.js';
 export { Settings } from './api/models/settings/settings.js';
 export { Activity } from './api/models/activity/activity.js';
+export { Blocked } from './ui/pages/Blocked.jsx';

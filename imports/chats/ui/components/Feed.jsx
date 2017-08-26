@@ -36,7 +36,6 @@ export class FeedComponent extends PureComponent {
 export const Feed = createContainer(() => {
   const handle = Meteor.subs.subscribe('activity.groupActivity');
   const activity = Activity.find().fetch();
-  console.log(activity);
   return {
     activity,
     activityReady: handle.ready(),

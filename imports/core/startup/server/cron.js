@@ -51,10 +51,11 @@ const endOfDayTexts = [
 SyncedCron.add({
   name: 'Add new days',
   schedule: function newDaysSchedule(parser) {
-    return parser.text('every 30 minutes');
+    return parser.text('every 1 hour');
   },
   job: function newDaysJob() {
-    // Need to be optimized using batch insert and aggregation on first major release
+    // TODO Need to run it in half an hour, to check if a block is already added
+    // TODO Need to be optimized using batch insert and aggregation on first major release
     Meteor.users.find().forEach((u) => {
       const {
         personalData: {
@@ -162,16 +163,19 @@ SyncedCron.add({
             if (uncheckedBlocks.length > 0 && !vacationUntil) {
               const { items = [], toPay, amount } = u.fees;
               let newToPay = toPay;
+              const query = { $set: {} };
+              if (items.length) {
+                const min = _.min(items, i => i.date);
+                if (now - min > 259000000) {
+                  query.$set.blocked = true;
+                }
+              }
               uncheckedBlocks.forEach((b) => {
                 newToPay += amount;
                 items.push({ name: b.name, date: moment(currentDay.createdAt).valueOf() });
               });
-              const query = {
-                $set: {
-                  'fees.toPay': newToPay,
-                  'fees.items': items,
-                },
-              };
+              query.$set['fees.toPay'] = newToPay;
+              query.$set['fees.items'] = items;
               Meteor.users.update(u._id, query);
               if (progress) {
                 Activity.insert({

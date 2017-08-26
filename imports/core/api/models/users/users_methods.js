@@ -323,4 +323,97 @@ Meteor.methods({
       });
     }
   },
+
+  'users.manuallyAddDay'(userId) {
+    if (this.userId && !this.isSimulation) {
+      const u = Meteor.users.findOne(userId);
+      if (u) {
+        const {
+          personalData: {
+            timezone,
+            firstName,
+            lastName,
+          },
+          blocks,
+        } = u;
+        const obj = {
+          userId: u._id,
+          createdAt: moment().startOf('day').toISOString(),
+          blocks: [],
+          timezone,
+        };
+        const currentUsersTime = moment.tz(timezone);
+        const userCreatedAt = moment(u.createdAt).tz(timezone).format('DD/MM/YYYY');
+        const day = moment(currentUsersTime.format('DD/MM/YYYY HH:mm:SS'), 'DD/MM/YYYY HH:mm:SS')
+            .diff(moment(`${userCreatedAt} 00:00:00`, 'DD/MM/YYYY HH:mm:SS'), 'days') + 1;
+        const task = Tasks.findOne({ day });
+        obj.blocks.push({
+          name: 'dailyTask',
+          passed: false,
+          closed: false,
+          options: {
+            html: task.html,
+            day,
+          },
+        });
+        Object.keys(blocks).forEach((block) => {
+          const blockData = blocks[block];
+          if (block !== 'custom') {
+            const { enabled, options: blockOptions } = blockData;
+            if (enabled) {
+              const blockDoc = {
+                name: block,
+                passed: false,
+                closed: false,
+              };
+              if (blockOptions) {
+                blockDoc.options = blockOptions;
+              }
+              obj.blocks.push(blockDoc);
+            }
+          } else {
+            blockData.filter(data => data.enabled).forEach((data) => {
+              const {
+                name,
+                color,
+                frequency,
+                type,
+                _id: blockId,
+              } = data;
+              const isToAdd = (() => {
+                if (frequency.name === 'daily') {
+                  return true;
+                } else if (frequency.name === 'days') {
+                  const userMoment = moment(currentUsersTime.format('DD/MM/YYYY HH:mm:SS'), 'DD/MM/YYYY HH:mm:SS');
+                  const weekday = `${userMoment.weekday() + 1}`;
+                  return frequency.options.dayNames.includes(weekday);
+                } else if (frequency.name === 'monthly') {
+                  const userMoment = moment(currentUsersTime.format('DD/MM/YYYY HH:mm:SS'), 'DD/MM/YYYY HH:mm:SS');
+                  return frequency.options.date === `${userMoment.date()}`;
+                }
+              })();
+              if (isToAdd) {
+                const blockDoc = {
+                  name: 'custom',
+                  options: {
+                    color,
+                    type,
+                    frequency,
+                    name,
+                    _id: blockId,
+                  },
+                  passed: false,
+                  closed: false,
+                };
+                obj.blocks.push(blockDoc);
+              }
+            });
+          }
+        });
+        const dayId = Days.insert(obj);
+        console.log(dayId);
+        return dayId;
+      }
+    }
+  },
 });

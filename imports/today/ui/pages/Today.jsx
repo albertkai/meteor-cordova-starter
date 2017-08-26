@@ -105,8 +105,25 @@ export class TodayComponent extends PureComponent {
     timeLeft: '00:00:00',
   };
 
-  componentWillUnmount() {
-    Meteor.clearInterval(this.interval);
+  componentWillMount() {
+    const { today, user: { blocks: { sport } } } = this.props;
+    if (today && this.state.timeLeft === '00:00:00' && !this.interval) {
+      const limit = moment(today.createdAt).add(1, 'days').set(0, 'hour').set(0, 'minute');
+      let timeLeft = moment.utc(limit.diff(moment(), 'milliseconds')).format('HH:mm:ss');
+      this.setState({ timeLeft });
+      this.interval = Meteor.setInterval(() => {
+        timeLeft = moment.utc(limit.diff(moment(), 'milliseconds')).format('HH:mm:ss');
+        this.setState({ timeLeft });
+      }, 1000);
+    }
+    if (sport && sport.enabled) {
+      if (!document.getElementById('youtube-api-script')) {
+        const tag = document.createElement('script');
+        tag.setAttribute('id', 'youtube-api-script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        document.body.appendChild(tag);
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -122,25 +139,10 @@ export class TodayComponent extends PureComponent {
         this.setState({ timeLeft });
       }, 1000);
     }
-    console.log('changing');
   }
 
-  componentDidMount() {
-    const { today, user: { blocks: { sport } } } = this.props;
-    if (today && this.state.timeLeft === '00:00:00' && !this.interval) {
-      const limit = moment(today.createdAt).add(1, 'days').set(0, 'hour').set(0, 'minute');
-      let timeLeft = moment.utc(limit.diff(moment(), 'milliseconds')).format('HH:mm:ss');
-      this.setState({ timeLeft });
-      this.interval = Meteor.setInterval(() => {
-        timeLeft = moment.utc(limit.diff(moment(), 'milliseconds')).format('HH:mm:ss');
-        this.setState({ timeLeft });
-      }, 1000);
-    }
-    if (sport && sport.enabled) {
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      document.body.appendChild(tag);
-    }
+  componentWillUnmount() {
+    Meteor.clearInterval(this.interval);
   }
 
   getFrequency = (frequency) => {

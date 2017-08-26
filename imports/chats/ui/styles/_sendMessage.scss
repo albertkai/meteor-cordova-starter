@@ -4,7 +4,7 @@
   padding: 10px;
   position: relative;
   border-top: 1px solid $gray-lighter;
-  & .message-input {
+  .message-input {
     background: none;
     border: none;
     outline: none!important;
@@ -13,22 +13,26 @@
     font-size: 20px;
     height: 40px;
     margin: 0;
-    padding-right: 20px;
-    width: 70%;
+    padding-right: 0;
+    width: 72%;
     font-weight: 500;
+    max-height: 200px;
+    overflow-y: scroll;
     @media screen and (max-width: $screen-sm) {
       font-size: 18px;
     }
+    &:empty:before{
+      content: attr(placeholder);
+      display: block;
+      color: $gray-light;
+    }
   }
 
-  textarea:focus:-webkit-placeholder{
-    color: transparent;
-  }
-
-  & .message-submit {
+  .message-submit {
     position: absolute;
     z-index: 1;
-    top: 9px;
+    top: 50%;
+    @include transform(translate(0, -50%));
     right: 10px;
     color: #fff;
     border: none;

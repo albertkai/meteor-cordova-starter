@@ -18,7 +18,7 @@ export class MessagesListComponent extends PureComponent {
 
   componentDidMount() {
     this.cont.scrollTop = this.cont.scrollHeight;
-    Meteor.subs.reset();
+    // Meteor.subs.reset();
   }
 
   componentDidUpdate(prevProps) {
@@ -149,6 +149,7 @@ const MessagesListContainer = createContainer(({
     .find({ thread }, { sort: { createdAt: -1 }, limit })
     .fetch()
     .reverse();
+  console.log(messages);
   const messagesCount = Counts.get('messagesLength');
   return {
     gotMore: messagesCount ? limit < messagesCount : null,

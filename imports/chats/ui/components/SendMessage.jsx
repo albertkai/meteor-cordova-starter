@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Textarea from 'react-textarea-autosize';
 
 import { chatsActions } from '/imports/chats';
 
@@ -20,7 +21,7 @@ export class SendMessageComponent extends PureComponent {
       groupId,
       sendMessage,
     } = this.props;
-    const content = this.input.value;
+    const content = this.input.value.trim();
     if (content) {
       let thread;
       if (threadType === 'common' || threadType === 'insights') {
@@ -36,7 +37,7 @@ export class SendMessageComponent extends PureComponent {
   render() {
     return (
       <div id="send-message">
-        <textarea
+        <Textarea
           ref={ref => this.input = ref}
           type="text"
           onKeyDown={this.onChange}

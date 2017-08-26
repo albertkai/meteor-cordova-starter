@@ -80,6 +80,6 @@ aldeed:collection2
 http@1.2.12
 btafel:accounts-facebook-cordova
 meteorhacks:subs-manager
-# mdg:reload-on-resume
+mdg:reload-on-resume
 tmeasday:publish-counts
 matb33:collection-hooks

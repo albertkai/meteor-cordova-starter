@@ -8,11 +8,15 @@
       > li {
         i {
           font-size: 24px;
+          color: $gray-light;
         }
         @include flex-grow(1);
-        &.active, &:hover {
+        &.active {
+          i {
+            color: $violet;
+          }
           &:after {
-            background: $red;
+            background: $violet;
           }
         }
       }

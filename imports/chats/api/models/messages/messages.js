@@ -6,6 +6,7 @@ export const Messages = new Mongo.Collection('messages');
 const messagesSchema = new SimpleSchema({
   author: {
     type: String,
+    regEx: SimpleSchema.RegEx.Id,
   },
   thread: {
     type: String,
@@ -30,6 +31,9 @@ const messagesSchema = new SimpleSchema({
   },
   createdAt: {
     type: Number,
+    autoValue() {
+      return Date.now();
+    },
   },
 });
 

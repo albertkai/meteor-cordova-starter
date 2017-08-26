@@ -89,7 +89,7 @@ export class MainLayoutComponent extends PureComponent {
       if (!newUser.onboard.isFinished) {
         browserHistory.push(`/onboard/${newUser.onboard.step}`);
       } else if (newUser.blocked) {
-        browserHistory.push('/pay');
+        browserHistory.push('/blocked');
       } else if (pathname === '/') {
         browserHistory.push('/today');
       }

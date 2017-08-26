@@ -1,7 +1,13 @@
 import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
-import { MainLayout, EmptyLayout, Login, SignUp } from '/imports/core';
+import {
+  MainLayout,
+  EmptyLayout,
+  Login,
+  SignUp,
+  Blocked,
+} from '/imports/core';
 import { History } from '/imports/history';
 import { Goals } from '/imports/goals';
 import { Today } from '/imports/today';
@@ -31,6 +37,7 @@ export const AppRouter = () => (
 			<Route path="/profile" component={Profile} />
 			<Route path="/my-day" component={MyDay} />
 			<Route path="/group" component={Chats} />
+			<Route path="/blocked" component={Blocked} />
 			{/* Placeholder (used by robot) */}
     </Route>
     <Route component={EmptyLayout}>

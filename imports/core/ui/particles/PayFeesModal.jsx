@@ -72,7 +72,7 @@ export class PayFeesModalComponent extends PureComponent {
             </div>
             <h3>Оплата:</h3>
             <p className="amount">Сумма: <strong>{toPay}p</strong></p>
-            <p className="desc">Оплата осуществляется с помощью сервиса Braintree от Paypal. Выши данные будут надежно защищены</p>
+            <p className="desc">Оплата осуществляется с помощью сервиса Braintree от Paypal. Ваши данные будут надежно защищены</p>
           </div>
           <div className="modal-footer">
             <button onClick={this.pay} disabled={!paymentToken}>
