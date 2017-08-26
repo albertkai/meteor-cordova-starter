@@ -13,6 +13,7 @@ const initialState = fromJS({
   paymentToken: '',
   openedMeditationName: null,
   openedSportName: null,
+  userOpened: null,
 });
 
 export function coreReducer(state = initialState, action) {
@@ -39,7 +40,9 @@ export function coreReducer(state = initialState, action) {
       return state.set('openedMeditationName', action.name);
     case c.TOGGLE_SPORT_OVERLAY:
       return state.set('openedSportName', action.name);
-    // Placeholder (used by robot)
+    case c.TOGGLE_USER_MODAL:
+      return state.set('userOpened', action.user);
+		// Placeholder (used by robot)
     default:
       return state;
   }

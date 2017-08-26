@@ -3,14 +3,9 @@ import { SyncedCron } from 'meteor/percolate:synced-cron';
 import moment from 'moment';
 import 'moment-timezone';
 import _ from 'underscore';
-import OneSignalClient from 'node-onesignal';
 
+import { onesignalClient } from '/imports/notifications';
 import { Days, Tasks, Activity } from '/imports/core';
-
-const client = new OneSignalClient(
-  Meteor.settings.public.oneSignal.appId,
-  Meteor.settings.public.oneSignal.restApiKey,
-);
 
 const waterTexts = [
   'Выпейте еще воды! Это совсем не сложно, но производит грандиозный эффект в перспективе!',
@@ -77,6 +72,7 @@ SyncedCron.add({
         const currentDay = Days.findOne({ userId: u._id }, { sort: { createdAt: -1 } });
         const now = Date.now();
         if (currentDay) {
+          console.log(`Adding block for ${firstName} ${lastName}`);
           const createdAtFormat = moment(currentDay.createdAt).tz(timezone).format('DD/MM/YYYY');
           const currentUsersDayFormat = currentUsersTime.format('DD/MM/YYYY');
           if (createdAtFormat !== currentUsersDayFormat) {
@@ -85,13 +81,10 @@ SyncedCron.add({
                 .diff(moment(`${userCreatedAt} 00:00:00`, 'DD/MM/YYYY HH:mm:SS'), 'days') + 1;
             const task = Tasks.findOne({ day });
             const { blocks } = u;
-            let index = currentDay.index || 1;
-            index += 1;
             const obj = {
               userId: u._id,
               createdAt: moment().toISOString(),
               blocks: [],
-              index,
               timezone,
             };
             if (vacationUntil && vacationUntil >= now) obj.isVacation = true;
@@ -223,7 +216,6 @@ SyncedCron.add({
                 name: block,
                 passed: false,
                 closed: false,
-                index: 1,
               };
               if (options) {
                 blockDoc.options = options;
@@ -447,7 +439,7 @@ SyncedCron.add({
           waterBlock.enabled &&
           [9, 12, 15, 18, 21].includes(currentHour)
         ) {
-          client.sendNotification('2 литра воды в день', {
+          onesignalClient.sendNotification('2 литра воды в день', {
             include_player_ids: [oneSignalId],
             contents: {
               en: _.sample(waterTexts),
@@ -456,7 +448,7 @@ SyncedCron.add({
           });
         }
         if (motivation && [8, 14, 20].includes(currentHour)) {
-          client.sendNotification('Мотивация', {
+          onesignalClient.sendNotification('Мотивация', {
             include_player_ids: [oneSignalId],
             contents: {
               en: _.sample(motivationTexts),
@@ -470,8 +462,12 @@ SyncedCron.add({
         ) {
           const currentDay = Days.findOne({ userId: u._id }, { sort: { createdAt: -1 } });
           const { blocks } = currentDay;
-          if (dailyTask && currentHour === 11 && !blocks.dailyTask.passed) {
-            client.sendNotification('Дневное задание', {
+          if (
+            dailyTask && currentHour === 11 &&
+            blocks.find(b => b.name === 'dailyTask') &&
+            !blocks.find(b => b.name === 'dailyTask').passed
+          ) {
+            onesignalClient.sendNotification('Дневное задание', {
               include_player_ids: [oneSignalId],
               contents: {
                 en: _.sample(dailyTaskTexts),
@@ -483,7 +479,7 @@ SyncedCron.add({
             endOfDay &&
             currentHour === 22 && blocks.filter(b => !b.passed).length > 0
           ) {
-            client.sendNotification('Остались невыполненные задания', {
+            onesignalClient.sendNotification('Остались невыполненные задания', {
               include_player_ids: [oneSignalId],
               contents: {
                 en: _.sample(endOfDayTexts),

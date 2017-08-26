@@ -11,11 +11,11 @@ import { store } from '../../api/redux/store';
 // Import methods for optimistic UI here
 import '/imports/core/api/models/users/users_methods';
 import '/imports/core/api/models/days/days_methods';
+import '/imports/chats/api/models/messages/messages_methods';
 
 if (Meteor.isCordova) {
   initReactFastclick();
   Meteor.startup(() => {
-    console.log('Initializing cordova');
     window.plugins.OneSignal
       .startInit(Meteor.settings.public.oneSignal.appId)
       .handleNotificationReceived(function(jsonData) {

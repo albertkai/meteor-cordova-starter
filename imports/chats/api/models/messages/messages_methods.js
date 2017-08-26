@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import sanitize from 'sanitize-html';
 
+import { onesignalClient } from '/imports/notifications';
 import { Messages } from './messages.js';
 
 Meteor.methods({
@@ -16,20 +16,36 @@ Meteor.methods({
         firstName,
         lastName,
       },
+      serviceData: {
+        groupId,
+      },
     } = Meteor.users.findOne(this.userId);
-    console.log(thread);
-    console.log(sanitize(content));
-    console.log(type);
-    // Messages.insert({
-    //   author: this.userId,
-    //   thread,
-    //   userData: {
-    //     avatar,
-    //     firstName,
-    //     lastName,
-    //   },
-    //   content,
-    //   type,
-    // });
+    if (content) {
+      Messages.insert({
+        author: this.userId,
+        thread,
+        userData: {
+          avatar,
+          firstName,
+          lastName,
+        },
+        content,
+        type,
+      });
+      Meteor.users
+        .find({ 'serviceData.groupId': groupId, _id: { $ne: this.userId } })
+        .forEach((u) => {
+          const { serviceData: { notifications: { messages } } } = u;
+          if (messages) {
+            onesignalClient.sendNotification('Новое сообщение', {
+              include_player_ids: [u._id],
+              contents: {
+                en: `${firstName} ${lastName}: ${type === 'text' ? content : 'New message'}`,
+                ru: `${firstName} ${lastName}: ${type === 'text' ? content : 'Новое сообщение'}`,
+              },
+            });
+          }
+        });
+    }
   },
 });

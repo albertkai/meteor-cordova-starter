@@ -137,7 +137,7 @@ Meteor.methods({
           userId: this.userId,
           'blocks.name': 'water',
         }, query);
-        insertActivity('water', 'WATER', user);
+        // insertActivity('water', 'WATER', user);
         if (isCheck) insertActivity('water', 'PASSED', user);
         return 2000 - currentVolume - 200;
       }

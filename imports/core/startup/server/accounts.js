@@ -3,8 +3,7 @@ import { HTTP } from 'meteor/http';
 import _ from 'underscore';
 
 import { Groups } from '../../api/models/groups/groups';
-
-const GROUP_MAX = 20;
+import { GROUP_MAX } from '../../api/helpers/constants';
 
 Accounts.onCreateUser((options, user) => {
   const newUser = user;
@@ -38,20 +37,18 @@ Accounts.onCreateUser((options, user) => {
       lastName: last_name,
       language: locale.split('_')[0],
     };
-    // const requestString = `https://graph.facebook.com/v2.9/${ facebookId }?access_token=${ accessToken }&fields=${ fields.join(',') }`;
   }
   if (user.services.vk) {
     const {
-      // accessToken,
       first_name,
       last_name,
-      photo_big,
+      photo_big: photoBig,
       id,
       sex,
       email,
     } = user.services.vk;
     newUser.personalData = {
-      avatar: photo_big ? photo_big : '',
+      avatar: photoBig || '',
       email,
       gender: sex === 2 ? 'male' : 'female',
       vkId: id,
@@ -64,13 +61,13 @@ Accounts.onCreateUser((options, user) => {
   }
   if (user.services.twitter) {
     const {
-      profile_image_url_https,
+      profile_image_url_https: profileImage,
       screenName,
       lang,
       id,
     } = user.services.twitter;
     newUser.personalData = {
-      avatar: profile_image_url_https ? profile_image_url_https : '',
+      avatar: profileImage || '',
       gender: 'male',
       twitterId: id,
       background,

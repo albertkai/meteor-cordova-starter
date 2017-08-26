@@ -11,6 +11,13 @@
       height: 100%;
     }
   }
+  button {
+    @media screen and (max-width: $screen-md) {
+      &:hover {
+        background: transparent;
+      }
+    }
+  }
   .uploading-overlay {
     position: absolute;
     width: 100%;

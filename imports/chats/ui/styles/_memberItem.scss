@@ -1,6 +1,17 @@
 .member-item {
   @include flexbox;
+  border: 0;
+  background: white;
+  padding: 0;
   border-bottom: 1px solid $gray-lighter;
+  @media screen and (max-width: $screen-sm) {
+    &:hover {
+      background: white;
+      p {
+        color: $brand-primary;
+      }
+    }
+  }
   > div {
     padding: 10px;
     &:nth-child(1) {
@@ -16,6 +27,7 @@
       font-weight: 400;
       margin: 0;
       font-size: 22px;
+      text-transform: capitalize;
     }
   }
 }

@@ -91,6 +91,11 @@ export const toggleSportOverlay = name => ({
   name,
 });
 
+export const toggleUserModal = user => ({
+  type: c.TOGGLE_USER_MODAL,
+  user,
+});
+
 // Placeholder (used by robot)
 
 // Actions with side effect

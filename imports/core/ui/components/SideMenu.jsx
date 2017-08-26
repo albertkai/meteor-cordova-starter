@@ -69,11 +69,6 @@ export class SideMenu extends PureComponent {
                    Моя группа
                 </Link>
               </li>
-              {/*<li>*/}
-                {/*<Link to="/goals" activeClassName="active">*/}
-                  {/*Цели*/}
-                {/*</Link>*/}
-              {/*</li>*/}
             </ul>
           </nav>
           {
@@ -81,7 +76,7 @@ export class SideMenu extends PureComponent {
               <h4><i className="fa fa-warning" /> Оплатите штрафы:</h4>
               <h2>{toPay}р<button onClick={toggleFeesModal}>?</button></h2>
               <button onClick={togglePayFeesModal}>Оплатить</button>
-              <p>Штрафы необходимо погасить не позднее чем через 5 суток после начисления, иначе вы не сможете продолжить пользоваться приложением</p>
+              <p>Штрафы необходимо погасить не позднее чем через 5 суток после начисления. Напоминаем вам, что большая часть денег будет направлена в Фонд Дикой Природы (WWF)</p>
             </div>
           }
           <div className="vacation">

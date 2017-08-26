@@ -25,6 +25,7 @@ const messagesSchema = new SimpleSchema({
   },
   content: {
     type: String,
+    max: 3000,
   },
   type: {
     type: String,

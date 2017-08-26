@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import _ from 'underscore';
 
 import { ItemsLoading } from '/imports/core';
 import { MemberItem } from '../particles/MemberItem';

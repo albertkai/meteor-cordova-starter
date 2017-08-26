@@ -9,4 +9,5 @@ export const TOGGLE_PAY_FEES_MODAL = 'core/TOGGLE_PAY_FEES_MODAL';
 export const SET_PAYMENT_TOKEN = 'core/SET_PAYMENT_TOKEN';
 export const TOGGLE_MEDITATION_OVERLAY = 'core/TOGGLE_MEDITATION_OVERLAY';
 export const TOGGLE_SPORT_OVERLAY = 'core/TOGGLE_SPORT_OVERLAY';
+export const TOGGLE_USER_MODAL = 'core/TOGGLE_USER_MODAL';
 // Placeholder (used by robot)

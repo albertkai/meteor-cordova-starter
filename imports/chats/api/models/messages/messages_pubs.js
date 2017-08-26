@@ -8,9 +8,6 @@ Meteor.publish({
   'messages.listMessages': function listMessages(thread, limit) {
     check(thread, String);
 
-    console.log(thread);
-    console.log(limit);
-    console.log(Messages.find({ thread }, { sort: { createdAt: -1 }, limit }).count());
     return Messages.find({ thread }, { sort: { createdAt: -1 }, limit });
   },
 

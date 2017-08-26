@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Textarea from 'react-textarea-autosize';
@@ -7,11 +8,26 @@ import { chatsActions } from '/imports/chats';
 
 export class SendMessageComponent extends PureComponent {
 
-  onChange = e => {
+  static propTypes = {
+    thread: PropTypes.string,
+    groupId: PropTypes.string.isRequired,
+    sendMessage: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    thread: '',
+  };
+
+  state = {
+    value: '',
+  };
+
+  onChange = (e) => {
     if (e.which === 13) {
       e.preventDefault();
       this.sendMessage();
-      this.input.value = '';
+    } else {
+      this.setState({ value: e.target.value });
     }
   };
 
@@ -21,7 +37,7 @@ export class SendMessageComponent extends PureComponent {
       groupId,
       sendMessage,
     } = this.props;
-    const content = this.input.value.trim();
+    const { value: content } = this.state;
     if (content) {
       let thread;
       if (threadType === 'common' || threadType === 'insights') {
@@ -30,7 +46,7 @@ export class SendMessageComponent extends PureComponent {
         thread = groupId;
       }
       sendMessage(thread, content, 'text');
-      this.input.value = '';
+      this.setState({ value: '' });
     }
   };
 
@@ -38,16 +54,16 @@ export class SendMessageComponent extends PureComponent {
     return (
       <div id="send-message">
         <Textarea
-          ref={ref => this.input = ref}
-          type="text"
-          onKeyDown={this.onChange}
-          className="message-input"
-          placeholder="Type message..."
+            type="text"
+            onChange={this.onChange}
+            value={this.state.value}
+            className="message-input"
+            placeholder="Type message..."
         />
         <button
-          type="submit"
-          className="message-submit"
-          onClick={this.sendMessage}
+            type="submit"
+            className="message-submit"
+            onClick={this.sendMessage}
         >
           <i className="fa fa-send" />
         </button>

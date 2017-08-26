@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import _ from 'underscore';
 import { Counts } from 'meteor/tmeasday:publish-counts';
@@ -11,10 +12,24 @@ import * as actions from '../../api/redux/actions';
 
 export class MessagesListComponent extends PureComponent {
 
-  constructor(props) {
-    super(props);
-    this.wasScrolled = false;
-  }
+  static propTypes = {
+    user: PropTypes.object.isRequired,
+    messages: PropTypes.array,
+    messagesReady: PropTypes.bool.isRequired,
+    gotMore: PropTypes.bool.isRequired,
+    chats: PropTypes.object.isRequired,
+    setInitiallyScrolled: PropTypes.func.isRequired,
+    resetMessagesLimit: PropTypes.func.isRequired,
+    messagesLoadMore: PropTypes.func.isRequired,
+    messagesCount: PropTypes.number,
+    thread: PropTypes.string,
+  };
+
+  static defaultProps = {
+    messages: [],
+    messagesCount: 0,
+    thread: '',
+  };
 
   componentDidMount() {
     this.cont.scrollTop = this.cont.scrollHeight;
@@ -43,10 +58,8 @@ export class MessagesListComponent extends PureComponent {
     // if (
     //   prevMessages &&
     //   messages &&
-    //   prevMessages.length === messages.length &&
-    //   this.cont.scrollHeight - this.cont.scrollTop < 100 &&
+    //   prevMessages.length - messages.length === 1
     // ) {
-    //   this.setWasScrolled();
     //   this.cont.scrollTop = this.cont.scrollHeight;
     // }
     if (messagesReady && messages.length > 0 && !initiallyScrolled) {
@@ -59,7 +72,6 @@ export class MessagesListComponent extends PureComponent {
     ) {
       if (scrollHeight) {
         Meteor.defer(() => {
-          console.log('Adjust scroll height');
           this.cont.scrollTop = this.cont.scrollHeight - scrollHeight;
         });
       }
@@ -76,13 +88,6 @@ export class MessagesListComponent extends PureComponent {
     }
   };
 
-  setWasScrolled = () => {
-    this.wasScrolled = true;
-    Meteor.setTimeout(() => {
-      this.wasScrolled = false;
-    }, 30);
-  };
-
   render() {
     const {
       user,
@@ -91,11 +96,6 @@ export class MessagesListComponent extends PureComponent {
       gotMore,
       messagesCount,
       thread,
-      user: {
-        serviceData: {
-          groupId,
-        },
-      },
     } = this.props;
     return (
       <div id="messages-list">
@@ -120,7 +120,7 @@ export class MessagesListComponent extends PureComponent {
             ))
           }
         </div>
-        <SendMessage thread={thread} groupId={groupId} />
+        <SendMessage thread={thread} groupId={user.serviceData.groupId} />
       </div>
     );
   }
@@ -149,7 +149,6 @@ const MessagesListContainer = createContainer(({
     .find({ thread }, { sort: { createdAt: -1 }, limit })
     .fetch()
     .reverse();
-  console.log(messages);
   const messagesCount = Counts.get('messagesLength');
   return {
     gotMore: messagesCount ? limit < messagesCount : null,

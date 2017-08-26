@@ -16,6 +16,7 @@ import {
   WakeUpModal,
   DaySuccessModal,
   VacationModal,
+  UserModal,
 } from '/imports/core';
 import { MeditationOverlay, SportOverlay } from '/imports/today';
 import { mydayActions, CustomTaskModal } from '/imports/myday';
@@ -47,6 +48,7 @@ export class MainLayoutComponent extends PureComponent {
     toggleChoosePictureModal: PropTypes.func.isRequired,
     toggleMeditationOverlay: PropTypes.func.isRequired,
     toggleSportOverlay: PropTypes.func.isRequired,
+    toggleUserModal: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -119,6 +121,7 @@ export class MainLayoutComponent extends PureComponent {
         payFeesModalShown,
         openedMeditationName,
         openedSportName,
+        userOpened,
       },
       profile: {
         choosePictureModalShown,
@@ -136,6 +139,7 @@ export class MainLayoutComponent extends PureComponent {
       toggleChoosePictureModal,
       toggleMeditationOverlay,
       toggleSportOverlay,
+      toggleUserModal,
     } = this.props;
     return (
       <div id="main-layout" className="root">
@@ -195,6 +199,13 @@ export class MainLayoutComponent extends PureComponent {
                     <SportOverlay
                         name={openedSportName}
                         toggle={() => toggleSportOverlay(null)}
+                    />
+                }
+                {
+                  userOpened &&
+                    <UserModal
+                        user={userOpened}
+                        toggle={() => toggleUserModal(null)}
                     />
                 }
               </div>
