@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
 const blocksMap = {
@@ -15,6 +16,10 @@ const blocksMap = {
 
 
 export class ActivityItem extends PureComponent {
+
+  static propTypes = {
+    item: PropTypes.object.isRequired,
+  };
 
   renderIcon = () => {
     const { item: { type } } = this.props;
@@ -47,7 +52,7 @@ export class ActivityItem extends PureComponent {
           {this.renderIcon()}
         </div>
         <div>
-          <p className="task">{blocksMap[name]}</p>
+          <p className="task">{blocksMap[name] || `${name}р`}</p>
           <p className="name">{firstName} {lastName}</p>
         </div>
         <div>
