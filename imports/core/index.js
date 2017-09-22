@@ -1,66 +1,9 @@
 export { MainLayout } from './ui/layouts/MainLayout';
-export { Home } from './ui/pages/Home';
 
 export * as coreActions from './api/redux/actions';
-export * as coreConstants from './api/helpers/constants';
-export * as coreHelpers from './api/helpers/helpers';
 
-export { SideMenu } from './ui/components/SideMenu.jsx';
-export { Header } from './ui/components/Header.jsx';
-export { Days } from './api/models/days/days.js';
-
-export { Checkbox } from './ui/particles/Checkbox.jsx';
 export { EmptyLayout } from './ui/layouts/EmptyLayout.jsx';
 
 export { Login } from './ui/pages/Login.jsx';
 export { Loading } from './ui/pages/Loading.jsx';
-export { FeeModal } from './ui/components/FeeModal.jsx';
-export { users } from './api/models/users/users.js';
-export { Avatar } from './ui/particles/Avatar.jsx';
-
-export { SignUp } from './ui/pages/SignUp.jsx';
-
-export { ContentEditable } from './ui/particles/ContentEditable.jsx';
-
-export { Tasks } from './api/models/tasks/tasks.js';
-export { MobileMenu } from './ui/components/MobileMenu.jsx';
-
-export { Groups } from './api/models/groups/groups.js';
-export { Switcher } from './ui/particles/Switcher.jsx';
-
-export { WakeUpModal } from './ui/particles/WakeUpModal.jsx';
-
-export { DaySuccessModal } from './ui/particles/DaySuccessModal.jsx';
-
-export { AlarmIcon } from './ui/particles/AlarmIcon.jsx';
-
-export { CalendarIcon } from './ui/particles/CalendarIcon.jsx';
-
-export { KindIcon } from './ui/particles/KindIcon.jsx';
-
-export { MeditationIcon } from './ui/particles/MeditationIcon.jsx';
-
-export { ReportIcon } from './ui/particles/ReportIcon.jsx';
-
-export { SportIcon } from './ui/particles/SportIcon.jsx';
-
-export { TaskIcon } from './ui/particles/TaskIcon.jsx';
-
-export { WaterIcon } from './ui/particles/WaterIcon.jsx';
-
-export { VacationModal } from './ui/particles/VacationModal.jsx';
-
-export { FeesModal } from './ui/particles/FeesModal.jsx';
-
-export { PayFeesModal } from './ui/particles/PayFeesModal.jsx';
-
-export { LogoIcon } from './ui/particles/LogoIcon.jsx';
-
-export { ItemsLoading } from './ui/particles/ItemsLoading.jsx';
-
-export { Transactions } from './api/models/transactions/transactions.js';
-export { Settings } from './api/models/settings/settings.js';
-export { Activity } from './api/models/activity/activity.js';
-export { Blocked } from './ui/pages/Blocked.jsx';
-
-export { UserModal } from './ui/particles/UserModal.jsx';
+export { users } from './api/models/users/collection.js';

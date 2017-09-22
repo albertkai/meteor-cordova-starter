@@ -1,14 +1,14 @@
 // This section sets up some basic app metadata,
 // the entire section is optional.
 App.info({
-  id: 'com.discotech.betterme',
-  name: 'betterme',
-  description: 'Make yourself and the world around you better',
-  author: 'Albert Kai',
-  email: 'albertkai@me.com',
-  website: 'http://better.me/',
-  version: '0.0.2',
-  buildNumber: 2,
+  id: '<your-app-id>',
+  name: 'my new awesome app',
+  description: 'This is a basic Meteor + Cordova + React app. Works with robot',
+  author: 'Me Myself',
+  email: 'my@email.com',
+  website: 'http://mywebsite.com/',
+  version: '0.0.1',
+  buildNumber: 1,
 });
 
 App.icons({
@@ -41,8 +41,6 @@ App.launchScreens({
   ipad_landscape_2x: 'resources/splash/ipad_landscape_2x.png',
   android_mdpi_portrait: 'resources/splash/android_mdpi_portrait.png',
   android_mdpi_landscape: 'resources/splash/android_mdpi_landscape.png',
-  // android_hdpi_portrait: 'resources/splash/android_hdpi_portrait.png',
-  // android_hdpi_landscape: 'resources/splash/android_hdpi_landscape.png',
   android_xhdpi_portrait: 'resources/splash/android_xhdpi_portrait.png',
   android_xhdpi_landscape: 'resources/splash/android_xhdpi_landscape.png',
   android_xxhdpi_portrait: 'resources/splash/android_xxhdpi_portrait.png',
@@ -51,14 +49,9 @@ App.launchScreens({
 
 // Let these urls access the following domains
 App.accessRule('*'); // @@@@@@@@@@@@@@@@
-App.accessRule('https://*.youtube.com', { type: 'navigation' });
 
 // Set PhoneGap/Cordova preferences
 App.setPreference('BackgroundColor', '0xff0000ff');
-App.setPreference('AllowInlineMediaPlayback', true);
-App.setPreference('MediaPlaybackRequiresUserAction', false);
-App.setPreference('MediaPlaybackAllowsAirPlay', true);
-App.setPreference('HideKeyboardFormAccessoryBar', true);
 App.setPreference('DisallowOverscroll', true);
 App.setPreference('BackupWebStorage', 'local');
 App.setPreference('AutoHideSplashScreen', true); // ???
@@ -76,9 +69,3 @@ App.setPreference('Orientation', 'portrait');
 //App.configurePlugin('org.apache.cordova.file', {
 //    iosPersistentFileLocation: 'Library'
 //});
-
-
-App.configurePlugin('cordova-plugin-facebook4', {
-  APP_ID: '1903245093279775',
-  APP_NAME: 'betterme',
-});

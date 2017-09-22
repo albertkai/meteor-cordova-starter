@@ -1,1 +1,0 @@
-export { Goals } from './ui/pages/Goals.jsx';

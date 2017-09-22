@@ -53,9 +53,27 @@
     "no-underscore-dangle": [
       "off"
     ],
+    "no-return-assign": [
+      "off"
+    ],
+    "no-new": [
+      "off"
+    ],
+    "consistent-return": [
+      "off"
+    ],
+    "jsx-a11y/no-static-element-interactions": [
+      "off"
+    ],
+    "no-param-reassign": [
+      "off"
+    ],
     "react/jsx-indent-props": [
       "error",
       4
+    ],
+    "react/no-array-index-key": [
+      "off"
     ],
     "no-confusing-arrow": [
       "off"
@@ -64,6 +82,9 @@
       "off"
     ],
     "react/jsx-closing-bracket-location": [
+      "off"
+    ],
+    "meteor/audit-argument-checks": [
       "off"
     ]
   },

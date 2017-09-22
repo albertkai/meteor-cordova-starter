@@ -1,13 +1,2 @@
 export const INCREMENT_CLICK_COUNT = 'core/INCREMENT_CLICK_COUNT';
-export const TOGGLE_MENU = 'core/TOGGLE_MENU';
-export const CLOSE_MENU = 'core/CLOSE_MENU';
-export const TOGGLE_WAKE_UP_MODAL = 'core/TOGGLE_WAKE_UP_MODAL';
-export const TOGGLE_DAY_SUCCESS_MODAL = 'core/TOGGLE_DAY_SUCCESS_MODAL';
-export const TOGGLE_VACATION = 'core/TOGGLE_VACATION';
-export const TOGGLE_FEES_MODAL = 'core/TOGGLE_FEES_MODAL';
-export const TOGGLE_PAY_FEES_MODAL = 'core/TOGGLE_PAY_FEES_MODAL';
-export const SET_PAYMENT_TOKEN = 'core/SET_PAYMENT_TOKEN';
-export const TOGGLE_MEDITATION_OVERLAY = 'core/TOGGLE_MEDITATION_OVERLAY';
-export const TOGGLE_SPORT_OVERLAY = 'core/TOGGLE_SPORT_OVERLAY';
-export const TOGGLE_USER_MODAL = 'core/TOGGLE_USER_MODAL';
 // Placeholder (used by robot)

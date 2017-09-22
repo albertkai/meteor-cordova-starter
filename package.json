@@ -1,32 +1,24 @@
 {
-  "name": "meteor-react-starter",
+  "name": "meteor-cordova-starter",
   "private": true,
   "scripts": {
     "start": "npm install && meteor run --settings settings.json",
-    "deploy": "meteor deploy betterme.meteorapp.com --settings settings.json",
+    "deploy": "meteor deploy <url> --settings settings.json",
     "device": "meteor run ios-device --settings settings.json",
-    "sim": "meteor run ios --settings settings.json",
-    "build": "rm -r ../betterme-build && meteor build ../betterme-build --server https://betterme.meteorapp.com --mobile-settings settings.json"
+    "sim": "npm install && meteor run ios --settings settings.json",
+    "build": "meteor build ../app-build --server https://example.server.com --mobile-settings settings.json"
   },
   "dependencies": {
-    "aws-sdk": "^2.70.0",
-    "babel-runtime": "^6.20.0",
-    "bas-meteor-facebook-login": "^1.1.0",
+    "babel-runtime": "^6.26.0",
     "bcrypt": "^0.8.7",
-    "braintree": "^2.2.0",
-    "faker": "^4.1.0",
-    "howler": "^2.0.4",
     "immutable": "^3.8.1",
     "meteor-node-stubs": "~0.2.4",
     "moment": "^2.18.1",
-    "moment-duration-format": "^1.3.0",
-    "moment-timezone": "^0.5.13",
     "node-onesignal": "^0.3.1",
-    "plist": "^2.1.0",
     "react": "^15.4.2",
     "react-addons-perf": "^15.4.1",
     "react-addons-pure-render-mixin": "^15.3.2",
-    "react-circular-progressbar": "^0.1.5",
+    "react-addons-transition-group": "^15.6.0",
     "react-dom": "^15.4.1",
     "react-fastclick": "^3.0.2",
     "react-mounter": "^1.2.0",
@@ -37,10 +29,7 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
     "redux-thunk": "^2.1.0",
-    "sanitize": "^2.0.1",
-    "sanitize-html": "^1.14.1",
-    "underscore": "^1.8.3",
-    "xcode": "^0.9.3"
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",

@@ -4,10 +4,6 @@ import thunk from 'redux-thunk';
 import Immutable from 'immutable';
 
 import { coreReducer } from './reducer.js';
-import { profileReducer } from '/imports/profile';
-import { chatsReducer } from '/imports/chats';
-import { historyReducer } from '/imports/history';
-import { mydayReducer } from '/imports/myday';
 // Placeholder import (used by robot)
 
 const middleware = [thunk];
@@ -48,10 +44,6 @@ const enhancer = compose(
 const store = createStore(
   combineReducers({
     core: coreReducer,
-    profile: profileReducer,
-    chats: chatsReducer,
-    history: historyReducer,
-    myday: mydayReducer,
     // Placeholder (used by robot)
   }),
   enhancer,

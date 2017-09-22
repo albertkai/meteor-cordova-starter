@@ -1,6 +1,6 @@
-# Meteor + React + Redux starter
+# Meteor + Cordova + React + Redux starter
 
-This repo contains the basic setup for Meteor apps, that use React and Redux on the frontend.
+This repo contains the basic setup for Meteor mobile apps, that use React and Redux on the frontend.
 It leverages a scalable app structure, that separates the app into a feature modules, contained in
 the imports directory
 

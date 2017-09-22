@@ -2,8 +2,6 @@ import React, { PureComponent } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { browserHistory } from 'react-router';
 
-import { Loading } from '/imports/core';
-
 export class EmptyLayoutComponent extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
@@ -13,16 +11,12 @@ export class EmptyLayoutComponent extends PureComponent {
       userReady: newUserReady,
     } = nextProps;
     if (newUser) {
-      if (newUser.blocked) {
-        browserHistory.push('/pay');
-      } else if (pathname === '/login') {
-        browserHistory.push('/today');
-      }
+      // Some redirect logic
     }
   }
 
   render() {
-    const { children, user, userReady } = this.props;
+    const { children } = this.props;
     return (
       <div id="empty-layout">
         <div className="content">
