@@ -1,43 +1,26 @@
 import { Meteor } from 'meteor/meteor';
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createContainer } from 'meteor/react-meteor-data';
-import { browserHistory } from 'react-router';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import * as coreActions from '../../api/redux/actions';
+import { Index } from '../pages/Index';
 
 const actions = Object.assign({}, coreActions);
 
 export class MainLayoutComponent extends PureComponent {
 
-  static propTypes = {
-    user: PropTypes.object,
-    userReady: PropTypes.bool.isRequired,
-    location: PropTypes.object.isRequired,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]).isRequired,
-    core: PropTypes.object.isRequired,
-  };
-
-  static defaultProps = {
-    user: null,
-  };
-
   render() {
     return (
-      <div id="main-layout">
-        {
-          user && userReady
-            ? <div>
-                <h1>This is the login protected part of the app</h1>
-              </div>
-            : <Loading />
-        }
-      </div>
+      <Router>
+        <div id="main-layout">
+          <Switch>
+            <Route path="/" render={props => <Index {...this.props} {...props} />} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }

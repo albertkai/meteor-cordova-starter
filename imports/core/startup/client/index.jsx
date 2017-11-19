@@ -4,9 +4,8 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import initReactFastclick from 'react-fastclick';
 
-import { AppRouter } from './routes';
 import { store } from '../../api/redux/store';
-
+import { MainLayout } from '../../ui/layouts/MainLayout';
 // Import methods for optimistic UI here
 
 if (Meteor.isCordova) {
@@ -24,7 +23,7 @@ if (Meteor.isCordova) {
 Meteor.startup(() => {
   render(
     <Provider store={store}>
-      <AppRouter />
+      <MainLayout />
     </Provider>,
     document.getElementById('app'),
   );

@@ -1,11 +1,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory, Link } from 'react-router';
 
 import * as actions from '../../api/redux/actions';
 
-export class LoginComponent extends PureComponent {
+export class IndexComponent extends PureComponent {
 
   state = {
     email: '',
@@ -77,10 +76,10 @@ const mapStateToProps = state => state;
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actions, dispatch);
 
-export const Login = connect(
+export const Index = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(LoginComponent);
+)(IndexComponent);
 
 
-export default Login;
+export default Index;
